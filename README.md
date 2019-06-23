@@ -18,7 +18,7 @@ pod install
 ## Автор
 
 * **Тархов Никита** - *Разработка* - [nikit6000](https://github.com/nikit6000)
-* **Тархов Никита** - *Разработка* - [nikit6000](https://github.com/anonym0uz)
+* **Тархов Никита** - *Разработка* - [anonym0uz](https://github.com/anonym0uz)
 
 ## Лиценция
 
