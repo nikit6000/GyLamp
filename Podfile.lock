@@ -1,0 +1,50 @@
+PODS:
+  - Alamofire (4.8.2)
+  - IGListKit (3.4.0):
+    - IGListKit/Default (= 3.4.0)
+  - IGListKit/Default (3.4.0):
+    - IGListKit/Diffing
+  - IGListKit/Diffing (3.4.0)
+  - Material (3.1.4):
+    - Material/Core (= 3.1.4)
+  - Material/Core (3.1.4):
+    - Motion (~> 3.1.0)
+  - Motion (3.1.1):
+    - Motion/Core (= 3.1.1)
+  - Motion/Core (3.1.1)
+  - RxCocoa (5.0.0):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxRelay (5.0.0):
+    - RxSwift (~> 5)
+  - RxSwift (5.0.0)
+
+DEPENDENCIES:
+  - Alamofire
+  - IGListKit (~> 3.0)
+  - Material (~> 3.1.0)
+  - RxCocoa (~> 5)
+  - RxSwift (~> 5)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - IGListKit
+    - Material
+    - Motion
+    - RxCocoa
+    - RxRelay
+    - RxSwift
+
+SPEC CHECKSUMS:
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  IGListKit: 7a5d788e9fb746bcd402baa8e8b24bc3bd2a5a07
+  Material: 3622a0e18c8114e701b9d8509c3c4af28ed69ed8
+  Motion: f115b33f36cc52472a25a965daa89b3859817de0
+  RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
+  RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
+  RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
+
+PODFILE CHECKSUM: 12dfeb77951fc6d63f7dc63c4afda2d21ab4b2c0
+
+COCOAPODS: 1.7.2
