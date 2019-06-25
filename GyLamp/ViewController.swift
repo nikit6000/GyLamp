@@ -54,7 +54,19 @@ class ViewController: UIViewController {
         
         setupInterface()
         
-        adapter.reloadData(completion: nil)
+        //adapter.reloadData(completion: nil)
+        
+        NKUDPUtil.shared.scan()
+                        .subscribeOn(SerialDispatchQueueScheduler(qos: .background))
+                        .observeOn(MainScheduler.instance)
+                        .subscribe(onNext: { device in
+                            NKLog("Device:", device.ip)
+                        }, onError: { error in
+                            NKLog(error)
+                        }, onCompleted: {
+                            NKLog("completed")
+                        })
+                        .disposed(by: disposeBag)
         // Do any additional setup after loading the view.
     }
     

@@ -20,6 +20,10 @@
 		1177845922B91FC80075CE33 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1177845722B91FC80075CE33 /* Main.storyboard */; };
 		1177845B22B91FCC0075CE33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1177845A22B91FCC0075CE33 /* Assets.xcassets */; };
 		1177845E22B91FCC0075CE33 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1177845C22B91FCC0075CE33 /* LaunchScreen.storyboard */; };
+		1186847A22C23CB10047F554 /* NKUDPUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186847922C23CB10047F554 /* NKUDPUtil.swift */; };
+		1186847E22C261EF0047F554 /* NKLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186847D22C261EF0047F554 /* NKLogger.swift */; };
+		1186848122C274E00047F554 /* NKDeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186848022C274E00047F554 /* NKDeviceModel.swift */; };
+		1186848322C281120047F554 /* UIDevice+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186848222C281120047F554 /* UIDevice+extension.swift */; };
 		2C59D2748E32245A5A529BE3 /* Pods_GyLamp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892B0062866A484621DDFCD /* Pods_GyLamp.framework */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +44,11 @@
 		1177845A22B91FCC0075CE33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1177845D22B91FCC0075CE33 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1177845F22B91FCC0075CE33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1186847822C239CC0047F554 /* GyLamp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GyLamp-Bridging-Header.h"; sourceTree = "<group>"; };
+		1186847922C23CB10047F554 /* NKUDPUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKUDPUtil.swift; sourceTree = "<group>"; };
+		1186847D22C261EF0047F554 /* NKLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKLogger.swift; sourceTree = "<group>"; };
+		1186848022C274E00047F554 /* NKDeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKDeviceModel.swift; sourceTree = "<group>"; };
+		1186848222C281120047F554 /* UIDevice+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+extension.swift"; sourceTree = "<group>"; };
 		2892B0062866A484621DDFCD /* Pods_GyLamp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GyLamp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDA60115F4135953C1A1477 /* Pods-GyLamp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GyLamp.debug.xcconfig"; path = "Target Support Files/Pods-GyLamp/Pods-GyLamp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -69,6 +78,8 @@
 			children = (
 				11340C5122B9339E008094FA /* ColorUtil.swift */,
 				11340C5322B9342F008094FA /* Colorizer.swift */,
+				1186847922C23CB10047F554 /* NKUDPUtil.swift */,
+				1186847D22C261EF0047F554 /* NKLogger.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -102,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				1163B89522B95FD000DFBAD5 /* UIScreen+extension.swift */,
+				1186848222C281120047F554 /* UIDevice+extension.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -127,6 +139,7 @@
 		1177845222B91FC80075CE33 /* GyLamp */ = {
 			isa = PBXGroup;
 			children = (
+				1186847F22C274C70047F554 /* models */,
 				1163B89422B94BC700DFBAD5 /* extensions */,
 				11340C5E22B949B5008094FA /* Custom Views */,
 				11340C5B22B9488F008094FA /* Cells */,
@@ -135,12 +148,21 @@
 				11340C4F22B92B57008094FA /* SectionControllers */,
 				1177845322B91FC80075CE33 /* AppDelegate.swift */,
 				1177845522B91FC80075CE33 /* ViewController.swift */,
+				1186847822C239CC0047F554 /* GyLamp-Bridging-Header.h */,
 				1177845722B91FC80075CE33 /* Main.storyboard */,
 				1177845A22B91FCC0075CE33 /* Assets.xcassets */,
 				1177845C22B91FCC0075CE33 /* LaunchScreen.storyboard */,
 				1177845F22B91FCC0075CE33 /* Info.plist */,
 			);
 			path = GyLamp;
+			sourceTree = "<group>";
+		};
+		1186847F22C274C70047F554 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				1186848022C274E00047F554 /* NKDeviceModel.swift */,
+			);
+			path = models;
 			sourceTree = "<group>";
 		};
 		A2EE343D1EA282F1B50643D8 /* Pods */ = {
@@ -276,14 +298,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				11340C5222B9339E008094FA /* ColorUtil.swift in Sources */,
+				1186848322C281120047F554 /* UIDevice+extension.swift in Sources */,
 				11340C5A22B94778008094FA /* NKHeaderSectionController.swift in Sources */,
 				1177845622B91FC80075CE33 /* ViewController.swift in Sources */,
 				1177845422B91FC80075CE33 /* AppDelegate.swift in Sources */,
 				11340C6022B949C4008094FA /* NKHairlineView.swift in Sources */,
+				1186848122C274E00047F554 /* NKDeviceModel.swift in Sources */,
 				11340C5D22B948AB008094FA /* NKSectionCell.swift in Sources */,
+				1186847E22C261EF0047F554 /* NKLogger.swift in Sources */,
 				11340C5422B9342F008094FA /* Colorizer.swift in Sources */,
 				11340C5822B944EB008094FA /* NKLedContoller.swift in Sources */,
 				1163B89822B975A000DFBAD5 /* NKSectionModel.swift in Sources */,
+				1186847A22C23CB10047F554 /* NKUDPUtil.swift in Sources */,
 				1163B89622B95FD000DFBAD5 /* UIScreen+extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -367,6 +393,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "./GyLamp/GyLamp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -421,6 +448,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "./GyLamp/GyLamp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -432,13 +460,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = EL83N7U3ZC;
+				DEVELOPMENT_TEAM = N96NQPX5MR;
 				INFOPLIST_FILE = GyLamp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = pw.nproject.GyLamp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -452,7 +481,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = EL83N7U3ZC;
+				DEVELOPMENT_TEAM = N96NQPX5MR;
 				INFOPLIST_FILE = GyLamp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (

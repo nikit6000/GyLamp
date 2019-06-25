@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 
 class NKSectionCell: UICollectionViewCell {
     
@@ -88,9 +89,9 @@ class NKSectionCell: UICollectionViewCell {
         self.contentView.backgroundColor = ColorUtil.shared.colorizer.value.palette[.sections]
         self.titleLabel.textColor = ColorUtil.shared.colorizer.value.palette[.sectionText] ?? UIColor.lightGray
         
-        ColorUtil.shared.colorizer.subscribe(onNext: { value in
-            self.contentView.backgroundColor = value.palette[.sections]
-            self.titleLabel.textColor = value.palette[.sectionText] ?? UIColor.lightGray
+        ColorUtil.shared.colorizer.bind(onNext: { [weak self] colorizer in
+            self?.contentView.rx.backgroundColor.onNext(colorizer.palette[.sections])
+            self?.titleLabel.textColor = colorizer.palette[.sectionText] ?? UIColor.lightGray
         }).disposed(by: disposeBag)
         
         setupConstarints()
