@@ -14,17 +14,17 @@ import RxSwift
 class ViewController: UIViewController {
 
     private var disposeBag: DisposeBag!
+    private var isLoading: Bool = false
     
-    fileprivate var data: [Any] = [NKSectionModel(style: .top, title: "Text"),
-                                    NKSectionModel(style: .bottom, title: "Big text"),
-                                    NKSectionModel(style: .top, title: "Very big text"),
-                                    NKSectionModel(style: .top, title: "Very very very very very very very very very very very very very very very very very over very big text"),
-                                    NKSectionModel(style: .top, title: "Text")]
+    let findSection = NKSectionModel(style: .top, title: NSLocalizedString("scan.finded", comment: ""))
+    
+    fileprivate var data: [Any] = []
+    private var foundedDevicesStartIndex: Int = 0
     
     private lazy var collectionView: UICollectionView = {
         
-        let layout = UICollectionViewFlowLayout()
-        layout.estimatedItemSize = CGSize(width: self.view.frame.width, height: 40)
+        let layout = ListCollectionViewLayout(stickyHeaders: false, scrollDirection: .vertical, topContentInset: 0, stretchToEdge: true)
+        //layout.estimatedItemSize = CGSize(width: self.view.frame.width, height: 40)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
@@ -46,53 +46,130 @@ class ViewController: UIViewController {
         return adapter;
     }()
     
+    let gradientLayer: CAGradientLayer = {
+        let layer = CAGradientLayer()
+        let topColor = #colorLiteral(red: 0.937254902, green: 0.4235294118, blue: 0, alpha: 1)
+        let bottomColor = #colorLiteral(red: 1, green: 0.3411764706, blue: 0.1333333333, alpha: 1)
+
+        layer.colors = [topColor.cgColor, bottomColor.cgColor]
+        layer.locations = [0.0, 1.0]
+        
+        return layer
+    }()
+    
+    private lazy var scanButton: IconButton = {
+        let view = IconButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        view.image = Icon.search?.tint(with: .white)
+        view.addTarget(self, action: #selector(ViewController.scan), for: .touchUpInside)
+        return view
+    }()
+    
+    private lazy var addButton: IconButton = {
+        let view = IconButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        view.image = Icon.add?.tint(with: .white)
+        view.addTarget(self, action: #selector(ViewController.add), for: .touchUpInside)
+        return view
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         disposeBag = DisposeBag()
         
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(customView: addButton),
+            UIBarButtonItem(customView: scanButton)
+        ]
+        
         setupInterface()
         
-        //adapter.reloadData(completion: nil)
+        data.append(NKSectionModel(style: .top, title: NSLocalizedString("scan.saved", comment: "")))
+        data.append(NKDeviceModel(ip:"255.255.255.255"))
+        data.append(NKDeviceModel(ip:"255.255.255.265"))
+        data.append(NKDeviceModel(ip:"255.255.255.261"))
+        data.append(NKDeviceModel(ip:"255.255.255.221"))
+        data.append(findSection)
         
-        NKUDPUtil.shared.scan()
-                        .subscribeOn(SerialDispatchQueueScheduler(qos: .background))
-                        .observeOn(MainScheduler.instance)
-                        .subscribe(onNext: { device in
-                            NKLog("Device:", device.ip)
-                        }, onError: { error in
-                            NKLog(error)
-                        }, onCompleted: {
-                            NKLog("completed")
-                        })
-                        .disposed(by: disposeBag)
+        foundedDevicesStartIndex = data.count
+        
+        adapter.reloadData(completion: nil)
+        
+        scan()
         // Do any additional setup after loading the view.
     }
     
+    @objc private func add() {
+        
+    }
+    
+    @objc private func scan() {
+        if isLoading {
+            return
+        }
+        
+        //let section = adapter.sectionController(for: findSection)
+        
+        isLoading = true
+        findSection.isLoading = true
+       
+        adapter.reloadObjects([findSection])
+        
+        if data.count > foundedDevicesStartIndex {
+            data.removeLast(data.count - foundedDevicesStartIndex)
+            adapter.performUpdates(animated: true, completion: nil)
+        }
+        
+        
+        
+        NKUDPUtil.shared.scan()
+            .subscribeOn(SerialDispatchQueueScheduler(qos: .background))
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self] device in
+                NKLog("Device:", device.ip)
+                self?.data.append(device)
+                self?.adapter.performUpdates(animated: true, completion: nil)
+            }, onError: { [weak self] error in
+                NKLog(error)
+                self?.isLoading = false
+                self?.findSection.isLoading = false
+            }, onCompleted: { [weak self] in
+                NKLog("completed")
+                
+                guard let strongSelf = self else {
+                    return
+                }
+                
+                strongSelf.isLoading = false
+                strongSelf.findSection.isLoading = false
+                strongSelf.adapter.reloadObjects([strongSelf.findSection])
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        view.layer.insertSublayer(gradientLayer, at: 0)
+        view.backgroundColor = .clear
+        
+        self.navigationController?.navigationBar.barStyle = .black
+        
+        super.viewWillAppear(animated)
+    }
     
     private func setupInterface() {
         
         self.title = NSLocalizedString("scan.title", comment: "")
-        self.view.backgroundColor = .lightGray
         
         self.view.addSubview(collectionView)
         
-        if #available(iOS 11.0, *) {
+        /*if #available(iOS 11.0, *) {
             self.navigationItem.largeTitleDisplayMode = .always
         } else {
             // Fallback on earlier versions
-        }
+        }*/
         
         setupConstarints()
         
-        let disposeable = ColorUtil.shared.colorizer.subscribe(onNext: { value in
-            self.collectionView.backgroundColor = value.palette[.collectionBackground]
-            self.view.backgroundColor = value.palette[.primary]
-            self.navigationController?.navigationBar.barStyle = value.barStyle
-        })
-        
-        disposeable.disposed(by: disposeBag)
     }
     
 
@@ -110,6 +187,10 @@ class ViewController: UIViewController {
         
     }
 
+    override func viewDidLayoutSubviews() {
+        gradientLayer.frame = view.bounds
+        super.viewDidLayoutSubviews()
+    }
 
 }
 
@@ -123,6 +204,8 @@ extension ViewController: ListAdapterDataSource {
         switch object {
         case is NKSectionModel:
             return NKHeaderSectionController()
+        case is NKDeviceModel:
+            return NKDeviceController()
         default:
             fatalError()
         }

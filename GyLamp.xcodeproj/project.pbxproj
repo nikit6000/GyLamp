@@ -24,8 +24,45 @@
 		1186847E22C261EF0047F554 /* NKLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186847D22C261EF0047F554 /* NKLogger.swift */; };
 		1186848122C274E00047F554 /* NKDeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186848022C274E00047F554 /* NKDeviceModel.swift */; };
 		1186848322C281120047F554 /* UIDevice+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186848222C281120047F554 /* UIDevice+extension.swift */; };
+		11AC0F1522C2CC42008442D2 /* UDPClient+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11AC0F1422C2CC42008442D2 /* UDPClient+extension.swift */; };
+		11FD6E5F22C3848700BABF30 /* NKDeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD6E5E22C3848700BABF30 /* NKDeviceCell.swift */; };
+		11FD6E6522C38B0000BABF30 /* NKDeviceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD6E6422C38B0000BABF30 /* NKDeviceController.swift */; };
+		11FD6E6722C3A27D00BABF30 /* NKNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD6E6622C3A27D00BABF30 /* NKNavigationBar.swift */; };
+		11FD6E6922C3A95800BABF30 /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD6E6822C3A95800BABF30 /* UIView+extension.swift */; };
+		11FD6E6B22C3B6FF00BABF30 /* NKEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD6E6A22C3B6FF00BABF30 /* NKEffect.swift */; };
 		2C59D2748E32245A5A529BE3 /* Pods_GyLamp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892B0062866A484621DDFCD /* Pods_GyLamp.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		11AC0F0C22C2B8A4008442D2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 11AC0F0522C2B8A4008442D2 /* SwiftSocket.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 377DAA691DCDE40200009697;
+			remoteInfo = "SwiftSocket iOS";
+		};
+		11AC0F0E22C2B8A4008442D2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 11AC0F0522C2B8A4008442D2 /* SwiftSocket.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 377DAA761DCDE45D00009697;
+			remoteInfo = "SwiftSocket macOS";
+		};
+		11AC0F1022C2B8A4008442D2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 11AC0F0522C2B8A4008442D2 /* SwiftSocket.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 37454ECA1E06158200800AE5;
+			remoteInfo = "SwiftSocket tvOS";
+		};
+		11AC0F1222C2B8A4008442D2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 11AC0F0522C2B8A4008442D2 /* SwiftSocket.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 375C482D1DDC4C56008C701D;
+			remoteInfo = "iOS Example";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		059B249548F642F2DFFE3B84 /* Pods-GyLamp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GyLamp.release.xcconfig"; path = "Target Support Files/Pods-GyLamp/Pods-GyLamp.release.xcconfig"; sourceTree = "<group>"; };
@@ -49,6 +86,13 @@
 		1186847D22C261EF0047F554 /* NKLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKLogger.swift; sourceTree = "<group>"; };
 		1186848022C274E00047F554 /* NKDeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKDeviceModel.swift; sourceTree = "<group>"; };
 		1186848222C281120047F554 /* UIDevice+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+extension.swift"; sourceTree = "<group>"; };
+		11AC0F0522C2B8A4008442D2 /* SwiftSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftSocket.xcodeproj; path = SwiftSocket/SwiftSocket.xcodeproj; sourceTree = "<group>"; };
+		11AC0F1422C2CC42008442D2 /* UDPClient+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UDPClient+extension.swift"; sourceTree = "<group>"; };
+		11FD6E5E22C3848700BABF30 /* NKDeviceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKDeviceCell.swift; sourceTree = "<group>"; };
+		11FD6E6422C38B0000BABF30 /* NKDeviceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKDeviceController.swift; sourceTree = "<group>"; };
+		11FD6E6622C3A27D00BABF30 /* NKNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKNavigationBar.swift; sourceTree = "<group>"; };
+		11FD6E6822C3A95800BABF30 /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
+		11FD6E6A22C3B6FF00BABF30 /* NKEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKEffect.swift; sourceTree = "<group>"; };
 		2892B0062866A484621DDFCD /* Pods_GyLamp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GyLamp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDA60115F4135953C1A1477 /* Pods-GyLamp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GyLamp.debug.xcconfig"; path = "Target Support Files/Pods-GyLamp/Pods-GyLamp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -68,6 +112,7 @@
 		11340C4F22B92B57008094FA /* SectionControllers */ = {
 			isa = PBXGroup;
 			children = (
+				11FD6E6422C38B0000BABF30 /* NKDeviceController.swift */,
 				11340C5922B94778008094FA /* NKHeaderSectionController.swift */,
 			);
 			path = SectionControllers;
@@ -88,7 +133,6 @@
 			isa = PBXGroup;
 			children = (
 				11340C5722B944EB008094FA /* NKLedContoller.swift */,
-				1163B89722B975A000DFBAD5 /* NKSectionModel.swift */,
 			);
 			path = "New Group";
 			sourceTree = "<group>";
@@ -97,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				11340C5C22B948AB008094FA /* NKSectionCell.swift */,
+				11FD6E5E22C3848700BABF30 /* NKDeviceCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -114,6 +159,8 @@
 			children = (
 				1163B89522B95FD000DFBAD5 /* UIScreen+extension.swift */,
 				1186848222C281120047F554 /* UIDevice+extension.swift */,
+				11AC0F1422C2CC42008442D2 /* UDPClient+extension.swift */,
+				11FD6E6822C3A95800BABF30 /* UIView+extension.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -121,6 +168,7 @@
 		1177844722B91FC80075CE33 = {
 			isa = PBXGroup;
 			children = (
+				11AC0F0522C2B8A4008442D2 /* SwiftSocket.xcodeproj */,
 				1177845222B91FC80075CE33 /* GyLamp */,
 				1177845122B91FC80075CE33 /* Products */,
 				A2EE343D1EA282F1B50643D8 /* Pods */,
@@ -153,6 +201,7 @@
 				1177845A22B91FCC0075CE33 /* Assets.xcassets */,
 				1177845C22B91FCC0075CE33 /* LaunchScreen.storyboard */,
 				1177845F22B91FCC0075CE33 /* Info.plist */,
+				11FD6E6622C3A27D00BABF30 /* NKNavigationBar.swift */,
 			);
 			path = GyLamp;
 			sourceTree = "<group>";
@@ -160,9 +209,22 @@
 		1186847F22C274C70047F554 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				1163B89722B975A000DFBAD5 /* NKSectionModel.swift */,
 				1186848022C274E00047F554 /* NKDeviceModel.swift */,
+				11FD6E6A22C3B6FF00BABF30 /* NKEffect.swift */,
 			);
 			path = models;
+			sourceTree = "<group>";
+		};
+		11AC0F0622C2B8A4008442D2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				11AC0F0D22C2B8A4008442D2 /* SwiftSocket.framework */,
+				11AC0F0F22C2B8A4008442D2 /* SwiftSocket.framework */,
+				11AC0F1122C2B8A4008442D2 /* SwiftSocket.framework */,
+				11AC0F1322C2B8A4008442D2 /* iOS Example.app */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		A2EE343D1EA282F1B50643D8 /* Pods */ = {
@@ -230,12 +292,49 @@
 			mainGroup = 1177844722B91FC80075CE33;
 			productRefGroup = 1177845122B91FC80075CE33 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 11AC0F0622C2B8A4008442D2 /* Products */;
+					ProjectRef = 11AC0F0522C2B8A4008442D2 /* SwiftSocket.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				1177844F22B91FC80075CE33 /* GyLamp */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		11AC0F0D22C2B8A4008442D2 /* SwiftSocket.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftSocket.framework;
+			remoteRef = 11AC0F0C22C2B8A4008442D2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		11AC0F0F22C2B8A4008442D2 /* SwiftSocket.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftSocket.framework;
+			remoteRef = 11AC0F0E22C2B8A4008442D2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		11AC0F1122C2B8A4008442D2 /* SwiftSocket.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftSocket.framework;
+			remoteRef = 11AC0F1022C2B8A4008442D2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		11AC0F1322C2B8A4008442D2 /* iOS Example.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "iOS Example.app";
+			remoteRef = 11AC0F1222C2B8A4008442D2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1177844E22B91FC80075CE33 /* Resources */ = {
@@ -299,18 +398,24 @@
 			files = (
 				11340C5222B9339E008094FA /* ColorUtil.swift in Sources */,
 				1186848322C281120047F554 /* UIDevice+extension.swift in Sources */,
+				11FD6E6722C3A27D00BABF30 /* NKNavigationBar.swift in Sources */,
+				11AC0F1522C2CC42008442D2 /* UDPClient+extension.swift in Sources */,
 				11340C5A22B94778008094FA /* NKHeaderSectionController.swift in Sources */,
 				1177845622B91FC80075CE33 /* ViewController.swift in Sources */,
 				1177845422B91FC80075CE33 /* AppDelegate.swift in Sources */,
+				11FD6E5F22C3848700BABF30 /* NKDeviceCell.swift in Sources */,
 				11340C6022B949C4008094FA /* NKHairlineView.swift in Sources */,
 				1186848122C274E00047F554 /* NKDeviceModel.swift in Sources */,
+				11FD6E6922C3A95800BABF30 /* UIView+extension.swift in Sources */,
 				11340C5D22B948AB008094FA /* NKSectionCell.swift in Sources */,
 				1186847E22C261EF0047F554 /* NKLogger.swift in Sources */,
 				11340C5422B9342F008094FA /* Colorizer.swift in Sources */,
+				11FD6E6522C38B0000BABF30 /* NKDeviceController.swift in Sources */,
 				11340C5822B944EB008094FA /* NKLedContoller.swift in Sources */,
 				1163B89822B975A000DFBAD5 /* NKSectionModel.swift in Sources */,
 				1186847A22C23CB10047F554 /* NKUDPUtil.swift in Sources */,
 				1163B89622B95FD000DFBAD5 /* UIScreen+extension.swift in Sources */,
+				11FD6E6B22C3B6FF00BABF30 /* NKEffect.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

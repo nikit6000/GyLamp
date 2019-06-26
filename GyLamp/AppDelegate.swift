@@ -19,15 +19,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         
-        if (window == nil) {
-            return false
-        }
+        let navigationController = UINavigationController(navigationBarClass: NKNavigationBar.self, toolbarClass: UIToolbar.self)
         
-        let navigationController = UINavigationController(rootViewController: ViewController())
+        navigationController.viewControllers = [ViewController()]
         
-        window!.rootViewController = navigationController
+        window?.rootViewController = navigationController
         
-        window!.makeKeyAndVisible()
+        window?.makeKeyAndVisible()
         // Override point for customization after application launch.
         return true
     }

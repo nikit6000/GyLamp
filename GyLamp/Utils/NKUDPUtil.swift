@@ -25,7 +25,7 @@ enum NKUDPUtilError: Int, LocalizedError {
                 return NSLocalizedString("udpUtil.wrongDataReaded", comment: "")
             case .noDataReaded:
                 return NSLocalizedString("udpUtil.noDataReaded", comment: "")
-        case .cantReadLocalIp:
+            case .cantReadLocalIp:
                 return NSLocalizedString("udpUtil.cantReadLocalIp", comment: "")
         }
         
@@ -36,7 +36,7 @@ class NKUDPUtil {
     
     public static let shared = NKUDPUtil()
     
-    private var connection: UDPClient? = nil
+    private(set) var connection: UDPClient? = nil
     
     
     public func connect(ip: String, port: Int32 = 8888) -> Observable<Void> {
@@ -48,43 +48,30 @@ class NKUDPUtil {
         
         self.connection = UDPClient(address: ip, port: port)
         
+        self.connection!.enableTimeout(sec: 1, usec: 0)
+        
         let connection = self.connection!
 
         return Observable.create { observer in
     
-            let status = connection.send(string: "DEB")
             
-            switch status{
-            case .success:
-                let received = connection.recv(512)
-                
-                guard let data = received.0, let responseStr = String(bytes: data, encoding: .utf8) else {
-                    observer.onError(NKUDPUtilError.noDataReaded)
-                    NKLog("Wrong data receiving. Emmiting 'onError'")
-                    return Disposables.create()
-                }
-                
-                NKLog("Received", responseStr)
-                
-                if responseStr.starts(with: "OK") {
-                    
-                    NKLog("Device responsed. Emmiting 'onComplete'")
-                    
+            if let answ = connection.send(cmd: "DEB") {
+                if answ.starts(with: "OK") {
+                    NKLog("Device founded with ip:", ip, "Emmiting 'onNext'")
                     observer.onNext(())
                     observer.onCompleted()
                 } else {
-                    NKLog("Device answered with wrong byte sequence. Emmiting 'onError'")
+                    NKLog("An error occured while data sending. Emmiting 'onError'")
                     observer.onError(NKUDPUtilError.wrongDataReaded)
+                    return Disposables.create()
                 }
-                
-                
-                
-                return Disposables.create()
-            case .failure(let error):
-                NKLog("An error occured while data sending. Emmiting 'onError'")
-                observer.onError(error)
+            } else {
+                observer.onError(NKUDPUtilError.noDataReaded)
+                NKLog("Wrong data receiving. Emmiting 'onError'")
                 return Disposables.create()
             }
+            
+            return Disposables.create()
         }
     }
     
@@ -103,37 +90,27 @@ class NKUDPUtil {
             
             var client: UDPClient? = nil
             
+            
+            
             for i in 1...255 {
                 let deviceIp = "\(mask[0]).\(mask[1]).\(mask[2]).\(i)"
                 
-                client = nil
                 client = UDPClient(address: deviceIp, port: 8888)
                 
-                let status = client!.send(string: "DEB")
+                client!.enableTimeout(sec: 0, usec: 50000)
                 
-                switch status {
-                case .success:
-                    let received = client!.recv(512)
-                    
-                    if let data = received.0, let responseStr = String(bytes: data, encoding: .utf8) {
-                        if responseStr.starts(with: "OK") {
-                            
-                            NKLog("Device founded with ip:", deviceIp,"Emmiting 'onNext'")
-                            
-                            observer.onNext(NKDeviceModel(ip: deviceIp, port: 8888))
-                        }
-                    } else {
-                        NKLog("Device with ip", deviceIp,"not founded")
+                if let answ = client!.send(cmd: "DEB") {
+                    if answ.starts(with: "OK") {
+                        NKLog("Device founded with ip:", deviceIp,"Emmiting 'onNext'")
+                        observer.onNext(NKDeviceModel(ip: deviceIp, port: 8888, isReachable: true))
                     }
-                    
-                    break
-                case .failure(_):
-                    continue
                 }
+            
+                client?.close()
+                client = nil
                 
             }
             
-            client = nil
             
             observer.onCompleted()
             
@@ -141,6 +118,8 @@ class NKUDPUtil {
         }
         
     }
+    
+    
     
     
 }

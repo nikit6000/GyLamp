@@ -17,14 +17,12 @@ PODS:
   - RxRelay (5.0.0):
     - RxSwift (~> 5)
   - RxSwift (5.0.0)
-  - SwiftSocket (2.0.2)
 
 DEPENDENCIES:
   - IGListKit (~> 3.0)
   - Material (~> 3.1.0)
   - RxCocoa (~> 5)
   - RxSwift (~> 5)
-  - SwiftSocket
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -34,7 +32,6 @@ SPEC REPOS:
     - RxCocoa
     - RxRelay
     - RxSwift
-    - SwiftSocket
 
 SPEC CHECKSUMS:
   IGListKit: 7a5d788e9fb746bcd402baa8e8b24bc3bd2a5a07
@@ -43,8 +40,7 @@ SPEC CHECKSUMS:
   RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
-  SwiftSocket: 6f4c9c63fbc5c1d61188936bb3c599fd546f40ae
 
-PODFILE CHECKSUM: 6678d03fcc22ca6ceecd813cbe87af8debfc47d5
+PODFILE CHECKSUM: a202e9cd823ce9d726081e0a234d7f9fa1eac6e0
 
 COCOAPODS: 1.7.2

@@ -19,9 +19,12 @@ class NKSectionModel: NSObject {
     public var title: String?
     public var style: NKSectionStyle
     
+    public var isLoading: Bool
+    
     init(style: NKSectionStyle, title: String? = nil) {
         self.title = title
         self.style = style
+        self.isLoading = false
         super.init()
     }
     
