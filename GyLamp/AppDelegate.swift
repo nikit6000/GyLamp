@@ -23,9 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         navigationController.viewControllers = [ViewController()]
         
-        window?.rootViewController = navigationController
+        window!.rootViewController = navigationController
         
-        window?.makeKeyAndVisible()
+        window!.makeKeyAndVisible()
         // Override point for customization after application launch.
         return true
     }

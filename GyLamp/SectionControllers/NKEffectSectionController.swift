@@ -1,5 +1,5 @@
 //
-//  NKDeviceController.swift
+//  NKEffectSectionController.swift
 //  GyLamp
 //
 //  Created by Nikita Tarkhov on 26/06/2019.
@@ -9,14 +9,9 @@
 import Foundation
 import IGListKit
 
-protocol NKSectionControllerDelegate: class {
-    func didSelect(controller: ListSectionController, in section: Int, at index: Int)
-}
-
-
-class NKDeviceController: ListSectionController {
+class NKEffectSectionController: ListSectionController {
     
-    private(set) var model: NKDeviceModel!
+    private var model: NKEffect!
     
     public weak var delegate: NKSectionControllerDelegate? = nil
     
@@ -35,9 +30,9 @@ class NKDeviceController: ListSectionController {
         
         if UIScreen.main.scale == 3.0 {
             /* iPhone 7 Plus and above*/
-            onScreenCount = 4.0
+            onScreenCount = 4.3
         } else  {
-            onScreenCount = 3.0
+            onScreenCount = 3.3
         }
         
         return CGSize(width: size.width / onScreenCount - 8.0, height: size.width / onScreenCount - 8.0)
@@ -46,7 +41,7 @@ class NKDeviceController: ListSectionController {
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         
         
-        guard let model = model, let cell = collectionContext?.dequeueReusableCell(of: NKDeviceCell.self, for: self, at: index) as? NKDeviceCell else {
+        guard let model = model, let cell = collectionContext?.dequeueReusableCell(of: NKEffectCell.self, for: self, at: index) as? NKEffectCell else {
             fatalError("Error model is nil")
         }
         
@@ -56,15 +51,15 @@ class NKDeviceController: ListSectionController {
         return cell
     }
     
+    override func didSelectItem(at index: Int) {
+        delegate?.didSelect(controller: self, in: self.section, at: index)
+    }
+    
     override func didUpdate(to object: Any) {
-        guard let object = object as? NKDeviceModel else {
+        guard let object = object as? NKEffect else {
             fatalError("model must be a NKDeviceModel")
         }
         model = object
-    }
-    
-    override func didSelectItem(at index: Int) {
-        delegate?.didSelect(controller: self, in: self.section, at: index)
     }
     
     

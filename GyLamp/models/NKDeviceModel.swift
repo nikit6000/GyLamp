@@ -12,6 +12,9 @@ import RxSwift
 import RxCocoa
 import SwiftSocket
 
+typealias SelectAction = (_ index: Int) -> ()
+typealias DeslectAction = (_ index: Int) -> ()
+
 enum NKDeviceError: Int, LocalizedError {
     
     case noConnection = -1
@@ -101,6 +104,8 @@ class NKDeviceModel: NSObject, ListDiffable {
     private(set) var port: Int32
     private(set) var effects: [NKEffect]
     
+    public var deselectItem: DeslectAction?
+    public var selectItem: SelectAction?
     
     public var isReachable: Bool
     public var name: String? = nil
@@ -113,9 +118,11 @@ class NKDeviceModel: NSObject, ListDiffable {
         willSet {
             if mode != nil {
                 effects[mode!.rawValue].isSet = false
+                deselectItem?(mode!.rawValue)
             }
             if newValue != nil {
                 effects[newValue!.rawValue].isSet = true
+                selectItem?(newValue!.rawValue)
             }
         }
     }
@@ -155,6 +162,76 @@ class NKDeviceModel: NSObject, ListDiffable {
         return (self.ip == object.ip) && (self.port == object.port)
     }
     
+    public func setMode(_ mode: NKDeviceMode) -> Observable<Void> {
+        return Observable.create { [weak self] observer in
+            
+            guard let client = NKUDPUtil.shared.connection else {
+                observer.onError(NKDeviceError.noConnection)
+                return Disposables.create()
+            }
+            
+            guard let answ = client.send(cmd: "EFF", params: "\(mode.rawValue)") else {
+                observer.onError(NKDeviceError.noDataReaded)
+                return Disposables.create()
+            }
+            
+            guard answ.starts(with: "CURR") else {
+                observer.onError(NKDeviceError.badDataReceived)
+                return Disposables.create()
+            }
+            
+            let components = answ.split(separator: " ")
+            
+            if components.count < 2 {
+                observer.onError(NKDeviceError.badDataReceived)
+                return Disposables.create()
+            }
+            
+            
+            for (index, component) in components.suffix(from: 1).enumerated() {
+                
+                guard let value = Int(component) else {
+                    observer.onError(NKDeviceError.badDataReceived)
+                    return Disposables.create()
+                }
+                
+                switch index {
+                case 0:
+                    self?.mode = NKDeviceMode(rawValue: value)
+                    break
+                case 1:
+                    if let index = self?.mode {
+                        self?.effects[index.rawValue].brightness = Float(value) / 255.0
+                    }
+                    break
+                case 2:
+                    if let index = self?.mode {
+                        self?.effects[index.rawValue].brightness = Float(value) / 255.0
+                    }
+                    break
+                case 3:
+                    if let index = self?.mode {
+                        self?.effects[index.rawValue].brightness = Float(value) / 255.0
+                    }
+                    break
+                case 4:
+                    self?.isOn = (value != 0)
+                default:
+                    break
+                }
+            }
+            
+            
+            observer.onNext(())
+            observer.onCompleted()
+            
+            return Disposables.create()
+        }
+        
+        
+        
+    }
+    
     public func read() -> Observable<Void> {
         return Observable.create { [weak self] observer in
             
@@ -168,12 +245,15 @@ class NKDeviceModel: NSObject, ListDiffable {
                 return Disposables.create()
             }
             
+            NKLog("Received:", answ)
+            
             let components = answ.split(separator: " ")
             
             if components.count < 2 {
                 observer.onError(NKDeviceError.badDataReceived)
                 return Disposables.create()
             }
+            
             
             for (index, component) in components.suffix(from: 1).enumerated() {
                 

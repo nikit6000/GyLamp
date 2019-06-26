@@ -1,22 +1,17 @@
 //
-//  NKDeviceController.swift
+//  NKSliderController.swift
 //  GyLamp
 //
-//  Created by Nikita Tarkhov on 26/06/2019.
+//  Created by Nikita Tarkhov on 27/06/2019.
 //  Copyright © 2019 nproject. All rights reserved.
 //
 
 import Foundation
 import IGListKit
 
-protocol NKSectionControllerDelegate: class {
-    func didSelect(controller: ListSectionController, in section: Int, at index: Int)
-}
-
-
-class NKDeviceController: ListSectionController {
+class NKSliderController: ListSectionController {
     
-    private(set) var model: NKDeviceModel!
+    private(set) var model: NKFloatModel!
     
     public weak var delegate: NKSectionControllerDelegate? = nil
     
@@ -46,7 +41,7 @@ class NKDeviceController: ListSectionController {
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         
         
-        guard let model = model, let cell = collectionContext?.dequeueReusableCell(of: NKDeviceCell.self, for: self, at: index) as? NKDeviceCell else {
+        guard let model = model, let cell = collectionContext?.dequeueReusableCell(of: NKSliderCell.self, for: self, at: index) as? NKSliderCell else {
             fatalError("Error model is nil")
         }
         
@@ -57,7 +52,7 @@ class NKDeviceController: ListSectionController {
     }
     
     override func didUpdate(to object: Any) {
-        guard let object = object as? NKDeviceModel else {
+        guard let object = object as? NKFloatModel else {
             fatalError("model must be a NKDeviceModel")
         }
         model = object
@@ -69,3 +64,4 @@ class NKDeviceController: ListSectionController {
     
     
 }
+

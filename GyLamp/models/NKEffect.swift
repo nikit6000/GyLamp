@@ -19,6 +19,8 @@ class NKEffect: NSObject, ListDiffable {
     
     public var isSet: Bool = false
     
+    public var isLoading: Bool = false
+    
     init(mode: NKDeviceMode) {
         self.mode = mode
         super.init()

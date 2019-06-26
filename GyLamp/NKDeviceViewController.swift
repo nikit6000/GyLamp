@@ -1,8 +1,8 @@
 //
-//  ViewController.swift
+//  NKDeviceViewController.swift
 //  GyLamp
 //
-//  Created by Никита on 18/06/2019.
+//  Created by Nikita Tarkhov on 26/06/2019.
 //  Copyright © 2019 nproject. All rights reserved.
 //
 
@@ -11,15 +11,14 @@ import Material
 import IGListKit
 import RxSwift
 
-class ViewController: UIViewController {
-
-    private var disposeBag: DisposeBag!
-    private var isLoading: Bool = false
+class NKDeviceViewController: UIViewController {
     
-    let findSection = NKSectionModel(style: .top, title: NSLocalizedString("scan.finded", comment: ""))
+    private var disposeBag: DisposeBag!
+    private var model: NKDeviceModel?
+    private var headerModel = NKSectionModel(style: .bottom)
+    
     
     fileprivate var data: [Any] = []
-    private var foundedDevicesStartIndex: Int = 0
     
     private lazy var collectionView: UICollectionView = {
         
@@ -50,7 +49,7 @@ class ViewController: UIViewController {
         let layer = CAGradientLayer()
         let topColor = #colorLiteral(red: 0.937254902, green: 0.4235294118, blue: 0, alpha: 1)
         let bottomColor = #colorLiteral(red: 1, green: 0.3411764706, blue: 0.1333333333, alpha: 1)
-
+        
         layer.colors = [topColor.cgColor, bottomColor.cgColor]
         layer.locations = [0.0, 1.0]
         
@@ -60,90 +59,76 @@ class ViewController: UIViewController {
     private lazy var scanButton: IconButton = {
         let view = IconButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         view.image = Icon.search?.tint(with: .white)
-        view.addTarget(self, action: #selector(ViewController.scan), for: .touchUpInside)
+        //view.addTarget(self, action: #selector(ViewController.scan), for: .touchUpInside)
         return view
     }()
     
     private lazy var addButton: IconButton = {
         let view = IconButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         view.image = Icon.add?.tint(with: .white)
-        view.addTarget(self, action: #selector(ViewController.add), for: .touchUpInside)
+        //view.addTarget(self, action: #selector(ViewController.add), for: .touchUpInside)
         return view
     }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    convenience init(model: NKDeviceModel){
+        self.init(nibName: nil, bundle: nil)
+        self.model = model
+        withUnsafePointer(to: &self.model) {
+            NKLog("Model has adress:",$0)
+        }
         
         disposeBag = DisposeBag()
         
-        navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(customView: addButton),
-            UIBarButtonItem(customView: scanButton)
-        ]
+        headerModel.title = NSLocalizedString("device.title", comment: "")
+        headerModel.isLoading = true
         
         setupInterface()
         
-        data.append(NKSectionModel(style: .top, title: NSLocalizedString("scan.saved", comment: "")))
-        data.append(NKDeviceModel(ip:"255.255.255.255"))
-        data.append(NKDeviceModel(ip:"255.255.255.265"))
-        data.append(NKDeviceModel(ip:"255.255.255.261"))
-        data.append(NKDeviceModel(ip:"255.255.255.221"))
-        data.append(findSection)
-        
-        foundedDevicesStartIndex = data.count
+        data.append(headerModel)
+        data.append(model)
+        data.append(NKSectionModel(style: .bottom, title: NSLocalizedString("device.controls", comment: "")))
+        data.append(NKFloatModel(value: 0.0, text: "Bright"))
+        data.append(NKFloatModel(value: 0.0, text: "Speed"))
+        data.append(NKFloatModel(value: 0.0, text: "Scale"))
+        data.append(NKSectionModel(style: .bottom, title: NSLocalizedString("device.mode", comment: "")))
         
         adapter.reloadData(completion: nil)
         
-        scan()
-        // Do any additional setup after loading the view.
-    }
-    
-    @objc private func add() {
-        
-    }
-    
-    @objc private func scan() {
-        if isLoading {
-            return
-        }
-        
-        //let section = adapter.sectionController(for: findSection)
-        
-        isLoading = true
-        findSection.isLoading = true
-       
-        adapter.reloadObjects([findSection])
-        
-        if data.count > foundedDevicesStartIndex {
-            data.removeLast(data.count - foundedDevicesStartIndex)
-            adapter.performUpdates(animated: true, completion: nil)
-        }
-        
-        
-        
-        NKUDPUtil.shared.scan()
-            .subscribeOn(SerialDispatchQueueScheduler(qos: .background))
+        model.read().subscribeOn(SerialDispatchQueueScheduler(qos: .utility))
             .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { [weak self] device in
-                NKLog("Device:", device.ip)
-                self?.data.append(device)
-                self?.adapter.performUpdates(animated: true, completion: nil)
-            }, onError: { [weak self] error in
-                NKLog(error)
-                self?.isLoading = false
-                self?.findSection.isLoading = false
-            }, onCompleted: { [weak self] in
-                NKLog("completed")
+            .subscribe(onError: { [weak self] error in
+                
+                NKLog("Data read error:", error.localizedDescription)
                 
                 guard let strongSelf = self else {
                     return
                 }
                 
-                strongSelf.isLoading = false
-                strongSelf.findSection.isLoading = false
-                strongSelf.adapter.reloadObjects([strongSelf.findSection])
-            })
-            .disposed(by: disposeBag)
+                strongSelf.headerModel.isLoading = false
+                strongSelf.adapter.reloadObjects([strongSelf.headerModel])
+            }, onCompleted: { [weak self] in
+                    
+                guard let strongSelf = self, let model = strongSelf.model else {
+                    return
+                }
+                strongSelf.headerModel.isLoading = false
+                strongSelf.adapter.reloadObjects([strongSelf.headerModel])
+                strongSelf.data.append(NKCollectionModel(model: model))
+                strongSelf.adapter.performUpdates(animated: true, completion: nil)
+            }).disposed(by: disposeBag)
+        
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        
+       
+        
+    }
+    
+    deinit {
+        NKLog("DeviceVC deinited")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -162,17 +147,11 @@ class ViewController: UIViewController {
         
         self.view.addSubview(collectionView)
         
-        /*if #available(iOS 11.0, *) {
-            self.navigationItem.largeTitleDisplayMode = .always
-        } else {
-            // Fallback on earlier versions
-        }*/
-        
         setupConstarints()
         
     }
     
-
+    
     private func setupConstarints() {
         
         /* collectionView */
@@ -186,40 +165,15 @@ class ViewController: UIViewController {
         self.view.layoutIfNeeded()
         
     }
-
+    
     override func viewDidLayoutSubviews() {
         gradientLayer.frame = view.bounds
         super.viewDidLayoutSubviews()
     }
-
+    
 }
 
-extension ViewController: ListAdapterDataSource, NKSectionControllerDelegate {
-    
-    func didSelect(controller: ListSectionController, in section: Int, at index: Int) {
-        guard let controller = controller as? NKDeviceController else {
-            return
-        }
-        
-        let model = controller.model!
-        
-        
-        
-        NKUDPUtil.shared.connect(ip: model.ip, port: model.port)
-                        .subscribeOn(SerialDispatchQueueScheduler(qos: .utility))
-                        .observeOn(MainScheduler.instance)
-                        .subscribe(onError: { _ in
-                            
-                        }, onCompleted: { [weak self] in
-                            let deviceController = NKDeviceViewController(model: model)
-                            self?.navigationController?.pushViewController(deviceController, animated: true)
-                        })
-                        .disposed(by: disposeBag)
-        
-        
-    }
-    
-    
+extension NKDeviceViewController: ListAdapterDataSource {
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         return data as! [ListDiffable]
     }
@@ -230,9 +184,11 @@ extension ViewController: ListAdapterDataSource, NKSectionControllerDelegate {
         case is NKSectionModel:
             return NKHeaderSectionController()
         case is NKDeviceModel:
-            let controller = NKDeviceController()
-            controller.delegate = self
-            return controller
+            return NKDeviceController()
+        case is NKCollectionModel:
+            return NKEmbededCollectionController()
+        case is NKFloatModel:
+            return NKSliderController()
         default:
             fatalError()
         }
