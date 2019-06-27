@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import RxSwift
+import RxRelay
 
 class NKEffectCell: UICollectionViewCell {
     
+    private var disposeBag:DisposeBag?
     
     private lazy var iconView: UIImageView = {
         let view = UIImageView(frame: .zero)
@@ -46,23 +49,7 @@ class NKEffectCell: UICollectionViewCell {
     
     public var model: NKEffect? {
         didSet {
-            guard let model = self.model else {
-                return
-            }
-            
-            nameLabel.text = model.mode.name
-            brightnessLabel.text = "\(Int(model.brightness * 100.0))%"
-            
-            iconView.image = model.isSet ? #imageLiteral(resourceName: "light.on") : #imageLiteral(resourceName: "light.off")
-            
-            if model.isLoading {
-                indicator.startAnimating()
-                indicator.showAnimated()
-            } else {
-                indicator.hideAnimated(completion: { [weak self] in
-                    self?.indicator.stopAnimating()
-                })
-            }
+            update()
         }
     }
 
@@ -122,6 +109,46 @@ class NKEffectCell: UICollectionViewCell {
         
         self.setNeedsLayout()
         self.layoutIfNeeded()
+        
+    }
+    
+    private func update() {
+        guard let model = self.model else {
+            return
+        }
+        
+        nameLabel.text = model.mode.name
+        
+        
+        
+        disposeBag = nil
+        disposeBag = DisposeBag()
+        
+        model.isLoadingRelay.asDriver()
+                            .drive(onNext: { [weak self] value in
+                                if value {
+                                    self?.indicator.startAnimating()
+                                    self?.indicator.showAnimated()
+                                } else {
+                                    self?.indicator.hideAnimated(completion: {
+                                        self?.indicator.stopAnimating()
+                                    })
+                                }
+                            })
+                            .disposed(by: disposeBag!)
+        
+        model.isSetRelay.asDriver()
+                            .drive(onNext: { [weak self] value in
+                                self?.iconView.image = value ? #imageLiteral(resourceName: "light.on") : #imageLiteral(resourceName: "light.off")
+                                self?.contentView.alpha = value ? 1.0 : 0.7
+                            })
+                            .disposed(by: disposeBag!)
+        
+        model.brightnessRelay.asDriver()
+                            .drive(onNext: { [weak self] value in
+                                self?.brightnessLabel.text = "\(Int(value * 100.0))%"
+                            })
+                            .disposed(by: disposeBag!)
         
     }
     

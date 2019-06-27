@@ -59,6 +59,10 @@ class NKEmbededCollectionController: ListSectionController {
         }
         self.model = model
         self.adapter.reloadData(completion: nil)
+        
+        //let deviceModel = self.model.deviceModel
+        
+        
     }
     
 }
@@ -66,44 +70,11 @@ class NKEmbededCollectionController: ListSectionController {
 extension NKEmbededCollectionController: ListAdapterDataSource, NKSectionControllerDelegate {
     
     func didSelect(controller: ListSectionController, in section: Int, at index: Int) {
-
-        var objects: [NKEffect] = []
-        
-        let model = self.model.deviceModel
-        
-        if let lastIndex = model.mode?.rawValue {
-            objects.append(model.effects[lastIndex])
+        guard let mode = NKDeviceMode(rawValue: section) else {
+            return
         }
         
-        model.mode = NKDeviceMode(rawValue: section)
-        
-        if let curIndex = model.mode?.rawValue {
-            objects.append(model.effects[curIndex])
-        }
-        
-        if objects.count != 0 {
-            adapter.reloadObjects(objects)
-        }
-        
-        if let mode = model.mode {
-            model.setMode(mode)
-                    .subscribeOn(SerialDispatchQueueScheduler(qos: .utility))
-                    .observeOn(MainScheduler.instance)
-                    .subscribe(onError: { error in
-                        NKLog("Error:", error.localizedDescription)
-                    }, onCompleted: { [weak self] in
-                        guard let strongSelf = self else {
-                            return
-                        }
-                        let effect = strongSelf.model.deviceModel.effects[mode.rawValue]
-                        effect.isLoading = false
-                        strongSelf.adapter.reloadObjects([effect])
-                        
-                    })
-                    .disposed(by: disposeBag)
-        }
-        
-        
+        model.deviceModel.mode.accept(mode)
     }
     
     

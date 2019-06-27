@@ -17,6 +17,9 @@ class NKDeviceViewController: UIViewController {
     private var model: NKDeviceModel?
     private var headerModel = NKSectionModel(style: .bottom)
     
+    private var brighModel = NKFloatModel(value: 0, text: "Bright")
+    private var speedModel = NKFloatModel(value: 0, text: "Speed")
+    private var scaleModel = NKFloatModel(value: 0, text: "Scale")
     
     fileprivate var data: [Any] = []
     
@@ -56,17 +59,10 @@ class NKDeviceViewController: UIViewController {
         return layer
     }()
     
-    private lazy var scanButton: IconButton = {
+    private lazy var backButton: IconButton = {
         let view = IconButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        view.image = Icon.search?.tint(with: .white)
-        //view.addTarget(self, action: #selector(ViewController.scan), for: .touchUpInside)
-        return view
-    }()
-    
-    private lazy var addButton: IconButton = {
-        let view = IconButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        view.image = Icon.add?.tint(with: .white)
-        //view.addTarget(self, action: #selector(ViewController.add), for: .touchUpInside)
+        view.image = Icon.arrowBack?.tint(with: .white)
+        view.addTarget(self, action: #selector(NKDeviceViewController.back), for: .touchUpInside)
         return view
     }()
     
@@ -84,18 +80,24 @@ class NKDeviceViewController: UIViewController {
         
         setupInterface()
         
+        self.model?.cBrightnessRelay = brighModel.valueRelay
+        self.model?.cSpeedRelay = speedModel.valueRelay
+        self.model?.cScaleRelay = scaleModel.valueRelay
+        
         data.append(headerModel)
         data.append(model)
         data.append(NKSectionModel(style: .bottom, title: NSLocalizedString("device.controls", comment: "")))
-        data.append(NKFloatModel(value: 0.0, text: "Bright"))
-        data.append(NKFloatModel(value: 0.0, text: "Speed"))
-        data.append(NKFloatModel(value: 0.0, text: "Scale"))
+        data.append(brighModel)
+        data.append(speedModel)
+        data.append(scaleModel)
         data.append(NKSectionModel(style: .bottom, title: NSLocalizedString("device.mode", comment: "")))
+    
         
         adapter.reloadData(completion: nil)
         
         model.read().subscribeOn(SerialDispatchQueueScheduler(qos: .utility))
             .observeOn(MainScheduler.instance)
+            .retry(4)
             .subscribe(onError: { [weak self] error in
                 
                 NKLog("Data read error:", error.localizedDescription)
@@ -106,6 +108,7 @@ class NKDeviceViewController: UIViewController {
                 
                 strongSelf.headerModel.isLoading = false
                 strongSelf.adapter.reloadObjects([strongSelf.headerModel])
+                self?.onError(error)
             }, onCompleted: { [weak self] in
                     
                 guard let strongSelf = self, let model = strongSelf.model else {
@@ -116,6 +119,15 @@ class NKDeviceViewController: UIViewController {
                 strongSelf.data.append(NKCollectionModel(model: model))
                 strongSelf.adapter.performUpdates(animated: true, completion: nil)
             }).disposed(by: disposeBag)
+
+        model.errorRelay.observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self] error in
+                guard let error = error else {
+                    return
+                }
+                self?.onError(error)
+            })
+            .disposed(by: disposeBag)
         
     }
     
@@ -123,8 +135,9 @@ class NKDeviceViewController: UIViewController {
         super.viewDidLoad()
         
         
-       
+        navigationItem.title = "";
         
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
     
     deinit {
@@ -169,6 +182,19 @@ class NKDeviceViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         gradientLayer.frame = view.bounds
         super.viewDidLayoutSubviews()
+    }
+    
+    @objc private func back() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    private func onError(_ error: Error) {
+        let alert = UIAlertController(title: NSLocalizedString("device.error", comment: ""), message: error.localizedDescription, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] action in
+            self?.back()
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
 }

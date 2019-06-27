@@ -8,9 +8,12 @@
 
 import Foundation
 import IGListKit
+import RxSwift
+import RxRelay
 
 class NKEffectSectionController: ListSectionController {
     
+    private var disposeBag = DisposeBag()
     private var model: NKEffect!
     
     public weak var delegate: NKSectionControllerDelegate? = nil
@@ -60,6 +63,13 @@ class NKEffectSectionController: ListSectionController {
             fatalError("model must be a NKDeviceModel")
         }
         model = object
+    }
+    
+    public func update() {
+        guard let cell = cellForItem(at: 0) as? NKEffectCell else {
+            return
+        }
+        cell.model = model
     }
     
     

@@ -51,11 +51,28 @@ class NKSliderController: ListSectionController {
         return cell
     }
     
+    public func reload() {
+        let context = self.collectionContext
+        
+        context?.performBatch(animated: false, updates: { [weak self] updater in
+            
+            guard let strongSelf = self else {
+                return
+            }
+            
+            updater.reload(strongSelf)
+        }, completion: nil)
+    }
+    
     override func didUpdate(to object: Any) {
         guard let object = object as? NKFloatModel else {
             fatalError("model must be a NKDeviceModel")
         }
         model = object
+        
+        self.model.reload = { [weak self] in
+            self?.reload()
+        }
     }
     
     override func didSelectItem(at index: Int) {

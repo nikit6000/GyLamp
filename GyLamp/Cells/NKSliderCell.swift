@@ -8,9 +8,12 @@
 
 import UIKit
 import HGCircularSlider
+import RxSwift
+import RxRelay
 
 class NKSliderCell: UICollectionViewCell {
     
+    private var disposeBag: DisposeBag?
     
     private lazy var sliderView: CircularSlider = {
         let view = CircularSlider(frame: .zero)
@@ -22,9 +25,13 @@ class NKSliderCell: UICollectionViewCell {
         view.backgroundColor = .clear
         view.diskFillColor = .clear
         view.diskColor = .white
+        view.trackColor = UIColor.black.withAlphaComponent(0.1)
         view.lineWidth = 4
-        view.thumbRadius = 4
+        view.thumbRadius = 10
         view.thumbLineWidth = 1
+        view.endThumbStrokeColor = view.trackFillColor
+        view.endThumbStrokeHighlightedColor = view.trackFillColor
+        view.addTarget(self, action: #selector(NKSliderCell.onSlider), for: .valueChanged)
         return view
     }()
     
@@ -40,12 +47,7 @@ class NKSliderCell: UICollectionViewCell {
     
     public var model: NKFloatModel? {
         didSet {
-            guard let model = self.model else {
-                return
-            }
-            
-            nameLabel.text = model.text
-            sliderView.endPointValue = model.value
+            update()
         }
     }
     
@@ -69,6 +71,8 @@ class NKSliderCell: UICollectionViewCell {
         
         contentView.backgroundColor = .white
         
+        sliderView.isUserInteractionEnabled = true
+        
         setupConstraints()
     }
     
@@ -76,13 +80,17 @@ class NKSliderCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    @objc private func onSlider() {
+        model?.value = sliderView.endPointValue
+    }
+    
     private func setupConstraints() {
         
         
         /* sliderView */
         
-        NSLayoutConstraint(item: sliderView, attribute: .top, relatedBy: .equal, toItem: contentView, attribute: .top, multiplier: 1, constant: 8).isActive = true
-        NSLayoutConstraint(item: nameLabel, attribute: .top, relatedBy: .equal, toItem: sliderView, attribute: .bottom, multiplier: 1, constant: 8).isActive = true
+        NSLayoutConstraint(item: sliderView, attribute: .top, relatedBy: .equal, toItem: contentView, attribute: .top, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: nameLabel, attribute: .top, relatedBy: .equal, toItem: sliderView, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: sliderView, attribute: .width, relatedBy: .equal, toItem: sliderView, attribute: .height, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: sliderView, attribute: .centerX, relatedBy: .equal, toItem: contentView, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
         
@@ -96,5 +104,28 @@ class NKSliderCell: UICollectionViewCell {
         
     }
     
+    private func update() {
+        guard let model = self.model else {
+            return
+        }
+        
+        nameLabel.text = model.text
+        sliderView.endPointValue = model.value
+        
+        disposeBag = nil
+        disposeBag = DisposeBag()
+        
+        model.valueRelay.asDriver()
+                        .drive(onNext: { [weak self] value in
+                            guard let strongSelf = self else {
+                                return
+                            }
+                            if strongSelf.sliderView.endPointValue != value {
+                                strongSelf.sliderView.endPointValue = value
+                            }
+                        })
+                        .disposed(by: disposeBag!)
+        
+    }
 }
 
