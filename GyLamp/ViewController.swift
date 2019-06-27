@@ -211,7 +211,7 @@ extension ViewController: ListAdapterDataSource, NKSectionControllerDelegate {
                         .subscribe(onError: { _ in
                             
                         }, onCompleted: { [weak self] in
-                            let deviceController = NKDeviceViewController(model: model)
+                            let deviceController = NKDeviceViewController(model: model.copy())
                             self?.navigationController?.pushViewController(deviceController, animated: true)
                         })
                         .disposed(by: disposeBag)

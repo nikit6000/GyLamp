@@ -120,11 +120,8 @@ class NKDeviceViewController: UIViewController {
                 strongSelf.adapter.performUpdates(animated: true, completion: nil)
             }).disposed(by: disposeBag)
 
-        model.errorRelay.observeOn(MainScheduler.instance)
+        model.errorSubject.observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self] error in
-                guard let error = error else {
-                    return
-                }
                 self?.onError(error)
             })
             .disposed(by: disposeBag)

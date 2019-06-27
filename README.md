@@ -6,7 +6,7 @@ GyLaml - Приложение для управления лампой [GyverLam
 
 ```
 sudo gem install cocoapods
-git clone https://github.com/nikit6000/GyLamp.git && cd GyLamp
+git clone --recursive https://github.com/nikit6000/GyLamp.git && cd GyLamp
 pod install
 ```
 

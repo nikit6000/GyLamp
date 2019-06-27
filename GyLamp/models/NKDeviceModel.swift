@@ -106,7 +106,7 @@ class NKDeviceModel: NSObject, ListDiffable {
     private(set) var effects: [NKEffect]
     private(set) var mode: BehaviorRelay<NKDeviceMode?> = BehaviorRelay(value: nil)
     private(set) var isOnRelay: BehaviorRelay<Bool> = BehaviorRelay(value: false)
-    private(set) var errorRelay: BehaviorRelay<Error?> = BehaviorRelay(value: nil)
+    private(set) var errorSubject: PublishSubject<Error> = PublishSubject()
     
     private var disposeBag: DisposeBag
     private var currentMode: NKDeviceMode? = nil {
@@ -147,10 +147,10 @@ class NKDeviceModel: NSObject, ListDiffable {
                 
                 return strongSelf.send(cmd: "SPD", args: String(Int(value * 255)))
             }
-            .subscribe(onNext: {
+            .subscribe(onNext: { _ in
                 NKLog("Value SPD setted")
             }, onError: { [weak self] error in
-                self?.errorRelay.accept(error)
+                self?.errorSubject.onNext(error)
             })
             .disposed(by: disposeBag)
             
@@ -174,7 +174,7 @@ class NKDeviceModel: NSObject, ListDiffable {
                 .subscribe(onNext: {
                     NKLog("Value SCA setted")
                 }, onError: { [weak self] error in
-                    self?.errorRelay.accept(error)
+                    self?.errorSubject.onNext(error)
                 })
                 .disposed(by: disposeBag)
         }
@@ -196,7 +196,7 @@ class NKDeviceModel: NSObject, ListDiffable {
                 .subscribe(onNext: {
                     NKLog("Value BRI setted")
                 }, onError: { [weak self] error in
-                    self?.errorRelay.accept(error)
+                    self?.errorSubject.onNext(error)
                 })
                 .disposed(by: disposeBag)
         }
@@ -260,7 +260,7 @@ class NKDeviceModel: NSObject, ListDiffable {
                         
                         strongSelf.effects[index].isLoading = false
                         
-                        self?.errorRelay.accept(error)
+                        self?.errorSubject.onNext(error)
                     })
                     .disposed(by: disposeBag)
     }
@@ -436,6 +436,10 @@ class NKDeviceModel: NSObject, ListDiffable {
             
             return Disposables.create()
         }
+    }
+    
+    public func copy() -> NKDeviceModel {
+        return NKDeviceModel(ip: ip, port: port, isReachable: isReachable)
     }
 
 }
