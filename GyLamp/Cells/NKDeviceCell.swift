@@ -7,9 +7,13 @@
 //
 
 import UIKit
+import RxSwift
+import RxRelay
+
 
 class NKDeviceCell: UICollectionViewCell {
     
+    private var disposeBag: DisposeBag?
     
     private lazy var iconView: UIImageView = {
         let view = UIImageView(frame: .zero)
@@ -44,16 +48,7 @@ class NKDeviceCell: UICollectionViewCell {
     
     public var model: NKDeviceModel? {
         didSet {
-            guard let model = self.model else {
-                return
-            }
-            
-            nameLabel.text = model.name ?? "GyLamp"
-            adressLabel.text = model.ip
-            accessLabel.text = model.isReachable ?  NSLocalizedString("device.reachable", comment: "") :
-                                                    NSLocalizedString("device.unreachable", comment: "")
-            
-            iconView.image = model.icon
+            update()
         }
     }
     
@@ -112,6 +107,30 @@ class NKDeviceCell: UICollectionViewCell {
         self.setNeedsLayout()
         self.layoutIfNeeded()
         
+    }
+    
+    private func update() {
+        guard let model = self.model else {
+            return
+        }
+        
+        nameLabel.text = model.name ?? "GyLamp"
+        adressLabel.text = model.ip
+        accessLabel.text = NSLocalizedString("device.wait", comment: "")
+        
+        iconView.image = model.icon
+        
+        disposeBag = nil
+        disposeBag = DisposeBag()
+        
+        model.isOnRelay
+                        .asObservable()
+                        .observeOn(MainScheduler.instance)
+                        .subscribe(onNext: { [weak self] value in
+                            self?.accessLabel.text = value ?  NSLocalizedString("device.on", comment: "") :
+                                                                NSLocalizedString("device.off", comment: "")
+                        })
+                        .disposed(by: disposeBag!)
     }
     
 }

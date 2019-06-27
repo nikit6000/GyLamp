@@ -194,7 +194,32 @@ class ViewController: UIViewController {
 
 }
 
-extension ViewController: ListAdapterDataSource {
+extension ViewController: ListAdapterDataSource, NKSectionControllerDelegate {
+    
+    func didSelect(controller: ListSectionController, in section: Int, at index: Int) {
+        guard let controller = controller as? NKDeviceController else {
+            return
+        }
+        
+        let model = controller.model!
+        
+        
+        
+        NKUDPUtil.shared.connect(ip: model.ip, port: model.port)
+                        .subscribeOn(SerialDispatchQueueScheduler(qos: .utility))
+                        .observeOn(MainScheduler.instance)
+                        .subscribe(onError: { _ in
+                            
+                        }, onCompleted: { [weak self] in
+                            let deviceController = NKDeviceViewController(model: model)
+                            self?.navigationController?.pushViewController(deviceController, animated: true)
+                        })
+                        .disposed(by: disposeBag)
+        
+        
+    }
+    
+    
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         return data as! [ListDiffable]
     }
@@ -205,7 +230,9 @@ extension ViewController: ListAdapterDataSource {
         case is NKSectionModel:
             return NKHeaderSectionController()
         case is NKDeviceModel:
-            return NKDeviceController()
+            let controller = NKDeviceController()
+            controller.delegate = self
+            return controller
         default:
             fatalError()
         }

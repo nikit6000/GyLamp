@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11021B6222C42B6C00A82A80 /* launchscreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11021B6122C42B6C00A82A80 /* launchscreen.storyboard */; };
+		11021B6C22C42E1B00A82A80 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11021B6B22C42E1B00A82A80 /* Main.storyboard */; };
+		11021B7222C4302200A82A80 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 11021B7422C4302200A82A80 /* Localizable.strings */; };
 		11340C5222B9339E008094FA /* ColorUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11340C5122B9339E008094FA /* ColorUtil.swift */; };
 		11340C5422B9342F008094FA /* Colorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11340C5322B9342F008094FA /* Colorizer.swift */; };
 		11340C5822B944EB008094FA /* NKLedContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11340C5722B944EB008094FA /* NKLedContoller.swift */; };
@@ -17,9 +20,7 @@
 		1163B89822B975A000DFBAD5 /* NKSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1163B89722B975A000DFBAD5 /* NKSectionModel.swift */; };
 		1177845422B91FC80075CE33 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1177845322B91FC80075CE33 /* AppDelegate.swift */; };
 		1177845622B91FC80075CE33 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1177845522B91FC80075CE33 /* ViewController.swift */; };
-		1177845922B91FC80075CE33 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1177845722B91FC80075CE33 /* Main.storyboard */; };
 		1177845B22B91FCC0075CE33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1177845A22B91FCC0075CE33 /* Assets.xcassets */; };
-		1177845E22B91FCC0075CE33 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1177845C22B91FCC0075CE33 /* LaunchScreen.storyboard */; };
 		1186847A22C23CB10047F554 /* NKUDPUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186847922C23CB10047F554 /* NKUDPUtil.swift */; };
 		1186847E22C261EF0047F554 /* NKLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186847D22C261EF0047F554 /* NKLogger.swift */; };
 		1186848122C274E00047F554 /* NKDeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1186848022C274E00047F554 /* NKDeviceModel.swift */; };
@@ -30,6 +31,19 @@
 		11FD6E6722C3A27D00BABF30 /* NKNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD6E6622C3A27D00BABF30 /* NKNavigationBar.swift */; };
 		11FD6E6922C3A95800BABF30 /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD6E6822C3A95800BABF30 /* UIView+extension.swift */; };
 		11FD6E6B22C3B6FF00BABF30 /* NKEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD6E6A22C3B6FF00BABF30 /* NKEffect.swift */; };
+		11FD6E6D22C3D2D800BABF30 /* NKEmbededCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD6E6C22C3D2D800BABF30 /* NKEmbededCollectionController.swift */; };
+		11FD6E7122C3D84300BABF30 /* NKCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD6E7022C3D84300BABF30 /* NKCollectionCell.swift */; };
+		11FD6E7322C3DA4800BABF30 /* NKEffectSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD6E7222C3DA4800BABF30 /* NKEffectSectionController.swift */; };
+		11FD6E7522C3DAC100BABF30 /* NKEffectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD6E7422C3DAC100BABF30 /* NKEffectCell.swift */; };
+		11FD6E7722C3DCE100BABF30 /* NKDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD6E7622C3DCE100BABF30 /* NKDeviceViewController.swift */; };
+		11FD6E7922C4070300BABF30 /* NKCollectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD6E7822C4070300BABF30 /* NKCollectionModel.swift */; };
+		11FD6E8422C40ECD00BABF30 /* SwiftSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11AC0F0D22C2B8A4008442D2 /* SwiftSocket.framework */; };
+		11FD6E8522C40ECD00BABF30 /* SwiftSocket.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 11AC0F0D22C2B8A4008442D2 /* SwiftSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		11FD6E9522C414B500BABF30 /* HGCircularSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11FD6E9422C4149F00BABF30 /* HGCircularSlider.framework */; };
+		11FD6E9622C414B500BABF30 /* HGCircularSlider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 11FD6E9422C4149F00BABF30 /* HGCircularSlider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		11FD6E9A22C415D700BABF30 /* NKSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD6E9922C415D700BABF30 /* NKSliderCell.swift */; };
+		11FD6E9C22C4188600BABF30 /* NKFloatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD6E9B22C4188600BABF30 /* NKFloatModel.swift */; };
+		11FD6E9E22C4192600BABF30 /* NKSliderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FD6E9D22C4192600BABF30 /* NKSliderController.swift */; };
 		2C59D2748E32245A5A529BE3 /* Pods_GyLamp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892B0062866A484621DDFCD /* Pods_GyLamp.framework */; };
 /* End PBXBuildFile section */
 
@@ -62,10 +76,57 @@
 			remoteGlobalIDString = 375C482D1DDC4C56008C701D;
 			remoteInfo = "iOS Example";
 		};
+		11FD6E8122C40EC100BABF30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 11AC0F0522C2B8A4008442D2 /* SwiftSocket.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 377DAA681DCDE40200009697;
+			remoteInfo = "SwiftSocket iOS";
+		};
+		11FD6E8622C40ECD00BABF30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 11AC0F0522C2B8A4008442D2 /* SwiftSocket.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 377DAA681DCDE40200009697;
+			remoteInfo = "SwiftSocket iOS";
+		};
+		11FD6E9322C4149F00BABF30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 11FD6E8F22C4149E00BABF30 /* HGCircularSlider.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CCDBFDDB1E43366F005D6F08;
+			remoteInfo = HGCircularSlider;
+		};
+		11FD6E9722C414B500BABF30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 11FD6E8F22C4149E00BABF30 /* HGCircularSlider.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CCDBFDDA1E43366F005D6F08;
+			remoteInfo = HGCircularSlider;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		11FD6E8822C40ECD00BABF30 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				11FD6E8522C40ECD00BABF30 /* SwiftSocket.framework in Embed Frameworks */,
+				11FD6E9622C414B500BABF30 /* HGCircularSlider.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		059B249548F642F2DFFE3B84 /* Pods-GyLamp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GyLamp.release.xcconfig"; path = "Target Support Files/Pods-GyLamp/Pods-GyLamp.release.xcconfig"; sourceTree = "<group>"; };
+		11021B6122C42B6C00A82A80 /* launchscreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = launchscreen.storyboard; sourceTree = "<group>"; };
+		11021B6B22C42E1B00A82A80 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		11021B7322C4302200A82A80 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		11021B7522C4302700A82A80 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		11340C5122B9339E008094FA /* ColorUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorUtil.swift; sourceTree = "<group>"; };
 		11340C5322B9342F008094FA /* Colorizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colorizer.swift; sourceTree = "<group>"; };
 		11340C5722B944EB008094FA /* NKLedContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKLedContoller.swift; sourceTree = "<group>"; };
@@ -77,9 +138,7 @@
 		1177845022B91FC80075CE33 /* GyLamp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GyLamp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1177845322B91FC80075CE33 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1177845522B91FC80075CE33 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		1177845822B91FC80075CE33 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1177845A22B91FCC0075CE33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		1177845D22B91FCC0075CE33 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1177845F22B91FCC0075CE33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1186847822C239CC0047F554 /* GyLamp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GyLamp-Bridging-Header.h"; sourceTree = "<group>"; };
 		1186847922C23CB10047F554 /* NKUDPUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKUDPUtil.swift; sourceTree = "<group>"; };
@@ -93,6 +152,16 @@
 		11FD6E6622C3A27D00BABF30 /* NKNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKNavigationBar.swift; sourceTree = "<group>"; };
 		11FD6E6822C3A95800BABF30 /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
 		11FD6E6A22C3B6FF00BABF30 /* NKEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKEffect.swift; sourceTree = "<group>"; };
+		11FD6E6C22C3D2D800BABF30 /* NKEmbededCollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKEmbededCollectionController.swift; sourceTree = "<group>"; };
+		11FD6E7022C3D84300BABF30 /* NKCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKCollectionCell.swift; sourceTree = "<group>"; };
+		11FD6E7222C3DA4800BABF30 /* NKEffectSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKEffectSectionController.swift; sourceTree = "<group>"; };
+		11FD6E7422C3DAC100BABF30 /* NKEffectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKEffectCell.swift; sourceTree = "<group>"; };
+		11FD6E7622C3DCE100BABF30 /* NKDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKDeviceViewController.swift; sourceTree = "<group>"; };
+		11FD6E7822C4070300BABF30 /* NKCollectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKCollectionModel.swift; sourceTree = "<group>"; };
+		11FD6E8F22C4149E00BABF30 /* HGCircularSlider.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HGCircularSlider.xcodeproj; path = HGCircularSlider/HGCircularSlider.xcodeproj; sourceTree = "<group>"; };
+		11FD6E9922C415D700BABF30 /* NKSliderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKSliderCell.swift; sourceTree = "<group>"; };
+		11FD6E9B22C4188600BABF30 /* NKFloatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKFloatModel.swift; sourceTree = "<group>"; };
+		11FD6E9D22C4192600BABF30 /* NKSliderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKSliderController.swift; sourceTree = "<group>"; };
 		2892B0062866A484621DDFCD /* Pods_GyLamp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GyLamp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDA60115F4135953C1A1477 /* Pods-GyLamp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GyLamp.debug.xcconfig"; path = "Target Support Files/Pods-GyLamp/Pods-GyLamp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -103,6 +172,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C59D2748E32245A5A529BE3 /* Pods_GyLamp.framework in Frameworks */,
+				11FD6E8422C40ECD00BABF30 /* SwiftSocket.framework in Frameworks */,
+				11FD6E9522C414B500BABF30 /* HGCircularSlider.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,6 +185,9 @@
 			children = (
 				11FD6E6422C38B0000BABF30 /* NKDeviceController.swift */,
 				11340C5922B94778008094FA /* NKHeaderSectionController.swift */,
+				11FD6E6C22C3D2D800BABF30 /* NKEmbededCollectionController.swift */,
+				11FD6E7222C3DA4800BABF30 /* NKEffectSectionController.swift */,
+				11FD6E9D22C4192600BABF30 /* NKSliderController.swift */,
 			);
 			path = SectionControllers;
 			sourceTree = "<group>";
@@ -142,6 +216,9 @@
 			children = (
 				11340C5C22B948AB008094FA /* NKSectionCell.swift */,
 				11FD6E5E22C3848700BABF30 /* NKDeviceCell.swift */,
+				11FD6E7022C3D84300BABF30 /* NKCollectionCell.swift */,
+				11FD6E7422C3DAC100BABF30 /* NKEffectCell.swift */,
+				11FD6E9922C415D700BABF30 /* NKSliderCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -168,6 +245,7 @@
 		1177844722B91FC80075CE33 = {
 			isa = PBXGroup;
 			children = (
+				11FD6E8F22C4149E00BABF30 /* HGCircularSlider.xcodeproj */,
 				11AC0F0522C2B8A4008442D2 /* SwiftSocket.xcodeproj */,
 				1177845222B91FC80075CE33 /* GyLamp */,
 				1177845122B91FC80075CE33 /* Products */,
@@ -196,10 +274,12 @@
 				11340C4F22B92B57008094FA /* SectionControllers */,
 				1177845322B91FC80075CE33 /* AppDelegate.swift */,
 				1177845522B91FC80075CE33 /* ViewController.swift */,
+				11FD6E7622C3DCE100BABF30 /* NKDeviceViewController.swift */,
+				11021B6B22C42E1B00A82A80 /* Main.storyboard */,
+				11021B6122C42B6C00A82A80 /* launchscreen.storyboard */,
+				11021B7422C4302200A82A80 /* Localizable.strings */,
 				1186847822C239CC0047F554 /* GyLamp-Bridging-Header.h */,
-				1177845722B91FC80075CE33 /* Main.storyboard */,
 				1177845A22B91FCC0075CE33 /* Assets.xcassets */,
-				1177845C22B91FCC0075CE33 /* LaunchScreen.storyboard */,
 				1177845F22B91FCC0075CE33 /* Info.plist */,
 				11FD6E6622C3A27D00BABF30 /* NKNavigationBar.swift */,
 			);
@@ -212,6 +292,8 @@
 				1163B89722B975A000DFBAD5 /* NKSectionModel.swift */,
 				1186848022C274E00047F554 /* NKDeviceModel.swift */,
 				11FD6E6A22C3B6FF00BABF30 /* NKEffect.swift */,
+				11FD6E7822C4070300BABF30 /* NKCollectionModel.swift */,
+				11FD6E9B22C4188600BABF30 /* NKFloatModel.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -223,6 +305,14 @@
 				11AC0F0F22C2B8A4008442D2 /* SwiftSocket.framework */,
 				11AC0F1122C2B8A4008442D2 /* SwiftSocket.framework */,
 				11AC0F1322C2B8A4008442D2 /* iOS Example.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		11FD6E9022C4149E00BABF30 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				11FD6E9422C4149F00BABF30 /* HGCircularSlider.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -256,10 +346,14 @@
 				1177844D22B91FC80075CE33 /* Frameworks */,
 				1177844E22B91FC80075CE33 /* Resources */,
 				F03277D9F8B004B6E732A82E /* [CP] Embed Pods Frameworks */,
+				11FD6E8822C40ECD00BABF30 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				11FD6E8222C40EC100BABF30 /* PBXTargetDependency */,
+				11FD6E8722C40ECD00BABF30 /* PBXTargetDependency */,
+				11FD6E9822C414B500BABF30 /* PBXTargetDependency */,
 			);
 			name = GyLamp;
 			productName = GyLamp;
@@ -287,12 +381,17 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				ru,
 				Base,
 			);
 			mainGroup = 1177844722B91FC80075CE33;
 			productRefGroup = 1177845122B91FC80075CE33 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = 11FD6E9022C4149E00BABF30 /* Products */;
+					ProjectRef = 11FD6E8F22C4149E00BABF30 /* HGCircularSlider.xcodeproj */;
+				},
 				{
 					ProductGroup = 11AC0F0622C2B8A4008442D2 /* Products */;
 					ProjectRef = 11AC0F0522C2B8A4008442D2 /* SwiftSocket.xcodeproj */;
@@ -334,6 +433,13 @@
 			remoteRef = 11AC0F1222C2B8A4008442D2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		11FD6E9422C4149F00BABF30 /* HGCircularSlider.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = HGCircularSlider.framework;
+			remoteRef = 11FD6E9322C4149F00BABF30 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -341,9 +447,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1177845E22B91FCC0075CE33 /* LaunchScreen.storyboard in Resources */,
+				11021B7222C4302200A82A80 /* Localizable.strings in Resources */,
 				1177845B22B91FCC0075CE33 /* Assets.xcassets in Resources */,
-				1177845922B91FC80075CE33 /* Main.storyboard in Resources */,
+				11021B6222C42B6C00A82A80 /* launchscreen.storyboard in Resources */,
+				11021B6C22C42E1B00A82A80 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,6 +507,7 @@
 				1186848322C281120047F554 /* UIDevice+extension.swift in Sources */,
 				11FD6E6722C3A27D00BABF30 /* NKNavigationBar.swift in Sources */,
 				11AC0F1522C2CC42008442D2 /* UDPClient+extension.swift in Sources */,
+				11FD6E7122C3D84300BABF30 /* NKCollectionCell.swift in Sources */,
 				11340C5A22B94778008094FA /* NKHeaderSectionController.swift in Sources */,
 				1177845622B91FC80075CE33 /* ViewController.swift in Sources */,
 				1177845422B91FC80075CE33 /* AppDelegate.swift in Sources */,
@@ -407,11 +515,19 @@
 				11340C6022B949C4008094FA /* NKHairlineView.swift in Sources */,
 				1186848122C274E00047F554 /* NKDeviceModel.swift in Sources */,
 				11FD6E6922C3A95800BABF30 /* UIView+extension.swift in Sources */,
+				11FD6E7322C3DA4800BABF30 /* NKEffectSectionController.swift in Sources */,
+				11FD6E9C22C4188600BABF30 /* NKFloatModel.swift in Sources */,
 				11340C5D22B948AB008094FA /* NKSectionCell.swift in Sources */,
+				11FD6E7722C3DCE100BABF30 /* NKDeviceViewController.swift in Sources */,
 				1186847E22C261EF0047F554 /* NKLogger.swift in Sources */,
 				11340C5422B9342F008094FA /* Colorizer.swift in Sources */,
 				11FD6E6522C38B0000BABF30 /* NKDeviceController.swift in Sources */,
 				11340C5822B944EB008094FA /* NKLedContoller.swift in Sources */,
+				11FD6E6D22C3D2D800BABF30 /* NKEmbededCollectionController.swift in Sources */,
+				11FD6E9A22C415D700BABF30 /* NKSliderCell.swift in Sources */,
+				11FD6E7922C4070300BABF30 /* NKCollectionModel.swift in Sources */,
+				11FD6E9E22C4192600BABF30 /* NKSliderController.swift in Sources */,
+				11FD6E7522C3DAC100BABF30 /* NKEffectCell.swift in Sources */,
 				1163B89822B975A000DFBAD5 /* NKSectionModel.swift in Sources */,
 				1186847A22C23CB10047F554 /* NKUDPUtil.swift in Sources */,
 				1163B89622B95FD000DFBAD5 /* UIScreen+extension.swift in Sources */,
@@ -421,21 +537,32 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		1177845722B91FC80075CE33 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1177845822B91FC80075CE33 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
+/* Begin PBXTargetDependency section */
+		11FD6E8222C40EC100BABF30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SwiftSocket iOS";
+			targetProxy = 11FD6E8122C40EC100BABF30 /* PBXContainerItemProxy */;
 		};
-		1177845C22B91FCC0075CE33 /* LaunchScreen.storyboard */ = {
+		11FD6E8722C40ECD00BABF30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SwiftSocket iOS";
+			targetProxy = 11FD6E8622C40ECD00BABF30 /* PBXContainerItemProxy */;
+		};
+		11FD6E9822C414B500BABF30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = HGCircularSlider;
+			targetProxy = 11FD6E9722C414B500BABF30 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		11021B7422C4302200A82A80 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				1177845D22B91FCC0075CE33 /* Base */,
+				11021B7322C4302200A82A80 /* en */,
+				11021B7522C4302700A82A80 /* ru */,
 			);
-			name = LaunchScreen.storyboard;
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -445,6 +572,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -507,6 +635,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -563,6 +692,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CEDA60115F4135953C1A1477 /* Pods-GyLamp.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N96NQPX5MR;
@@ -584,6 +714,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 059B249548F642F2DFFE3B84 /* Pods-GyLamp.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N96NQPX5MR;

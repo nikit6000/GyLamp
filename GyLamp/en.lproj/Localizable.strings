@@ -1,0 +1,38 @@
+/* 
+  Localizable.strings
+  GyLamp
+
+  Created by Nikita Tarkhov on 27/06/2019.
+  Copyright © 2019 nproject. All rights reserved.
+*/
+"scan.title" = "Scan";
+"scan.saved" = "Saved";
+"scan.finded" = "Finded";
+
+"device.reachable" = "Reachable";
+"device.unreachable" = "Unreachable";
+"device.title" = "Device";
+"device.controls" = "Controls";
+"device.mode" = "Mode";
+"device.error" = "Error";
+"device.unknownError" = "Unknown error";
+
+
+"mode.confetti" = "confetti";
+"mode.fire" = "Fire";
+"mode.rainbowV" = "Rainbov V";
+"mode.rainbowH" = "Rainbov H";
+"mode.fade" = "Fade";
+"mode.madness3D" = "Madness 3D";
+"mode.cloud3D" = "Cloud 3D";
+"mode.lava3D" = "Lava 3D";
+"mode.plasm3D" = "Plasm 3D";
+"mode.rainbow3D" = "Rainbov 3D";
+"mode.peacock3D" = "Peacock 3D";
+"mode.zebra3D" = "Zebra 3D";
+"mode.forest3D" = "Forest 3D";
+"mode.ocean3D" = "Ocean 3D";
+"mode.color" = "Color";
+"mode.snow" = "Snow";
+"mode.matrix" = "Matrix";
+"mode.fireflies" = "Fireflies";
