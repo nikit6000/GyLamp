@@ -100,6 +100,59 @@ class ViewController: UIViewController {
     
     @objc private func add() {
         
+        if isLoading {
+            isLoading = false
+            findSection.isLoading = false
+        }
+        let alert = UIAlertController(title: "GyLamp", message: "Add manual", preferredStyle: .alert)
+        
+        let addClosure: (UIAlertAction) -> Void = { (UIAlertAction) -> Void in
+            guard let name = alert.textFields?[0].text,
+                let lIP = alert.textFields?[1].text,
+                let port = alert.textFields?[2].text
+                else { return }
+            NKUDPUtil.shared.connect(ip: lIP, port: Int32(port)!)
+                .subscribeOn(SerialDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { [weak self] device in
+                    self?.data.append(device)
+                    self?.adapter.performUpdates(animated: true, completion: nil)
+                    }, onError: { [weak self] error in
+                        NKLog(error)
+                        self?.isLoading = false
+                        self?.findSection.isLoading = false
+                    }, onCompleted: { [weak self] in
+                        NKLog("completed")
+                        
+                        guard let strongSelf = self else {
+                            return
+                        }
+                        
+                        strongSelf.isLoading = false
+                        strongSelf.findSection.isLoading = false
+                        strongSelf.adapter.reloadObjects([strongSelf.findSection])
+                })
+                .disposed(by: self.disposeBag)
+            NKLog("Name: \(name)\rLocal IP: \(lIP)\rPort: \(port)")
+        }
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        let addAction = UIAlertAction(title: "Add", style: .default, handler: addClosure)
+        
+        alert.addTextField { (textField) in
+            textField.placeholder = "Name"
+        }
+        alert.addTextField { (textField) in
+            textField.placeholder = "Local IP"
+        }
+        alert.addTextField { (textField) in
+            textField.placeholder = "Port (def: 8888)"
+        }
+        
+        addAction.isEnabled = true
+        alert.addAction(addAction)
+        
+        self.present(alert, animated: true, completion: nil)
+        
     }
     
     @objc private func scan() {
