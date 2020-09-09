@@ -1,18 +1,31 @@
 # GyLaml
 
-GyLaml - Приложение для управления лампой [GyverLamp](https://github.com/AlexGyver/GyverLamp) 
+GyLaml - Приложение для управления лампой (актуальная версия) [GyverLamp](https://github.com/AlexGyver/GyverLamp) 
 
 ## Как собрать
 
 ```
 sudo gem install cocoapods
-git clone https://github.com/nikit6000/GyLamp.git && cd GyLamp
+git clone --recursive https://github.com/nikit6000/GyLamp.git && cd GyLamp
 pod install
 ```
 
-## Управление
+## Изменения
 
-На данный момент управлять экранчиком можно только при помощи комманд:
+* Переписана большая часть приложения
+* Использован паттерн VIPER
+* Поиск устройств при помощи SSDP
+* Новая система управления устройствами (NKDeviceInterpretator)
+* Переход к реактивному программированию
+* Новый интерфейс
+* Добавлена возможность сохранения устройств
+
+## To-Do
+
+* Настройки приложения
+* Темная/Светлая темы
+* Прикрутить BLE к DeviceInterpretator
+* Придумать еще что-нибудь 
 
 
 ## Авторы
