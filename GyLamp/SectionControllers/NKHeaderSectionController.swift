@@ -13,8 +13,14 @@ class NKHeaderSectionController: ListSectionController {
     
     var model: NKSectionModel?
     
+    override init() {
+        super.init()
+        
+        inset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+    }
+    
     override func sizeForItem(at index: Int) -> CGSize {
-        return CGSize(width: collectionContext!.containerSize.width, height: 40)
+        return CGSize(width: collectionContext!.containerSize.width, height: 50)
     }
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {

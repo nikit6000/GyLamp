@@ -10,7 +10,12 @@ target 'GyLamp' do
 	pod 'IGListKit', '~> 3.0'
 	pod 'Material', '~> 3.1.0'
 	pod 'RxSwift', '~> 5'
-    	pod 'RxCocoa', '~> 5'
-	pod 'SwiftSocket'
+  pod 'RxCocoa', '~> 5'
+	pod "MBCircularProgressBar"
+	pod 'CocoaAsyncSocket'
+	pod 'Weak', '~> 1.0.0'
+	pod 'Alamofire'
+	pod 'SwiftyXML', '~> 3.0.0'
+  pod 'Google-Mobile-Ads-SDK'
 
 end

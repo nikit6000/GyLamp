@@ -12,12 +12,16 @@ public func NKLog(_ items: Any...) {
     NKLogger.shared.log(items)
 }
 
+public func NKLogE(_ items: Any...) {
+    NKLogger.shared.loge(items)
+}
+
 class NKLogger {
     
     public static let shared = NKLogger()
     
     
-    public func log(_ items: [Any]) {
+    public func log(_ items: [Any], terminator: String = "\n") {
         
         #if DEBUG
         
@@ -36,6 +40,11 @@ class NKLogger {
         
         #endif
     
+    }
+    
+    public func loge(_ items: [Any]) {
+        log(["Error:"], terminator: " ")
+        log(items)
     }
     
 }

@@ -1,0 +1,83 @@
+/* 
+  Localizable.strings
+  GyLamp
+
+  Created by Nikita Tarkhov on 27/06/2019.
+  Copyright © 2019 nproject. All rights reserved.
+*/
+
+"devError.noConnection" = "Возникла ошибка: Потеряно соединение с устройством.";
+"devError.noDataReaded" = "Возникла ошибка: Данные не получены.";
+"devError.badDataReceived" = "Возникла ошибка: Получены поврежденные данные.";
+
+"udpUtil.wrongDataReaded" = "Получены неверные данные. Проверьте прошивку вашего устройства.";
+"udpUtil.noDataReaded" = "Данные не получены! Проверьте состояния вашего устройства и вашей сети.";
+"udpUtil.cantReadLocalIp" = "Неудалось получить локальный ip адресс";
+"udpUtil.noConnection" = "Соединение не установлено! Проверьте состояния вашего устройства и вашей сети.";
+"udpUtil.busy" = "Устройство занято";
+
+"scan.title" = "Поиск";
+"scan.saved" = "Сохраненные";
+"scan.finded" = "Найденные";
+"scan.enterip" = "Введите ip";
+"scan.notFounded" = "Устройства не найдены! Проверте настройки SSDP ваших устройств или добавьте устройство вручную, нажав кнопку \"+\"";
+"scan.hereYouCanSeeDevices" = "Здесь вы сможете увидеть найденные устройства";
+"scan.ip" = "IP адрес";
+"scan.connect" = "Подключится";
+"scan.cancel" = "Отмена";
+"scan.ad" = "Реклама";
+
+"device.device" = "Устройство";
+"device.reachable" = "Доступно";
+"device.unreachable" = "Недоступно";
+"device.title" = "Устройство";
+"device.controls" = "Управление";
+"device.mode" = "Режим";
+"device.error" = "Ошибка";
+"device.unknownError" = "Неизвестная ошибка";
+"device.on" = "Вкл";
+"device.off" = "Выкл";
+"device.alarms" = "Будильники";
+"device.wait" = "Подождите";
+"device.save" = "Сохранить";
+"device.delete" = "Удалить";
+"device.quit" = "Выйти";
+"device.stay" = "Остаться";
+
+"mode.confetti" = "Конфетти";
+"mode.fire" = "Огонь";
+"mode.rainbowV" = "Радуга вертикальная";
+"mode.rainbowH" = "Радуга горизонтальная";
+"mode.fade" = "Переход";
+"mode.madness3D" = "Безумие 3D";
+"mode.cloud3D" = "Облака 3D";
+"mode.lava3D" = "Лава 3D";
+"mode.plasm3D" = "Плазма 3D";
+"mode.rainbow3D" = "Радуга 3D";
+"mode.peacock3D" = "Павлин 3D";
+"mode.zebra3D" = "Зебра 3D";
+"mode.forest3D" = "Лес 3D";
+"mode.ocean3D" = "Океан 3D";
+"mode.color" = "Цвет";
+"mode.snow" = "Снег";
+"mode.matrix" = "Матрица";
+"mode.fireflies" = "Светлячки";
+
+"week.monday" = "Понедельник";
+"week.tuesday" = "Вторник";
+"week.wednesday" = "Среда";
+"week.thursday" = "Четверг";
+"week.friday" = "Пятница";
+"week.saturday" = "Суббота";
+"week.sunday" = "Воскресенье";
+"week.mon" = "Пн";
+"week.tue" = "Вт";
+"week.wed" = "Ср";
+"week.thur" = "Чт";
+"week.fri" = "Пт";
+"week.sat" = "Сб";
+"week.sun" = "Вс";
+
+"alarm.dawnOff" = "Включить рассвет";
+"alarm.dawnOn" = "Выключить рассвет";
+"alarm.dawnMode" = "Переключить рассвет";

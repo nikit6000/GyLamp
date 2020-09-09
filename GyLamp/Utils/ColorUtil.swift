@@ -17,7 +17,6 @@ class ColorUtil {
     public var colorizer: BehaviorRelay<NKColorizer> =  BehaviorRelay(value: NKDefaultColorizer())
     
     public func set(colorizer value: NKColorizer) {
-        UIApplication.shared.statusBarStyle = value.statusBarStyle
         colorizer.accept(value)
     }
     

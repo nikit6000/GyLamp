@@ -11,11 +11,16 @@ import RxSwift
 import RxCocoa
 import SwiftSocket
 
+typealias UDPSuccessBlock = (_ answer: String) -> ()
+typealias UDPErrorBlock = (_ answer: Error) -> ()
+
 enum NKUDPUtilError: Int, LocalizedError {
     
     case wrongDataReaded = -1
     case noDataReaded
     case cantReadLocalIp
+    case noConnection
+    case busy
     
     var localizedDescription: String {
         
@@ -25,8 +30,12 @@ enum NKUDPUtilError: Int, LocalizedError {
                 return NSLocalizedString("udpUtil.wrongDataReaded", comment: "")
             case .noDataReaded:
                 return NSLocalizedString("udpUtil.noDataReaded", comment: "")
-        case .cantReadLocalIp:
+            case .cantReadLocalIp:
                 return NSLocalizedString("udpUtil.cantReadLocalIp", comment: "")
+            case .noConnection:
+                return NSLocalizedString("udpUtil.noConnection", comment: "")
+            case .busy:
+                return NSLocalizedString("udpUtil.busy", comment: "")
         }
         
     }
@@ -36,111 +45,50 @@ class NKUDPUtil {
     
     public static let shared = NKUDPUtil()
     
-    private var connection: UDPClient? = nil
+    private let discovery: SSDPDiscovery = SSDPDiscovery.defaultDiscovery
+    fileprivate var session: SSDPDiscoverySession?
     
+    fileprivate var disposeBag = DisposeBag()
     
-    public func connect(ip: String, port: Int32 = 8888) -> Observable<Void> {
-        
-        if (self.connection != nil) {
-            self.connection!.close()
-            self.connection = nil
-        }
-        
-        self.connection = UDPClient(address: ip, port: port)
-        
-        let connection = self.connection!
+    public var deviceSubject = PublishSubject<NKDeviceModel?>()
+    
+   
+    
+    public func searchForDevices() {
+        // Create the request for Sonos ZonePlayer devices
+        //let zonePlayerTarget = SSDPSearchTarget.deviceType(schema: SSDPSearchTarget.upnpOrgSchema, deviceType: "upnp:rootdevice", version: 1)
+        let request = SSDPMSearchRequest(delegate: self, searchTarget: .rootDevice)
+    
+        // Start a discovery session for the request and timeout after 10 seconds of searching.
+        self.session = try! discovery.startDiscovery(request: request, timeout: 10.0)
+    }
+    
+    public func stopSearching() {
+        self.session?.close()
+        self.session = nil
+    }
+    
+}
 
-        return Observable.create { observer in
+
+extension NKUDPUtil: SSDPDiscoveryDelegate {
     
-            let status = connection.send(string: "DEB")
-            
-            switch status{
-            case .success:
-                let received = connection.recv(512)
-                
-                guard let data = received.0, let responseStr = String(bytes: data, encoding: .utf8) else {
-                    observer.onError(NKUDPUtilError.noDataReaded)
-                    NKLog("Wrong data receiving. Emmiting 'onError'")
-                    return Disposables.create()
-                }
-                
-                NKLog("Received", responseStr)
-                
-                if responseStr.starts(with: "OK") {
-                    
-                    NKLog("Device responsed. Emmiting 'onComplete'")
-                    
-                    observer.onNext(())
-                    observer.onCompleted()
-                } else {
-                    NKLog("Device answered with wrong byte sequence. Emmiting 'onError'")
-                    observer.onError(NKUDPUtilError.wrongDataReaded)
-                }
-                
-                
-                
-                return Disposables.create()
-            case .failure(let error):
-                NKLog("An error occured while data sending. Emmiting 'onError'")
-                observer.onError(error)
-                return Disposables.create()
-            }
-        }
-    }
-    
-    public func scan() -> Observable<NKDeviceModel> {
-        return Observable.create { observer in
-            
-            guard let deviceIp = UIDevice.current.getWiFiAddress() else {
-                NKLog("Can`t get local ip adress. Emmiting 'onError'")
-                observer.onError(NKUDPUtilError.cantReadLocalIp)
-                return Disposables.create()
-            }
-            
-            NKLog("Local ip:", deviceIp)
-            
-            let mask = deviceIp.split(separator: ".")
-            
-            var client: UDPClient? = nil
-            
-            for i in 1...255 {
-                let deviceIp = "\(mask[0]).\(mask[1]).\(mask[2]).\(i)"
-                
-                client = nil
-                client = UDPClient(address: deviceIp, port: 8888)
-                
-                let status = client!.send(string: "DEB")
-                
-                switch status {
-                case .success:
-                    let received = client!.recv(512)
-                    
-                    if let data = received.0, let responseStr = String(bytes: data, encoding: .utf8) {
-                        if responseStr.starts(with: "OK") {
-                            
-                            NKLog("Device founded with ip:", deviceIp,"Emmiting 'onNext'")
-                            
-                            observer.onNext(NKDeviceModel(ip: deviceIp, port: 8888))
-                        }
-                    } else {
-                        NKLog("Device with ip", deviceIp,"not founded")
-                    }
-                    
-                    break
-                case .failure(_):
-                    continue
-                }
-                
-            }
-            
-            client = nil
-            
-            observer.onCompleted()
-            
-            return Disposables.create()
-        }
+    public func discoveredDevice(response: SSDPMSearchResponse, session: SSDPDiscoverySession) {
         
+        let ssdpUtil = SSDPUtil.shared
+        NKLog("SSDP", response.location)
+        ssdpUtil.getDevice(description: response.location).subscribe(onNext: { [weak self] model in
+            
+            self?.deviceSubject.onNext(model)
+            
+        }).disposed(by: disposeBag)
     }
-    
-    
+
+    public func discoveredService(response: SSDPMSearchResponse, session: SSDPDiscoverySession) {
+    }
+
+    public func closedSession(_ session: SSDPDiscoverySession) {
+        self.deviceSubject.onNext(nil)
+    }
+
 }

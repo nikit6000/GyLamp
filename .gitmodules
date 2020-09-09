@@ -1,3 +1,6 @@
 [submodule "SwiftSocket"]
 	path = SwiftSocket
 	url = https://github.com/nikit6000/SwiftSocket.git
+[submodule "HGCircularSlider"]
+	path = HGCircularSlider
+	url = https://github.com/nikit6000/HGCircularSlider.git
