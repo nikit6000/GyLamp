@@ -39,14 +39,13 @@ class NKSectionCell: UICollectionViewCell {
             }
             
             self.titleLabel.text = model.title
-            
+
             if model.isLoading {
                 indicator.startAnimating()
-                indicator.showAnimated()
+                indicator.isHidden = false
             } else {
-                indicator.hideAnimated(completion: { [weak self] in
-                    self?.indicator.stopAnimating()
-                })
+                indicator.isHidden = true
+                indicator.stopAnimating()
             }
             
             contentView.setNeedsLayout()

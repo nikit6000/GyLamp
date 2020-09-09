@@ -13,58 +13,20 @@ import RxSwift
 
 class NKEffect: NSObject, ListDiffable {
     
-    private(set) var mode: NKDeviceMode
+    private(set) var mode: String
     
-    public var speed: CGFloat {
-        didSet {
-            speedRelay.accept(speed)
-        }
-    }
+    public var isSet: Bool
+    public var isLoading: Bool
+    public var hasError: Bool
     
-    public var scale: CGFloat {
-        didSet {
-            scaleRelay.accept(scale)
-        }
-    }
+    public weak var deviceModel: NKDeviceProtocol?
     
-    public var brightness: CGFloat {
-        didSet {
-            brightnessRelay.accept(brightness)
-        }
-    }
-    
-    public var isSet: Bool {
-        didSet {
-            isSetRelay.accept(isSet)
-        }
-    }
-    
-    public var isLoading: Bool {
-        didSet {
-            isLoadingRelay.accept(isLoading)
-        }
-    }
-    
-    private(set) var isSetRelay: BehaviorRelay<Bool>
-    private(set) var isLoadingRelay: BehaviorRelay<Bool>
-    private(set) var speedRelay: BehaviorRelay<CGFloat>
-    private(set) var scaleRelay: BehaviorRelay<CGFloat>
-    private(set) var brightnessRelay: BehaviorRelay<CGFloat>
-    
-    init(mode: NKDeviceMode) {
+    init(mode: String) {
         self.mode = mode
-        self.isSetRelay = BehaviorRelay(value: false)
-        self.speedRelay = BehaviorRelay(value: 0)
-        self.brightnessRelay = BehaviorRelay(value: 0)
-        self.scaleRelay = BehaviorRelay(value: 0)
-        self.isLoadingRelay = BehaviorRelay(value: false)
         
         self.isSet = false
         self.isLoading = false
-        self.speed = 0
-        self.scale = 0
-        self.brightness = 0
-        
+        self.hasError = false
         super.init()
     }
     
@@ -73,14 +35,27 @@ class NKEffect: NSObject, ListDiffable {
     }
     
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-        guard let object = object as? NKEffect else {
-            return false
-        }
-        
-        return  (self.speed == object.speed) &&
-                (self.scale == object.scale) &&
-                (self.brightness == object.brightness)
+        return self.isEqual(object)
     }
     
+    
+}
+
+
+class NKEffects: NSObject {
+    
+    public var models: [NKEffect] = []
+    
+}
+
+extension NKEffects: ListDiffable {
+    
+    func diffIdentifier() -> NSObjectProtocol {
+        return self
+    }
+    
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
+        return self.isEqual(object)
+    }
     
 }

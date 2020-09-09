@@ -8,7 +8,9 @@
 
 import Foundation
 import IGListKit
+import RxSwift
 
+@available(*, deprecated, message: "outdated")
 protocol NKSectionControllerDelegate: class {
     func didSelect(controller: ListSectionController, in section: Int, at index: Int)
 }
@@ -17,12 +19,13 @@ protocol NKSectionControllerDelegate: class {
 class NKDeviceController: ListSectionController {
     
     private(set) var model: NKDeviceModel!
+    private var disposeBag = DisposeBag()
     
+    @available(*, deprecated, message: "Outdate")
     public weak var delegate: NKSectionControllerDelegate? = nil
     
     override init() {
         super.init()
-        
         inset = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
     }
     
@@ -31,14 +34,7 @@ class NKDeviceController: ListSectionController {
             return CGSize(width: 112, height: 112)
         }
         
-        let onScreenCount: CGFloat
-        
-        if UIScreen.main.scale == 3.0 {
-            /* iPhone 7 Plus and above*/
-            onScreenCount = 4.0
-        } else  {
-            onScreenCount = 3.0
-        }
+        let onScreenCount: CGFloat = 3.0
         
         return CGSize(width: size.width / onScreenCount - 8.0, height: size.width / onScreenCount - 8.0)
     }
@@ -64,8 +60,76 @@ class NKDeviceController: ListSectionController {
     }
     
     override func didSelectItem(at index: Int) {
-        delegate?.didSelect(controller: self, in: self.section, at: index)
+        guard let viewController = viewController as? NKScanDeviceView else {
+            return
+        }
+        
+        viewController.presenter?.router?.pushView(device: model)
     }
     
     
+    override func didLongPress(item: Int) {
+        
+        guard let cell = collectionContext?.cellForItem(at: item, sectionController: self) else {
+            return
+        }
+        
+        let actionView = NKActionView()
+        
+        
+        if model.managedObject != nil {
+            actionView.addAction(NSLocalizedString("device.delete", comment: ""), style: .danger) { [weak self] _ in
+                
+                guard let strongSelf = self else {
+                    return
+                }
+                
+                let worker = NKCoreDataWorker.shared
+                
+                worker.rx.delete(model: strongSelf.model)
+                    .subscribeOn(SerialDispatchQueueScheduler(qos: .utility))
+                    .observeOn(MainScheduler.instance)
+                    .subscribe(onError: { _ in
+                        actionView.dismiss()
+                    }, onCompleted: {
+                        actionView.dismiss(hideSnapshot: true)
+                        
+                    })
+                    .disposed(by: strongSelf.disposeBag)
+                
+            }
+        } else {
+            actionView.addAction(NSLocalizedString("device.save", comment: ""), style: .default) { [weak self] _ in
+                
+                guard let strongSelf = self else {
+                    return
+                }
+                
+                let worker = NKCoreDataWorker.shared
+                
+                worker.rx.save(model: strongSelf.model)
+                    .subscribeOn(SerialDispatchQueueScheduler(qos: .utility))
+                    .observeOn(MainScheduler.instance)
+                    .subscribe(onError: { _ in
+                        actionView.dismiss()
+                    }, onCompleted: {
+                        actionView.dismiss()
+                    })
+                    .disposed(by: strongSelf.disposeBag)
+                
+            }
+        }
+        
+        //actionView.addAction("Cancel", style: .cancel)
+        
+        
+        
+        actionView.present(for: cell.contentView)
+    }
+    
+    deinit {
+        NKLog("NKDeviceController - deinit")
+    }
+    
 }
+

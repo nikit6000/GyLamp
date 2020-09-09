@@ -10,7 +10,10 @@ import UIKit
 import RxSwift
 import RxRelay
 
-class NKEffectCell: UICollectionViewCell {
+class NKEffectCell: UICollectionViewCell, NKViewPressAble {
+    
+    var isPressAble: Bool = true
+    var isLongPressAble: Bool = false
     
     private var disposeBag:DisposeBag?
     
@@ -18,6 +21,7 @@ class NKEffectCell: UICollectionViewCell {
         let view = UIImageView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFit
+        view.image = UIImage(named: "fx")?.tint(with: .lightGray)
         return view
     }()
     
@@ -47,9 +51,35 @@ class NKEffectCell: UICollectionViewCell {
         return view
     }()
     
+    private lazy var errorImage: UIImageView = {
+        let view = UIImageView()
+           
+        view.contentMode = .scaleAspectFit
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isHidden = true
+        view.image = #imageLiteral(resourceName: "warning.30px")
+        return view
+    }()
+    
     public var model: NKEffect? {
         didSet {
             update()
+            
+            guard let model = self.model else {
+                return
+            }
+            
+            disposeBag = nil
+            disposeBag = DisposeBag()
+            
+            model.deviceModel?.modelUpdatedSubject
+                .asDriver(onErrorJustReturn: ())
+                .drive(onNext: { [weak self] in
+                    self?.update()
+                }, onDisposed: {
+                    NKLog("[NKEffectCell] - disposed")
+                })
+                .disposed(by: disposeBag!)
         }
     }
 
@@ -57,17 +87,18 @@ class NKEffectCell: UICollectionViewCell {
         super.init(frame: frame)
         
         contentView.layer.masksToBounds = true
-        contentView.layer.cornerRadius = 10
+        contentView.layer.cornerRadius = 20
         
         contentView.addSubview(iconView)
         contentView.addSubview(indicator)
         contentView.addSubview(nameLabel)
         contentView.addSubview(brightnessLabel)
+        contentView.addSubview(errorImage)
         
         contentView.layer.shadowColor = UIColor.black.cgColor
         contentView.layer.shadowOpacity = 1
         contentView.layer.shadowOffset = .zero
-        contentView.layer.shadowRadius = 10
+        contentView.layer.shadowRadius = 20
         contentView.layer.shadowPath = UIBezierPath(rect: contentView.bounds).cgPath
         
         contentView.layer.shouldRasterize = true
@@ -96,6 +127,11 @@ class NKEffectCell: UICollectionViewCell {
         NSLayoutConstraint(item: indicator, attribute: .width, relatedBy: .equal, toItem: indicator, attribute: .height, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: indicator, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
         
+        /* errorImage */
+        NSLayoutConstraint(item: contentView, attribute: .trailing, relatedBy: .equal, toItem: errorImage, attribute: .trailing, multiplier: 1, constant: 8).isActive = true
+        NSLayoutConstraint(item: errorImage, attribute: .top, relatedBy: .equal, toItem: contentView, attribute: .top, multiplier: 1, constant: 8).isActive = true
+        NSLayoutConstraint(item: errorImage, attribute: .width, relatedBy: .equal, toItem: errorImage, attribute: .height, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: errorImage, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
         
         /* brightnessLabel */
         NSLayoutConstraint(item: brightnessLabel, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: 8).isActive = true
@@ -117,38 +153,33 @@ class NKEffectCell: UICollectionViewCell {
             return
         }
         
-        nameLabel.text = model.mode.name
+        nameLabel.text = model.mode
         
+        self.contentView.alpha = (model.isSet == true) ? 1.0 : 0.7
         
+        if (model.isLoading) {
+            indicator.startAnimating()
+            indicator.isHidden = false
+        } else {
+            indicator.isHidden = true
+            indicator.stopAnimating()
+        }
         
-        disposeBag = nil
-        disposeBag = DisposeBag()
+        if (model.hasError) {
+            model.hasError = false
+            showError()
+        }
+    
         
-        model.isLoadingRelay.asDriver()
-                            .drive(onNext: { [weak self] value in
-                                if value {
-                                    self?.indicator.startAnimating()
-                                    self?.indicator.showAnimated()
-                                } else {
-                                    self?.indicator.hideAnimated(completion: {
-                                        self?.indicator.stopAnimating()
-                                    })
-                                }
-                            })
-                            .disposed(by: disposeBag!)
+    }
+    
+    private func showError() {
         
-        model.isSetRelay.asDriver()
-                            .drive(onNext: { [weak self] value in
-                                self?.iconView.image = value ? #imageLiteral(resourceName: "light.on") : #imageLiteral(resourceName: "light.off")
-                                self?.contentView.alpha = value ? 1.0 : 0.7
-                            })
-                            .disposed(by: disposeBag!)
+        errorImage.showAnimated()
         
-        model.brightnessRelay.asDriver()
-                            .drive(onNext: { [weak self] value in
-                                self?.brightnessLabel.text = "\(Int(value * 100.0))%"
-                            })
-                            .disposed(by: disposeBag!)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { [weak self] in
+            self?.errorImage.hideAnimated {}
+        })
         
     }
     

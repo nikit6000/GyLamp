@@ -5,17 +5,44 @@
   Created by Nikita Tarkhov on 27/06/2019.
   Copyright © 2019 nproject. All rights reserved.
 */
+
+"devError.noConnection" = "An error occured: Lost connection.";
+"devError.noDataReaded" = "An error occured: No data readed.";
+"devError.badDataReceived" = "An error occured: Bad data readed.";
+
+"udpUtil.wrongDataReaded" = "Wrong data readed! Check your firmware";
+"udpUtil.noDataReaded" = "No data readed! Сheck if the device is turned on.";
+"udpUtil.cantReadLocalIp" = "Can`t read local ip adress";
+"udpUtil.noConnection" = "No connection! Please check your local network and device";
+"udpUtil.busy" = "Device is busy";
+
 "scan.title" = "Scan";
 "scan.saved" = "Saved";
 "scan.finded" = "Finded";
+"scan.enterip" = "Enter ip";
+"scan.notFounded" = "No devices found! Try again or add the device manually by pressing the \"+\" button";
+"scan.hereYouCanSeeDevices" = "Here you can see founded devices";
+"scan.ip" = "IP address";
+"scan.connect" = "Connect";
+"scan.cancel" = "Cancel";
+"scan.ad" = "Advertising";
 
-"device.reachable" = "Reachable";
-"device.unreachable" = "Unreachable";
+"device.device" = "Device";
+"device.reachable" = "Online";
+"device.unreachable" = "Offline";
 "device.title" = "Device";
 "device.controls" = "Controls";
 "device.mode" = "Mode";
 "device.error" = "Error";
 "device.unknownError" = "Unknown error";
+"device.on" = "On";
+"device.off" = "Off";
+"device.alarms" = "Alarms";
+"device.wait" = "Wait";
+"device.save" = "Save";
+"device.delete" = "Delete";
+"device.quit" = "Quit";
+"device.stay" = "Stay";
 
 
 "mode.confetti" = "confetti";
@@ -36,3 +63,22 @@
 "mode.snow" = "Snow";
 "mode.matrix" = "Matrix";
 "mode.fireflies" = "Fireflies";
+
+"week.monday" = "Monday";
+"week.tuesday" = "Tuesday";
+"week.wednesday" = "Wednesday";
+"week.thursday" = "Thursdat";
+"week.friday" = "Friday";
+"week.saturday" = "Saturday";
+"week.sunday" = "Sunday";
+"week.mon" = "Mon";
+"week.tue" = "Tue";
+"week.wed" = "Wed";
+"week.thur" = "Thu";
+"week.fri" = "Fri";
+"week.sat" = "Sat";
+"week.sun" = "Sun";
+
+"alarm.dawnOff" = "Turn on dawn";
+"alarm.dawnOn" = "Turn off dawn";
+"alarm.dawnMode" = "Change mode";

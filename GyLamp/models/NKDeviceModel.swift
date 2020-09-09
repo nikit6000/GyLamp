@@ -12,6 +12,8 @@ import RxSwift
 import RxCocoa
 import RxRelay
 import SwiftSocket
+import CoreData
+import SwiftyXML
 
 typealias SelectAction = (_ index: Int) -> ()
 typealias DeslectAction = (_ index: Int) -> ()
@@ -99,347 +101,228 @@ enum NKDeviceMode: Int {
     }
 }
 
-class NKDeviceModel: NSObject, ListDiffable {
+class NKDeviceModel: NKModel, NKDeviceProtocol {
+    
     
     private(set) var ip: String
     private(set) var port: Int32
-    private(set) var effects: [NKEffect]
-    private(set) var mode: BehaviorRelay<NKDeviceMode?> = BehaviorRelay(value: nil)
-    private(set) var isOnRelay: BehaviorRelay<Bool> = BehaviorRelay(value: false)
-    private(set) var errorSubject: PublishSubject<Error> = PublishSubject()
-    
-    private var disposeBag: DisposeBag
-    private var currentMode: NKDeviceMode? = nil {
-        willSet {
-            if currentMode != nil {
-                effects[currentMode!.rawValue].isSet = false
-            }
-            if newValue != nil {
-                effects[newValue!.rawValue].isSet = true
-            }
-        }
-    }
     
     
-    public var isReachable: Bool
-    public var name: String? = nil
-    
+    public var isReachable: Bool =  false
     public var icon: UIImage
+    public var isOn: Bool
+    public var isBusy: Bool = false
     
-    public var isOn: Bool  {
-        didSet {
-            isOnRelay.accept(isOn)
+    public var modelUpdatedSubject = PublishSubject<Void>()
+    
+    private(set) var lampInterpretator: GyverLampInterpretator
+    private(set) var sliders = NKSlidersModel()
+    private(set) var alarms = NKAlarmsModel()
+    private(set) var effects = NKEffects()
+    
+    public var interpretatator: NKDeviceInterpretator {
+        return lampInterpretator as NKDeviceInterpretator
+    }
+    
+    public var name: String? = nil {
+        didSet{
+            update()
         }
     }
     
-    public var cSpeedRelay: BehaviorRelay<CGFloat>? {
-        didSet {
-            guard let observable = cSpeedRelay else {
-                return
-            }
-            observable.flatMapLatest{ [weak self] value -> Observable<Void> in
-                guard let strongSelf = self, let mode = strongSelf.mode.value else {
-                    return .empty()
-                }
-                strongSelf.effects[mode.rawValue].speed = value
-                
-                NKLog(mode.name, "SPD", value)
-                
-                return strongSelf.send(cmd: "SPD", args: String(Int(value * 255)))
-            }
-            .subscribe(onNext: { _ in
-                NKLog("Value SPD setted")
-            }, onError: { [weak self] error in
-                self?.errorSubject.onNext(error)
-            })
-            .disposed(by: disposeBag)
-            
-            
-        }
+    override class var entityName: String {
+        return "Device"
+    }
+
+    override var searchPredicate: NSPredicate {
+        return NSPredicate(format: "ip = %@ AND port = %d", ip, port)
     }
     
-    public var cScaleRelay: BehaviorRelay<CGFloat>? {
+    override var managedObject: NSManagedObject? {
         didSet {
-            guard let observable = cScaleRelay else {
-                return
-            }
-            observable.flatMapLatest{ [weak self] value -> Observable<Void> in
-                guard let strongSelf = self, let mode = strongSelf.mode.value else {
-                    return .empty()
-                }
-                strongSelf.effects[mode.rawValue].scale = value
-                
-                return strongSelf.send(cmd: "SCA", args: String(Int(value * 255)))
-                }
-                .subscribe(onNext: {
-                    NKLog("Value SCA setted")
-                }, onError: { [weak self] error in
-                    self?.errorSubject.onNext(error)
-                })
-                .disposed(by: disposeBag)
+            update()
         }
     }
-   
-    public var cBrightnessRelay: BehaviorRelay<CGFloat>? {
-        didSet {
-            guard let observable = cBrightnessRelay else {
-                return
-            }
-            observable.flatMapLatest{ [weak self] value -> Observable<Void> in
-                guard let strongSelf = self, let mode = strongSelf.mode.value else {
-                    return .empty()
-                }
-                strongSelf.effects[mode.rawValue].brightness = value
-                
-                return strongSelf.send(cmd: "BRI", args: String(Int(value * 255)))
-                }
-                .subscribe(onNext: {
-                    NKLog("Value BRI setted")
-                }, onError: { [weak self] error in
-                    self?.errorSubject.onNext(error)
-                })
-                .disposed(by: disposeBag)
-        }
-    }
-    
     
     init(ip: String, port: Int32 = 8888, isReachable: Bool = false) {
         self.ip = ip
         self.port = port
         self.icon = #imageLiteral(resourceName: "light.off")
         self.isReachable = isReachable
-        self.effects = []
-        self.disposeBag = DisposeBag()
         self.isOn = false
-        for i in 0..<14 {
-            effects.append(NKEffect(mode: NKDeviceMode(rawValue: i)!))
-        }
+        
+        lampInterpretator = GyverLampInterpretator(address: ip, port: port)
         
         super.init()
         
-        self.mode.asObservable()
-                    .subscribeOn(SerialDispatchQueueScheduler(qos: .utility))
-                    .observeOn(MainScheduler.instance)
-                    .flatMapLatest { [weak self] mode -> Observable<Void> in
-                        guard let strongMode = mode, let strongSelf = self else {
-                            return .empty()
-                        }
-                        
-                        let index = strongMode.rawValue
-                        strongSelf.currentMode = mode
-                        
-                        let effect = strongSelf.effects[index]
-                        
-                        effect.isLoading = true
-
-                        
-                        NKLog("Current mode:", strongMode.name)
-                        return strongSelf.setMode(strongMode)
-                    }
-                    .subscribe(onNext: { [weak self] in
-                        guard let strongSelf = self, let mode = strongSelf.currentMode else {
-                            return
-                        }
-                        
-                        let index = mode.rawValue
-                        
-                        
-                        let effect = strongSelf.effects[index]
-                        effect.isLoading = false
-                        
-                        strongSelf.cBrightnessRelay?.accept(effect.brightness)
-                        strongSelf.cSpeedRelay?.accept(effect.speed)
-                        strongSelf.cScaleRelay?.accept(effect.scale)
-                        NKLog("Mode set on device")
-                    }, onError: { [weak self] error in
-                        guard let strongSelf = self, let mode = strongSelf.currentMode else {
-                            return
-                        }
-                        
-                        let index = mode.rawValue
-                        
-                        strongSelf.effects[index].isLoading = false
-                        
-                        self?.errorSubject.onNext(error)
-                    })
-                    .disposed(by: disposeBag)
+        lampInterpretator.model = self
+        makeModels()
+        
+        for i in 0..<18 {
+            let effect = NKDeviceMode(rawValue: i)!
+            
+            let efferctModel = NKEffect(mode: effect.name)
+            
+            efferctModel.deviceModel = self
+            
+            effects.models.append(efferctModel)
+        }
+    }
+    
+    private func makeModels() {
+        
+        if (sliders.sliders.count > 0)
+        {
+            sliders.sliders.removeAll()
+        }
+        
+        if (alarms.alarmModels.count > 0)
+        {
+            alarms.alarmModels.removeAll()
+        }
+        
+        let sliderBRI = NKSliderModel(cmd: "BRI", min: 0.0, max: 255.0, type: .int)
+        let sliderSPD = NKSliderModel(cmd: "SPD", min: 0.0, max: 255.0, type: .int)
+        let sliderSCA = NKSliderModel(cmd: "SCA", min: 0.0, max: 255.0, type: .int)
+        
+        sliderBRI.model = self
+        sliderSPD.model = self
+        sliderSCA.model = self
+        
+        sliders.sliders.append(sliderBRI)
+        sliders.sliders.append(sliderSPD)
+        sliders.sliders.append(sliderSCA)
+        
+        for i in 0..<7 {
+            
+            let alarm = NKAlarmModel(day: WeekDay(rawValue: i)!, h: 0, m: 0)
+            
+            alarm.deviceModel = self
+            
+            alarms.alarmModels.append(alarm)
+        }
+            
     }
     
     override init() {
         fatalError("Use different init")
     }
     
-    
-    func diffIdentifier() -> NSObjectProtocol {
-        return "\(ip):\(port)" as NSObjectProtocol
+    required init?(xml: XML) {
+        
+        
+        guard let xmlns = xml.$xmlns.string, xmlns.starts(with: "urn:schemas-upnp-org") == true else {
+            return nil
+        }
+        
+        let device = xml.device
+        let modes = xml.modes
+        
+        guard let urlBase = xml.URLBase.string, let host = URL(string: urlBase)?.host else {
+            return nil
+        }
+        
+        guard let modelNumber = device.modelNumber.string else {
+            return nil
+        }
+        
+        if (modelNumber != "00004F790C92") {
+            return nil
+        }
+        
+        self.name = device.friendlyName.string
+        self.port = 8888
+        self.ip = host
+        self.icon = #imageLiteral(resourceName: "light.off")
+        self.isOn = false
+        
+        lampInterpretator = GyverLampInterpretator(address: self.ip, port: self.port)
+        
+        super.init()
+        
+        lampInterpretator.model = self
+        makeModels()
+        
+        for name in modes.value {
+            
+            guard let name = name.string else {
+                break
+            }
+            
+            let model = NKEffect(mode: name)
+            model.deviceModel = self
+            
+            effects.models.append(model)
+        }
     }
     
-    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
+    required init?(with managedObject: NSManagedObject) {
+        
+        let ip = managedObject.value(forKey: "ip") as? String
+        let port = managedObject.value(forKey: "port") as? Int32
+        let name = managedObject.value(forKey: "name") as? String
+        let modes = managedObject.value(forKey: "modes") as? [String]
+        
+        guard ip != nil, port != nil else {
+            return nil
+        }
+        
+        self.ip = ip!
+        self.port = port!
+        self.name = name
+        self.icon = #imageLiteral(resourceName: "light.off")
+        self.isOn = false
+        
+        lampInterpretator = GyverLampInterpretator(address: ip!, port: port!)
+        
+        super.init(with: managedObject)
+        
+        lampInterpretator.model = self
+        makeModels()
+        
+        modes?.forEach {
+            let effect = NKEffect(mode: $0)
+            effect.deviceModel = self
+            effects.models.append(effect)
+        }
+    }
+    
+    
+    override func diffIdentifier() -> NSObjectProtocol {
+        return self as NSObjectProtocol
+    }
+    
+    override func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         guard let object = object as? NKDeviceModel else {
             return false
         }
         
         return (self.ip == object.ip) && (self.port == object.port)
     }
-    
-    public func setMode(_ mode: NKDeviceMode) -> Observable<Void> {
-        return Observable.create { [weak self] observer in
-            
-            guard let client = NKUDPUtil.shared.connection else {
-                observer.onError(NKDeviceError.noConnection)
-                return Disposables.create()
-            }
-            
-            guard let answ = client.send(cmd: "EFF", params: "\(mode.rawValue)") else {
-                observer.onError(NKDeviceError.noDataReaded)
-                return Disposables.create()
-            }
-            
-            guard answ.starts(with: "CURR") else {
-                observer.onError(NKDeviceError.badDataReceived)
-                return Disposables.create()
-            }
-            
-            let components = answ.split(separator: " ")
-            
-            if components.count < 2 {
-                observer.onError(NKDeviceError.badDataReceived)
-                return Disposables.create()
-            }
-            
-            let mode: NKDeviceMode? = self?.mode.value
-            
-            for (index, component) in components.suffix(from: 1).enumerated() {
-                
-                guard let value = Int(component) else {
-                    observer.onError(NKDeviceError.badDataReceived)
-                    return Disposables.create()
-                }
-                
-                switch index {
-                case 1:
-                    if let index = mode?.rawValue {
-                        self?.effects[index].brightness = CGFloat(value) / 255.0
-                    }
-                    break
-                case 2:
-                    if let index = mode?.rawValue {
-                        self?.effects[index].speed = CGFloat(value) / 255.0
-                    }
-                    break
-                case 3:
-                    if let index = mode?.rawValue {
-                        self?.effects[index].scale = CGFloat(value) / 255.0
-                    }
-                    break
-                case 4:
-                    self?.isOn = (value != 0)
-                default:
-                    break
-                }
-            }
-            
-            
-            observer.onNext(())
-            observer.onCompleted()
-            
-            return Disposables.create()
-        }
-        
-        
-        
-    }
-    
-    public func send(cmd: String, args: String...) -> Observable<Void> {
-        return Observable.create { observer in
-            
-            guard let client = NKUDPUtil.shared.connection else {
-                observer.onError(NKDeviceError.noConnection)
-                return Disposables.create()
-            }
-            
-            guard let answ = client.sendCmd(cmd, params: args) else {
-                observer.onError(NKDeviceError.noDataReaded)
-                return Disposables.create()
-            }
-            
-            NKLog("Received:", answ)
-            
-            observer.onNext(())
-            observer.onCompleted()
-            
-            return Disposables.create()
-        }.subscribeOn(SerialDispatchQueueScheduler(qos: .utility))
-    }
-    
-    public func read() -> Observable<Void> {
-        return Observable.create { [weak self] observer in
-            
-            guard let client = NKUDPUtil.shared.connection else {
-                observer.onError(NKDeviceError.noConnection)
-                return Disposables.create()
-            }
-            
-            guard let answ = client.send(cmd: "GET") else {
-                observer.onError(NKDeviceError.noDataReaded)
-                return Disposables.create()
-            }
-            
-            NKLog("Received:", answ)
-            
-            let components = answ.split(separator: " ")
-            
-            if components.count < 2 {
-                observer.onError(NKDeviceError.badDataReceived)
-                return Disposables.create()
-            }
-            
-            
-            var mode: NKDeviceMode? = nil
-            
-            for (index, component) in components.suffix(from: 1).enumerated() {
-                
-                guard let value = Int(component) else {
-                    observer.onError(NKDeviceError.badDataReceived)
-                    return Disposables.create()
-                }
-                
-                switch index {
-                case 0:
-                    mode = NKDeviceMode(rawValue: value)
-                    self?.mode.accept(mode)
-                    break
-                case 1:
-                    if let index = mode?.rawValue {
-                        self?.effects[index].brightness = CGFloat(value) / 255.0
-                    }
-                    break
-                case 2:
-                    if let index = mode?.rawValue {
-                        self?.effects[index].speed = CGFloat(value) / 255.0
-                    }
-                    break
-                case 3:
-                    if let index = mode?.rawValue {
-                        self?.effects[index].scale = CGFloat(value) / 255.0
-                    }
-                    break
-                case 4:
-                    self?.isOn = (value != 0)
-                default:
-                    break
-                }
-            }
-            
-            observer.onNext(())
-            observer.onCompleted()
-            
-            return Disposables.create()
-        }
-    }
+
     
     public func copy() -> NKDeviceModel {
         return NKDeviceModel(ip: ip, port: port, isReachable: isReachable)
     }
+    
+    private func update() {
+        
+        guard let managedObject = self.managedObject else {
+            return
+        }
+        
+        let modes = effects.models.map {
+            return $0.mode
+        }
+        
+        managedObject.setValue(ip, forKey: "ip")
+        managedObject.setValue(port, forKey: "port")
+        managedObject.setValue(name, forKey: "name")
+        managedObject.setValue(modes, forKey: "modes")
+    }
 
+    deinit {
+        NKLog("[NKDeviceModel] - deinit")
+    }
 }
+

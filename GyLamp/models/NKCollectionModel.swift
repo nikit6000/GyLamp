@@ -13,8 +13,11 @@ class NKCollectionModel: NSObject, ListDiffable {
     
     var deviceModel: NKDeviceModel
     
-    init(model: NKDeviceModel) {
+    var sectionController: ListSectionController
+    
+    init(model: NKDeviceModel, controller: ListSectionController) {
         self.deviceModel = model
+        self.sectionController = controller
         withUnsafePointer(to: &deviceModel) {
             NKLog("In model pointer", $0)
         }

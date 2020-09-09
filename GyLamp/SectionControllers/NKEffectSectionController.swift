@@ -14,10 +14,8 @@ import RxRelay
 class NKEffectSectionController: ListSectionController {
     
     private var disposeBag = DisposeBag()
-    private var model: NKEffect!
-    
-    public weak var delegate: NKSectionControllerDelegate? = nil
-    
+    private var model: NKEffect?
+        
     override init() {
         super.init()
         
@@ -29,14 +27,7 @@ class NKEffectSectionController: ListSectionController {
             return CGSize(width: 112, height: 112)
         }
         
-        let onScreenCount: CGFloat
-        
-        if UIScreen.main.scale == 3.0 {
-            /* iPhone 7 Plus and above*/
-            onScreenCount = 4.3
-        } else  {
-            onScreenCount = 3.3
-        }
+        let onScreenCount: CGFloat = 3.3
         
         return CGSize(width: size.width / onScreenCount - 8.0, height: size.width / onScreenCount - 8.0)
     }
@@ -55,7 +46,28 @@ class NKEffectSectionController: ListSectionController {
     }
     
     override func didSelectItem(at index: Int) {
-        delegate?.didSelect(controller: self, in: self.section, at: index)
+        
+        guard let model = self.model else {
+            return
+        }
+        
+        if model.isSet {
+            return
+        }
+        
+        model.isLoading = true
+        model.deviceModel?.modelUpdatedSubject.onNext(())
+        
+        model.deviceModel?.interpretatator.set(mode: self.section, onSuccess: nil, onError: { _ in
+            
+            model.isLoading = false
+            model.hasError = true
+            model.deviceModel?.modelUpdatedSubject.onNext(())
+            
+        })
+        
+        
+        
     }
     
     override func didUpdate(to object: Any) {
@@ -65,12 +77,7 @@ class NKEffectSectionController: ListSectionController {
         model = object
     }
     
-    public func update() {
-        guard let cell = cellForItem(at: 0) as? NKEffectCell else {
-            return
-        }
-        cell.model = model
+    deinit {
+        NKLog("[NKEffectSectionController] - deinit")
     }
-    
-    
 }

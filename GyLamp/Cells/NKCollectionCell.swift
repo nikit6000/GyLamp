@@ -14,15 +14,18 @@ import RxSwift
 
 final class NKCollectionCell: UICollectionViewCell {
     
-    lazy var collectionView: UICollectionView = {
+    private var lastTapCell: UICollectionViewCell?
+    
+    lazy var collectionView: NKCollectionView = {
         let layout = ListCollectionViewLayout(stickyHeaders: false, scrollDirection: .horizontal, topContentInset: 0, stretchToEdge: true)
-        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let view = NKCollectionView(frame: .zero, collectionViewLayout: layout)
         view.backgroundColor = .clear
         view.alwaysBounceVertical = false
         view.alwaysBounceHorizontal = true
         view.showsHorizontalScrollIndicator = false
         view.showsVerticalScrollIndicator = false
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.delaysContentTouches = true
         return view
     }()
     
@@ -33,6 +36,11 @@ final class NKCollectionCell: UICollectionViewCell {
         self.contentView.backgroundColor = .clear
         self.contentView.addSubview(collectionView)
         
+        contentView.isUserInteractionEnabled = true
+        
+        self.isUserInteractionEnabled = true
+        
+        self.superview?.isUserInteractionEnabled = true
         self.applyConstraints()
         
     }
@@ -55,5 +63,4 @@ final class NKCollectionCell: UICollectionViewCell {
         layoutIfNeeded()
         
     }
-    
 }

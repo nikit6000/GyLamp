@@ -11,7 +11,7 @@ import UIKit
 extension UIView {
     
     func hideAnimated(completion: @escaping () -> ()) {
-        UIView.animate(withDuration: 0.1, animations: { [weak self] in
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
             self?.alpha = 0.0
         }, completion: { [weak self] _ in
             self?.isHidden = true
@@ -23,9 +23,16 @@ extension UIView {
     func showAnimated() {
         self.alpha = 0.0
         self.isHidden = false
-        UIView.animate(withDuration: 0.1, animations: { [weak self] in
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
             self?.alpha = 1.0
         })
+    }
+    
+    func getSnapshot() -> UIView {
+        self.isHidden = false //The copy not works if is hidden, just prevention
+        let viewCopy = self.snapshotView(afterScreenUpdates: true)
+        self.isHidden = true
+        return viewCopy!
     }
     
 }
