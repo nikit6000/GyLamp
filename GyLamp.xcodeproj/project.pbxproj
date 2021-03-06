@@ -130,6 +130,10 @@
 		CF6D3C7D25EAD8EA000ACD7D /* StringListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6D3C7C25EAD8EA000ACD7D /* StringListModel.swift */; };
 		CF7EE3EE25C9A8F800781060 /* GLPresetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7EE3ED25C9A8F800781060 /* GLPresetModel.swift */; };
 		CF84174425E2D9910030796F /* NKThemedWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF84174325E2D9910030796F /* NKThemedWindow.swift */; };
+		CF97623425F402D800BDB479 /* NKStringConvertableParamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF97623325F402D800BDB479 /* NKStringConvertableParamCell.swift */; };
+		CF97623625F4037600BDB479 /* NKFormattedStringConvertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF97623525F4037600BDB479 /* NKFormattedStringConvertable.swift */; };
+		CF97623825F405D200BDB479 /* NKStringBindableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF97623725F405D200BDB479 /* NKStringBindableCell.swift */; };
+		CF97623A25F407B400BDB479 /* NKStringValuePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF97623925F407B400BDB479 /* NKStringValuePicker.swift */; };
 		CFB3112A25E06B2900CF1221 /* PartialKeyPath+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB3112925E06B2900CF1221 /* PartialKeyPath+extension.swift */; };
 		CFD1696A25D0674300CE9CF3 /* NKFloatValuePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD1696925D0674300CE9CF3 /* NKFloatValuePicker.swift */; };
 		CFD1697125D0744B00CE9CF3 /* CGPoint+Delta.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD1696D25D0744B00CE9CF3 /* CGPoint+Delta.swift */; };
@@ -367,6 +371,10 @@
 		CF6D3C7C25EAD8EA000ACD7D /* StringListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringListModel.swift; sourceTree = "<group>"; };
 		CF7EE3ED25C9A8F800781060 /* GLPresetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLPresetModel.swift; sourceTree = "<group>"; };
 		CF84174325E2D9910030796F /* NKThemedWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKThemedWindow.swift; sourceTree = "<group>"; };
+		CF97623325F402D800BDB479 /* NKStringConvertableParamCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKStringConvertableParamCell.swift; sourceTree = "<group>"; };
+		CF97623525F4037600BDB479 /* NKFormattedStringConvertable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKFormattedStringConvertable.swift; sourceTree = "<group>"; };
+		CF97623725F405D200BDB479 /* NKStringBindableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKStringBindableCell.swift; sourceTree = "<group>"; };
+		CF97623925F407B400BDB479 /* NKStringValuePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKStringValuePicker.swift; sourceTree = "<group>"; };
 		CFB3112925E06B2900CF1221 /* PartialKeyPath+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PartialKeyPath+extension.swift"; sourceTree = "<group>"; };
 		CFD1696925D0674300CE9CF3 /* NKFloatValuePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKFloatValuePicker.swift; sourceTree = "<group>"; };
 		CFD1696D25D0744B00CE9CF3 /* CGPoint+Delta.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Delta.swift"; sourceTree = "<group>"; };
@@ -838,6 +846,7 @@
 			isa = PBXGroup;
 			children = (
 				CF5093CF25DEE6750019195C /* NKListViewable.swift */,
+				CF97623525F4037600BDB479 /* NKFormattedStringConvertable.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -853,6 +862,7 @@
 		CFD1696825D0671400CE9CF3 /* Pickers */ = {
 			isa = PBXGroup;
 			children = (
+				CF97623925F407B400BDB479 /* NKStringValuePicker.swift */,
 				CFD1696925D0674300CE9CF3 /* NKFloatValuePicker.swift */,
 				CF5093D325DEF6150019195C /* NKDiscreteRangePicker.swift */,
 			);
@@ -1176,10 +1186,12 @@
 			isa = PBXGroup;
 			children = (
 				CFD6438A25CF12CA0017B17A /* NKImageBasedTableCell.swift */,
+				CF41515625D87C3D00D08ADF /* NKBoolParamCell.swift */,
+				CF97623325F402D800BDB479 /* NKStringConvertableParamCell.swift */,
 				CFDAA22C25CFFB18000F3B60 /* NKEnumBindableCell.swift */,
 				CFDAA23125D03703000F3B60 /* NKNumericParamBindableCell.swift */,
-				CF41515625D87C3D00D08ADF /* NKBoolParamCell.swift */,
 				CF5093D125DEEACE0019195C /* NKDiscreteRangedCell.swift */,
+				CF97623725F405D200BDB479 /* NKStringBindableCell.swift */,
 			);
 			path = Table;
 			sourceTree = "<group>";
@@ -1434,6 +1446,7 @@
 				11FA208523AD24D5000E813C /* SSDPDiscoverySession.swift in Sources */,
 				11A9F9D9239F8E1D00105536 /* NKProgressCell.swift in Sources */,
 				CF2AC684246AE7C40099CCFA /* NKNativeAdModel.swift in Sources */,
+				CF97623425F402D800BDB479 /* NKStringConvertableParamCell.swift in Sources */,
 				11D3866323492D4C005F38CC /* NKScanDevicesInteractorInputProtocol.swift in Sources */,
 				11AC0F1522C2CC42008442D2 /* UDPClient+extension.swift in Sources */,
 				CFD6436525CEF1B50017B17A /* LocaleInfo.swift in Sources */,
@@ -1469,6 +1482,7 @@
 				CFF3B68825CDD8FF00D2937D /* GLDawnDay.swift in Sources */,
 				CF54FF1825E1AC3A00374F7A /* String+extension.swift in Sources */,
 				11C64C73239F002C00F16085 /* NKDeviceViewProtocols.swift in Sources */,
+				CF97623825F405D200BDB479 /* NKStringBindableCell.swift in Sources */,
 				CFD6436325CEF1B50017B17A /* LocalePickerViewController.swift in Sources */,
 				CFD6436925CEF1B50017B17A /* LocationPickerViewController.swift in Sources */,
 				CFD6435925CEF1B50017B17A /* UIViewController+Extensions.swift in Sources */,
@@ -1527,6 +1541,7 @@
 				11D3866523492D5F005F38CC /* NKScanDevicesInteractorOutputProtocol.swift in Sources */,
 				11FD6E6522C38B0000BABF30 /* NKDeviceController.swift in Sources */,
 				CFD6437D25CEF1B50017B17A /* TextField.swift in Sources */,
+				CF97623625F4037600BDB479 /* NKFormattedStringConvertable.swift in Sources */,
 				11A9F9DE239F995C00105536 /* NKProcressController.swift in Sources */,
 				CFD6438B25CF12CA0017B17A /* NKImageBasedTableCell.swift in Sources */,
 				CF59D7632468716C000CEEA0 /* NKTouchThroughable.swift in Sources */,
@@ -1536,6 +1551,7 @@
 				CFD6435825CEF1B50017B17A /* UIView+Extensions.swift in Sources */,
 				CF2AC6BE246B25D90099CCFA /* GADTMediumTemplateView.m in Sources */,
 				11FD6E6D22C3D2D800BABF30 /* NKEmbededEffectsController.swift in Sources */,
+				CF97623A25F407B400BDB479 /* NKStringValuePicker.swift in Sources */,
 				11FD6E9A22C415D700BABF30 /* NKSliderCell.swift in Sources */,
 				CFE577C525C72D9000523641 /* NKComandBuilder.swift in Sources */,
 				CFD6437925CEF1B50017B17A /* Button.swift in Sources */,

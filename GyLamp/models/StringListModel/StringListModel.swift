@@ -16,7 +16,7 @@ class NKStringListModel: ListDiffable, NKListViewable {
     public var description: String?
     public var icon: UIImage?
     
-    init(value: String, title: String, icon: UIImage? = nil, description: String? = nil) {
+    init(value: String, title: String = "", icon: UIImage? = nil, description: String? = nil) {
         self.value = value
         self.title = title
         self.description = description
@@ -42,3 +42,4 @@ class NKStringListModel: ListDiffable, NKListViewable {
     
     
 }
+

@@ -32,7 +32,7 @@ extension UIAlertController {
     }
 }
 
-final class NKWideRangePickerViewController<T: NKWideRangePickable>: UIViewController, UITextFieldDelegate, Themeable {
+final class NKWideRangePickerViewController<T: NKWideRangePickable>: NKStringValuePicker {
     
     typealias Config = (_ textField: Material.ErrorTextField) -> ()
     typealias Action = (_ textField: Material.ErrorTextField, _ value: T) -> ()
@@ -40,20 +40,6 @@ final class NKWideRangePickerViewController<T: NKWideRangePickable>: UIViewContr
     private var min: T?
     private var max: T?
     private var action: Action?
-    
-    var isThemingEnabled: Bool = true
-    
-    fileprivate lazy var textField: Material.ErrorTextField = {
-        let view = Material.ErrorTextField()
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.delegate = self
-        view.addTarget(self, action: #selector(textFieldHandler), for: .editingChanged)
-        view.textColor = Theme.current.onPrimary
-        
-        return view
-    }()
-    
     
     init(configuration: Config?, action: Action?, min: T? = nil, max: T? = nil) {
         self.min = min
@@ -64,14 +50,7 @@ final class NKWideRangePickerViewController<T: NKWideRangePickable>: UIViewContr
             fatalError("Maximum value must be greater than minimum value")
         }
         
-        super.init(nibName: nil, bundle: nil)
-        view.addSubview(textField)
-        
-        setupConstraints()
-        
-        configuration?(textField)
-        
-        preferredContentSize.height = 80.0
+        super.init(configuration: configuration, action: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -82,32 +61,7 @@ final class NKWideRangePickerViewController<T: NKWideRangePickable>: UIViewContr
         Log("has deinitialized")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // Using perfom(..., afterDelay: 0.0) instead of calling .becomeFirstResponder() directly will fix animation issue
-        textField.perform(#selector(becomeFirstResponder), with: nil, afterDelay: 0.0)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-    
-    private func setupConstraints() {
-        NSLayoutConstraint.activate([
-            textField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -16.0),
-            textField.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            textField.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
-        
-        view.setNeedsLayout()
-        view.layoutIfNeeded()
-    }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         var allowedCharacters = CharacterSet.decimalDigits
         let inputCharacterSet = CharacterSet(charactersIn: string)
@@ -138,12 +92,12 @@ final class NKWideRangePickerViewController<T: NKWideRangePickable>: UIViewContr
         
     }
     
-    @objc private func textFieldHandler() {
-        guard let textValue = textField.text else {
+    override func onTextChanged(_ sender: ErrorTextField) {
+        guard let textValue = sender.text else {
             
-            textField.error = NSLocalizedString("WideRangePicker.error.noValue", comment: "")
-            textField.shake(with: .error)
-            textField.isErrorRevealed = true
+            sender.error = NSLocalizedString("WideRangePicker.error.noValue", comment: "")
+            sender.shake(with: .error)
+            sender.isErrorRevealed = true
             
             return
         }
@@ -169,27 +123,22 @@ final class NKWideRangePickerViewController<T: NKWideRangePickable>: UIViewContr
         } else {
             error = nil
             normalizedValue = numericValue!
-            textField.isErrorRevealed = false
+            sender.isErrorRevealed = false
         }
         
         if error != nil {
-            textField.error = error
+            sender.error = error
         
-            if !textField.isErrorRevealed {
-                textField.isErrorRevealed = true
-                textField.shake(with: .error)
+            if !sender.isErrorRevealed {
+                sender.isErrorRevealed = true
+                sender.shake(with: .error)
             }
         } else {
-            action?(textField, normalizedValue!)
-            textField.isErrorRevealed = false
+            action?(sender, normalizedValue!)
+            sender.isErrorRevealed = false
         }
-        
-        
     }
     
-    func apply(theme: Theme) {
-        textField.textColor = theme.onPrimary
-    }
 }
 
 

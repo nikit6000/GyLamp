@@ -154,6 +154,30 @@ class NKEnumICSectionController: ListBindingSectionController<ListDiffable>, Lis
 
     }
     
+    private func showStringPicker(in alert: UIAlertController, for model: NKStringListModel, at index: Int) {
+        
+        let configuration: NKWideRangePickerViewController.Config = { textField in
+            textField.text = model.value
+            textField.placeholder = "NKEnumICSectionController.alert.textEdit.placeholder".localized
+            textField.isPlaceholderAnimated = true
+            textField.keyboardType = .numberPad
+        }
+        
+        alert.title = model.title
+        alert.message = model.description
+        
+        alert.addStringPicker(configuration: configuration) { [weak self] _, value in
+            model.value = value
+            self?.reload()
+        }
+        
+        alert.addAction(title: "NKEnumICSectionController.alert.done".localized, style: .cancel, isEnabled: true, handler: { [weak self] alert in
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.sectionController?(strongSelf, didUpdate: model.value, at: index)
+        })
+
+    }
+    
     private func reload() {
         self.collectionContext?.performBatch(animated: false, updates: { [weak self] in
             guard let strongSelf = self else { return }
@@ -212,6 +236,8 @@ class NKEnumICSectionController: ListBindingSectionController<ListDiffable>, Lis
                 models.append(NKDiscreteRangedModel(from: value as! NKDiscreteRangedModel<UInt32>, title: titles[i], description: description, icon: icon))
             case is NKDiscreteRangedModel<Int16>:
                 models.append(NKDiscreteRangedModel(from: value as! NKDiscreteRangedModel<Int16>, title: titles[i], description: description, icon: icon))
+            case is String:
+                models.append(NKStringListModel(value: value as! String, title: titles[i], icon: icon, description: description))
             case is Bool:
                 models.append(NKBoolListMoldel(value: value as! Bool, title: titles[i], icon: icon, description: description))
             default:
@@ -259,6 +285,8 @@ class NKEnumICSectionController: ListBindingSectionController<ListDiffable>, Lis
             cellToReturn = collectionContext?.dequeueReusableCell(of: NKDiscreteRangedCell<UInt32>.self, for: self, at: index) as! NKDiscreteRangedCell<UInt32>
         case is NKDiscreteRangedModel<Int16>:
             cellToReturn = collectionContext?.dequeueReusableCell(of: NKDiscreteRangedCell<Int16>.self, for: self, at: index) as! NKDiscreteRangedCell<Int16>
+        case is NKStringListModel:
+            cellToReturn = collectionContext?.dequeueReusableCell(of: NKStringBindableCell.self, for: self, at: index) as! NKStringBindableCell
         default:
             fatalError("No cell for given model!")
         }
