@@ -83,19 +83,7 @@ class NKDeviceController: ListSectionController {
                 guard let strongSelf = self else {
                     return
                 }
-                
-                let worker = NKCoreDataWorker.shared
-                
-                worker.rx.delete(model: strongSelf.model)
-                    .subscribeOn(SerialDispatchQueueScheduler(qos: .utility))
-                    .observeOn(MainScheduler.instance)
-                    .subscribe(onError: { _ in
-                        actionView.dismiss()
-                    }, onCompleted: {
-                        actionView.dismiss(hideSnapshot: true)
-                        
-                    })
-                    .disposed(by: strongSelf.disposeBag)
+
                 
             }
         } else {
@@ -104,18 +92,6 @@ class NKDeviceController: ListSectionController {
                 guard let strongSelf = self else {
                     return
                 }
-                
-                let worker = NKCoreDataWorker.shared
-                
-                worker.rx.save(model: strongSelf.model)
-                    .subscribeOn(SerialDispatchQueueScheduler(qos: .utility))
-                    .observeOn(MainScheduler.instance)
-                    .subscribe(onError: { _ in
-                        actionView.dismiss()
-                    }, onCompleted: {
-                        actionView.dismiss()
-                    })
-                    .disposed(by: strongSelf.disposeBag)
                 
             }
         }

@@ -78,26 +78,7 @@ extension NKLampSliderController: NKVerticalSliderCellDelegate {
         }
         
         model.value = value
-        
-        model.model?.interpretatator.set(slider: model, onSuccess: {
-            NKLog("[NKLampSliderController] success")
-        }, onError: { error in
-            
-            guard let error = error as? NKUDPUtilError else {
-                return
-            }
-            
-            switch error {
-                case .busy:
-                    break
-                default:
-                    break
-            }
-            
-        })
-        //NKLog("[SECTION \(self.section)]:", value)
-        
-        
+
         
     }
     

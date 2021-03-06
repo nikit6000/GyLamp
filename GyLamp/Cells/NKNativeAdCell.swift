@@ -21,7 +21,7 @@ class NKNativeAdCell: UICollectionViewCell {
         
     }()
     
-    public var nativeAd: GADUnifiedNativeAd? {
+    public var nativeAd: GADNativeAd? {
         set {
             template.nativeAd = newValue
         }

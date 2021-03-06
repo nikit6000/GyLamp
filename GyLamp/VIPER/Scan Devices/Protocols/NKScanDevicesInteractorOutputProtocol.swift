@@ -18,4 +18,5 @@ protocol NKScanDevicesInteractorOutputProtocol: class {
     
     func needUpdate(sectionFor item: ListDiffable)
     func manualModelReady(model: NKDeviceModel)
+    func presentGyverLampBeta()
 }

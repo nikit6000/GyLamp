@@ -7,17 +7,19 @@
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
+import Material
+import IGListKit
 
-class NKSectionCell: UICollectionViewCell {
+class NKSectionCell: UICollectionViewCell, Themeable {
+    
+    var isThemingEnabled: Bool = true
     
     private lazy var titleLabel: UILabel = {
         
         let view = UILabel(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = UIFont.boldSystemFont(ofSize: 25)
-        view.textColor = .white
+        view.textColor = Theme.current.onBackground
         
         return view
     }()
@@ -92,6 +94,10 @@ class NKSectionCell: UICollectionViewCell {
         self.contentView.layoutIfNeeded()
     }
     
+    func apply(theme: Theme) {
+        titleLabel.textColor = theme.onBackground
+    }
+    
     /*override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         setNeedsLayout()
         layoutIfNeeded()
@@ -102,5 +108,15 @@ class NKSectionCell: UICollectionViewCell {
         layoutAttributes.frame = newFrame
         return layoutAttributes
     }*/
+    
+}
+
+extension NKSectionCell: ListBindable {
+    
+    func bindViewModel(_ viewModel: Any) {
+        guard let model = viewModel as? NKSectionModel else { return }
+        
+        self.model = model
+    }
     
 }

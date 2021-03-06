@@ -82,3 +82,85 @@
 "alarm.dawnOff" = "Turn on dawn";
 "alarm.dawnOn" = "Turn off dawn";
 "alarm.dawnMode" = "Change mode";
+
+
+// MARK: - GyverLampBeta Strings
+
+"gyverLampBetaView.settings" = "Settings";
+
+"gyverLampBetaView.general" = "General";
+"gyverLampBetaView.general.timeZone" = "Time zone";
+"gyverLampBetaView.general.ntpServer" = "NTP server";
+"gyverLampBetaView.general.cityId" = "City ID";
+"gyverLampBetaView.general.adcMode" = "ADC mode";
+"gyverLampBetaView.general.lampType" = "Lamp type";
+"gyverLampBetaView.general.maxCurrent" = "Max current";
+"gyverLampBetaView.general.workSince" = "Work since";
+"gyverLampBetaView.general.workUntil" = "Work until";
+
+"gyverLampBetaView.general.timeZone.description" = "Select Your time zone";
+"gyverLampBetaView.general.ntpServer.description" = "Select NTP server";
+"gyverLampBetaView.general.adcMode.description" = "Select ADC mode";
+"gyverLampBetaView.general.lampType.description" = "Select lamp type";
+"gyverLampBetaView.general.maxCurrent.description" = "Enter maximum current consumption";
+"gyverLampBetaView.general.workSince.description" = "Select the time from which the lamp will turn on";
+"gyverLampBetaView.general.workUntil.description" = "Select the time until which the lamp will work";
+
+"gyverLampBetaView.brightness" = "Brightnes";
+
+"gyverLampBetaView.brightness.current" = "Current";
+"gyverLampBetaView.brightness.min" = "Minimal";
+"gyverLampBetaView.brightness.max" = "Maximum";
+
+"gyverLampBetaView.brightness.current.description" = "Set current brightness level";
+"gyverLampBetaView.brightness.min.description" = "Set maximum brightness level";
+"gyverLampBetaView.brightness.max.description" = "Set minimum brightness level";
+
+"gyverLampBetaView.presets" = "Presets";
+
+"gyverLampBetaView.changeMode" = "Change mode";
+"gyverLampBetaView.randomMode" = "Random";
+"gyverLampBetaView.changePeriod" = "Change period";
+"gyverLampBetaView.changeMode.length" = "Length";
+"gyverLampBetaView.changeMode.width" = "Width";
+
+"gyverLampBetaView.changeMode.description" = "Select preset change mode";
+"gyverLampBetaView.randomMode.description" = "Random mode";
+"gyverLampBetaView.changePeriod.description" = "Enter change period";
+"gyverLampBetaView.changeMode.length.description" = "Enter length of LED matrix";
+"gyverLampBetaView.changeMode.width.description" = "Enter width of LED matrix";
+
+"gyverLampBetaView.lamp" = "Lamp";
+
+// MARK: - GLSettingsModel
+
+"GLSettingsModel.NPTServer.1.name" = "Server 1";
+"GLSettingsModel.NPTServer.2.name" = "Server 2";
+"GLSettingsModel.NPTServer.3.name" = "Server 3";
+"GLSettingsModel.NPTServer.4.name" = "Server 4";
+"GLSettingsModel.NPTServer.5.name" = "Server 5";
+
+"GLSettingsModel.ADCMode.1.name" = "None";
+"GLSettingsModel.ADCMode.2.name" = "Brightness";
+"GLSettingsModel.ADCMode.3.name" = "Lightmusic";
+
+"GLSettingsModel.PresetChangeMode.0.name" = "Manual";
+"GLSettingsModel.PresetChangeMode.1.name" = "Auto";
+
+"GLSettingsModel.LampType.1.name" = "Strip";
+"GLSettingsModel.LampType.2.name" = "Zig-Zag";
+"GLSettingsModel.LampType.3.name" = "Spiral";
+
+"GLSettingsModel.changePeriod.fmt" = "%d min";
+
+// MARK: - NKEnumICSectionController
+
+"NKEnumICSectionController.alert.done" = "Done";
+"NKEnumICSectionController.alert.textEdit.placeholder" = "Enter value";
+
+// MARK: - NKDiscreteRangePicker
+
+"WideRangePicker.error.noValue" = "The field must not be empty!";
+"WideRangePicker.error.cantConvert" = "The entered value is out of range";
+"WideRangePicker.error.lower.fmt" = "Value cannot be less than %@";
+"WideRangePicker.error.greater.fmt" = "Value cannot be greater than %@";

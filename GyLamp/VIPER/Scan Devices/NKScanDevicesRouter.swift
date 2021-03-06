@@ -32,28 +32,24 @@ class NKScanDevicesRouter: NKScanDevicesRouterProtocol {
     
     
     func pushView(device: NKDeviceModel) {
-        
         let deviceController = NKDeviceView(device: device)
-        
+        presentView(view: deviceController)
+    }
+    
+    func presentGyverLampBetaView() {
+        let gyverLampBetaView = NKGyverLampBetaView()
+        presentView(view: gyverLampBetaView)
+    }
+    
+    private func presentView(view controller: UIViewController) {
         if #available(iOS 12.0, *) {
-        
             let navigationController = UINavigationController(navigationBarClass: NKNavigationBar.self, toolbarClass: nil)
-            
             navigationController.modalPresentationStyle = .formSheet
-
-            navigationController.viewControllers = [deviceController]
-            
+            navigationController.viewControllers = [controller]
             view?.present(navigationController, animated: true, completion: nil)
         } else {
-            
-            view?.navigationController?.pushViewController(deviceController, animated: true)
-            
+            view?.navigationController?.pushViewController(controller, animated: true)
         }
-        
-       
-        
-        //view?.navigationController?.pushViewController(deviceController, animated: true)
-        
     }
     
     

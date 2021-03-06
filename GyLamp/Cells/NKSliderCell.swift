@@ -6,8 +6,7 @@
 //  Copyright © 2019 nproject. All rights reserved.
 //
 
-import UIKit
-import HGCircularSlider
+/*import UIKit
 import RxSwift
 import RxRelay
 
@@ -129,3 +128,4 @@ class NKSliderCell: UICollectionViewCell {
     }
 }
 
+*/

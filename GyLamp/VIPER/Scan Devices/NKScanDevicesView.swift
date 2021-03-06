@@ -57,8 +57,6 @@ class NKScanDeviceView: NKBlurViewController, NKScanDevicesViewProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         self.image = #imageLiteral(resourceName: "bg")
         self.effect = UIBlurEffect(style: .dark)
         self.navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: addButton), UIBarButtonItem(customView: scanButton)]
@@ -69,6 +67,7 @@ class NKScanDeviceView: NKBlurViewController, NKScanDevicesViewProtocol {
         NKScanDevicesRouter.createScanModule(ref: self)
 
         presenter?.viewDidLoad()
+        
     }
     
     

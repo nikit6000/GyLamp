@@ -6,8 +6,7 @@
 //  Copyright © 2020 nproject. All rights reserved.
 //
 
-import Foundation
-import SwiftSocket
+/*import Foundation
 import RxSwift
 import RxRelay
 
@@ -226,3 +225,4 @@ class NKDeviceInterpretator: NSObject {
     
     
 }
+*/

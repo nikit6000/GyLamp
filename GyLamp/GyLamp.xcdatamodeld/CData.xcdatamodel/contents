@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="V1.3">
+    <entity name="GLDawnDay" representedClassName="GLDawnDay" syncable="YES">
+        <attribute name="day" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="6" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isEnabled" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="timeInSeconds" optional="YES" attributeType="Integer 32" minValueString="0" maxValueString="86340" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="GLDawnSettings" representedClassName="GLDawnSettings" syncable="YES">
+        <attribute name="brightness" optional="YES" attributeType="Float" minValueString="0" maxValueString="1" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="minutesUntilDawn" optional="YES" attributeType="Integer 16" minValueString="5" maxValueString="60" defaultValueString="5" usesScalarValueType="YES"/>
+        <relationship name="days" toMany="YES" minCount="7" maxCount="7" deletionRule="Nullify" destinationEntity="GLDawnDay"/>
+    </entity>
+    <entity name="GLPresetModel" representedClassName="GLPresetModel" syncable="YES">
+        <attribute name="centered" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="color" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="customBrightness" optional="YES" attributeType="Float" minValueString="0" maxValueString="1" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="effectType" optional="YES" attributeType="Integer 16" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="iconId" optional="YES" attributeType="Integer 16" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="lowBrightnessEnabled" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="maxSignal" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="minSignal" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="palette" optional="YES" attributeType="Integer 16" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="random" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="scale" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="soundReaction" optional="YES" attributeType="Integer 16" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="soundType" optional="YES" attributeType="Integer 16" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="speed" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="GLSettingsModel" representedClassName="GLSettingsModel" syncable="YES">
+        <attribute name="adcMode" optional="YES" attributeType="Integer 16" minValueString="1" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="brightness" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="changePeriod" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="lampType" optional="YES" attributeType="Integer 16" minValueString="1" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="length" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="maxBrigtness" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="maxCurrent" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="minBrightness" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="modeChange" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="ntpServer" optional="YES" attributeType="Integer 16" minValueString="0" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="random" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="timeZone" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="width" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="workTimeSince" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="workTimeUntil" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="GyverLampAlpha" representedClassName="GyverLampAlpha" syncable="YES" codeGenerationType="class">
+        <attribute name="ip" optional="YES" attributeType="String"/>
+        <attribute name="modes" optional="YES" attributeType="Transformable"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="port" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <elements>
+        <element name="GLDawnDay" positionX="-259.9375" positionY="4.921875" width="128" height="88"/>
+        <element name="GLDawnSettings" positionX="-480.01953125" positionY="-30.2421875" width="125.4765625" height="88"/>
+        <element name="GLPresetModel" positionX="-616.7734375" positionY="-32.515625" width="128" height="283"/>
+        <element name="GLSettingsModel" positionX="-761.71875" positionY="-32.6484375" width="128" height="268"/>
+        <element name="GyverLampAlpha" positionX="-900.1953125" positionY="-31.171875" width="128" height="103"/>
+    </elements>
+</model>

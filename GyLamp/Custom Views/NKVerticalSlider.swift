@@ -8,39 +8,101 @@
 
 import UIKit
 
+enum NKVerticalSliderState: CGFloat {
+    case upper = 1.0
+    case middle = 0.5
+    case lower = 0.1
+    case `default` = 0.0
+    
+    static func from(value: CGFloat) -> NKVerticalSliderState {
+        if (value >= 1.0) {
+            return .upper
+        } else if (value >= 0.5) {
+            return .middle
+        } else if (value == 0.0) {
+            return .default
+        } else {
+            return .lower
+        }
+    }
+}
+
 class NKVerticalSlider: UIControl {
     
     private var lastTapLocation: CGPoint
     private var oldValue: CGFloat
     private var isVerticalPan = true
     
+    private var barHeightConstraint: NSLayoutConstraint!
     
-    private var sliderLayer: NKSliderLayer {
-        return layer as! NKSliderLayer
-    }
+    private lazy var impactGenerator: UIImpactFeedbackGenerator = {
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        return generator
+    }()
     
-    override class var layerClass: AnyClass {
-        return NKSliderLayer.self
-    }
+    private lazy var effectView: UIVisualEffectView = {
+        let view = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isUserInteractionEnabled = false
+        
+        view.contentView.addSubview(barView)
+        
+        return view
+    }()
+    
+    private lazy var barView: UIView = {
+        let view = UIView()
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isUserInteractionEnabled = false
+        
+        view.alpha = 0.9
+        view.backgroundColor = .white
+        
+        return view
+    }()
+    
+    public var valueState: NKVerticalSliderState
     
     public var value: CGFloat {
         didSet {
             
-            if value > 1.0 {
-                sliderLayer.value = 1.0
-            } else if value < 0.0 {
-                sliderLayer.value = 0.0
+            let normalizedValue: CGFloat
+            
+            if value >= 1.0 && oldValue < 1.0 {
+                normalizedValue = 1.0
+                impactGenerator.impactOccurred()
+            } else if value <= 0.0 && oldValue > 0.0 {
+                normalizedValue = 0.0
+                impactGenerator.impactOccurred()
             } else {
-                sliderLayer.value = value
+                normalizedValue = value
             }
             
-            sliderLayer.setNeedsDisplay()
+            
+            self.setNeedsLayout()
+            self.layoutIfNeeded()
+            
+            valueState = .from(value: value)
         }
     }
     
-    public var sliderColor: UIColor {
-        didSet {
-            self.setNeedsDisplay()
+    public var sliderOpacity: CGFloat {
+        get {
+            barView.alpha
+        }
+        set {
+            barView.alpha = newValue
+        }
+    }
+    
+    public var sliderColor: UIColor? {
+        get {
+            barView.backgroundColor
+        }
+        set {
+            barView.backgroundColor = newValue
         }
     }
     
@@ -48,31 +110,23 @@ class NKVerticalSlider: UIControl {
         self.lastTapLocation = .zero
         self.value = 0.0
         self.oldValue = 0.0
-        self.sliderColor = .white
+        self.valueState = .default
         
         super.init(frame: frame)
+
+        self.isUserInteractionEnabled = true
+        self.isExclusiveTouch = true
+        self.isMultipleTouchEnabled = false
+        self.backgroundColor = .clear
+        self.insertSubview(effectView, at: 0)
         
-        
-        
-        sliderLayer.setNeedsDisplay()
+        setupConstarints()
         
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    /*override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-     
-     guard let panGesture = gestureRecognizer as? UIPanGestureRecognizer else {
-     return super.gestureRecognizerShouldBegin(gestureRecognizer)
-     }
-     
-     let velocity = panGesture.velocity(in: self)
-     NKLog(velocity)
-     
-     return abs(velocity.y) > abs(velocity.x)
-     }*/
     
     override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         
@@ -82,13 +136,17 @@ class NKVerticalSlider: UIControl {
             return result
         }
         
+        sendActions(for: .touchDown)
+        
         lastTapLocation = touch.location(in: self)
         oldValue = value
+        
         sendActions(for: .touchDown)
         return result
     }
     
     override func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        
         let result = super.continueTracking(touch, with: event)
         
         let deltaY = lastTapLocation.y - touch.location(in: self).y
@@ -105,10 +163,9 @@ class NKVerticalSlider: UIControl {
         } else {
             value = newValue
         }
-        
+       
         sendActions(for: .valueChanged)
-        
-        //NKLog(value)
+ 
         return result
     }
     
@@ -117,53 +174,32 @@ class NKVerticalSlider: UIControl {
         sendActions(for: .touchUpInside)
     }
     
-    override func action(for layer: CALayer, forKey event: String) -> CAAction? {
-        if event == #keyPath(NKSliderLayer.value),
-            let action = super.action(for: layer, forKey: #keyPath(backgroundColor)) as? CAAnimation,
-            let animation: CABasicAnimation = (action.copy() as? CABasicAnimation) {
-            
-            animation.keyPath = #keyPath(NKSliderLayer.value)
-            animation.fromValue = sliderLayer.value
-            animation.toValue = value
-            self.layer.add(animation, forKey: #keyPath(NKSliderLayer.value))
-            
-            return animation
-        }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        effectView.squircle()
+        barHeightConstraint.constant = value * effectView.frame.height
+    }
+    
+    private func setupConstarints() {
         
-        return super.action(for: layer, forKey: event)
+        barHeightConstraint = barView.heightAnchor.constraint(equalToConstant: 0.0)
+        
+        NSLayoutConstraint.activate([
+            effectView.widthAnchor.constraint(equalTo: self.widthAnchor),
+            effectView.heightAnchor.constraint(equalTo: self.heightAnchor),
+            effectView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            effectView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            
+            barView.bottomAnchor.constraint(equalTo: effectView.contentView.bottomAnchor),
+            barView.leadingAnchor.constraint(equalTo: effectView.contentView.leadingAnchor),
+            barView.trailingAnchor.constraint(equalTo: effectView.contentView.trailingAnchor),
+            barHeightConstraint
+        ])
+        
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
+        
     }
     
 }
 
-fileprivate class NKSliderLayer: CALayer {
-    @NSManaged var value: CGFloat
-    
-    override class func needsDisplay(forKey key: String) -> Bool {
-        if key == #keyPath(value) {
-            return true
-        }
-        return super.needsDisplay(forKey: key)
-    }
-    
-    override func draw(in ctx: CGContext) {
-        super.draw(in: ctx)
-        
-        UIGraphicsPushContext(ctx)
-        
-        
-        
-        let height = value * self.frame.height
-        let width = self.frame.width
-        let y = self.frame.height - height
-        
-        let frame = CGRect(x: 0, y: y, width: width, height: height)
-        
-        UIColor.black.setFill()
-        ctx.fill(self.bounds)
-        
-        UIColor.white.setFill()
-        ctx.fill(frame)
-        
-        UIGraphicsPopContext()
-    }
-}

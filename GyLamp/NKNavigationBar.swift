@@ -20,10 +20,17 @@ class NKNavigationBar: UINavigationBar {
     
     private var customHeight : CGFloat = 44
     
+    public var isBarVisible: Bool {
+        didSet {
+            self.shadowImage = isBarVisible ? nil : UIImage()
+            self.setBackgroundImage(self.shadowImage, for: .default)
+        }
+    }
+    
     lazy private var effectView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        self.titleGradientlayer.locations = [0,1]
+        self.titleGradientlayer.locations = [0, 1]
         self.titleGradientlayer.colors = [UIColor.black.withAlphaComponent(0.4).cgColor, UIColor.clear.cgColor]
         view.layer.addSublayer(self.titleGradientlayer)
         return view
@@ -37,11 +44,9 @@ class NKNavigationBar: UINavigationBar {
     }()
     
     override init(frame: CGRect) {
+        isBarVisible = true
         super.init(frame: frame)
         self.isTranslucent = true
-        self.shadowImage = UIImage()
-        self.setBackgroundImage(UIImage(), for: .default)
-
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -54,5 +59,6 @@ class NKNavigationBar: UINavigationBar {
         barGradient.frame = CGRect(x: 0, y: -statusBarHeight, width: self.frame.width, height: self.frame.height + statusBarHeight)
         self.layer.insertSublayer(barGradient, at: 1)
     }
+    
 }
 

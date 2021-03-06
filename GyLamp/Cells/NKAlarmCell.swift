@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import HGCircularSlider
 import RxSwift
 import RxRelay
 

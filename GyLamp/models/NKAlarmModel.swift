@@ -11,7 +11,7 @@ import IGListKit
 import RxSwift
 import RxRelay
 
-enum WeekDay: Int {
+@objc public enum WeekDay: Int {
     case Monday = 0, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
     
     func getDayInNumber() -> Int {

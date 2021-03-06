@@ -13,6 +13,5 @@ import RxSwift
 protocol NKDeviceProtocol: class {
     
     var modelUpdatedSubject: PublishSubject<Void> { get }
-    var interpretatator: NKDeviceInterpretator { get }
     
 }

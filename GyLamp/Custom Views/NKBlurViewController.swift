@@ -35,6 +35,7 @@ class NKBlurViewController : UIViewController {
         let view = UIVisualEffectView()
         
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.contentView.addSubview(collectionView)
         return view
         
     }()
@@ -46,13 +47,12 @@ class NKBlurViewController : UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.backgroundColor = .clear
-        
+        view.isUserInteractionEnabled = true
+        view.addSubview(effectView)
         return view
         
     }()
-    
-    
-    
+
     private(set) lazy var collectionView: NKCollectionView = {
         
         let layout = ListCollectionViewLayout(stickyHeaders: false, scrollDirection: .vertical, topContentInset: 0, stretchToEdge: true)
@@ -67,44 +67,56 @@ class NKBlurViewController : UIViewController {
         
     }()
     
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
     
     override func loadView() {
         super.loadView()
-        
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+
         view.addSubview(imageView)
-        view.addSubview(effectView)
-        view.addSubview(collectionView)
         
         setupConstraints()
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+    }
+    
     func setupConstraints() {
         
-        /* imageView */
         
-        NSLayoutConstraint(item: imageView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: view!, attribute: .trailing, relatedBy: .equal, toItem: imageView, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: imageView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: view!, attribute: .bottom, relatedBy: .equal, toItem: imageView, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
-        
-        /* effectView */
-        
-        NSLayoutConstraint(item: effectView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: view!, attribute: .trailing, relatedBy: .equal, toItem: effectView, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: effectView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: view!, attribute: .bottom, relatedBy: .equal, toItem: effectView, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
-        
-        /* collectionView */
-        
-        NSLayoutConstraint(item: collectionView, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1.0, constant: 0.0).isActive = true
-        NSLayoutConstraint(item: collectionView, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1.0, constant: 0.0).isActive = true
-        NSLayoutConstraint(item: self.view!, attribute: .trailing, relatedBy: .equal, toItem: collectionView, attribute: .trailing, multiplier: 1.0, constant: 0.0).isActive = true
-        NSLayoutConstraint(item: self.view!, attribute: .bottom, relatedBy: .equal, toItem: collectionView, attribute: .bottom, multiplier: 1.0, constant: 0.0).isActive = true
+        NSLayoutConstraint.activate([
+
+            
+            effectView.centerYAnchor.constraint(equalTo: imageView.centerYAnchor),
+            effectView.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
+            effectView.widthAnchor.constraint(equalTo: imageView.widthAnchor),
+            effectView.heightAnchor.constraint(equalTo: imageView.heightAnchor),
+            
+            collectionView.centerYAnchor.constraint(equalTo: effectView.contentView.centerYAnchor),
+            collectionView.centerXAnchor.constraint(equalTo: effectView.contentView.centerXAnchor),
+            collectionView.widthAnchor.constraint(equalTo: effectView.contentView.widthAnchor),
+            collectionView.heightAnchor.constraint(equalTo: effectView.contentView.heightAnchor),
+
+            imageView.topAnchor.constraint(equalTo: view.topAnchor),
+            imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+        ])
         
         view.setNeedsLayout()
         view.layoutIfNeeded()
@@ -112,4 +124,10 @@ class NKBlurViewController : UIViewController {
         
     }
     
+}
+
+extension NKBlurViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+       
+    }
 }

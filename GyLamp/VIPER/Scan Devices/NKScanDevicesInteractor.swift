@@ -17,7 +17,7 @@ class NKScanDevicesInteractor: NKScanDevicesInteractorInputProtocol {
     private var storedHeaderModel = NKSectionModel(style: .bottom, title: NSLocalizedString("scan.saved", comment: ""))
     private var findedHeaderModel = NKSectionModel(style: .bottom, title: NSLocalizedString("scan.finded", comment: ""))
     private var adHeaderModel = NKSectionModel(style: .bottom, title: NSLocalizedString("scan.ad", comment: ""))
-    private var adModel = NKNativeAdModel(ad: "ca-app-pub-3597227208792915/9854007081")
+    //private var adModel = NKNativeAdModel(ad: "ca-app-pub-3597227208792915/9854007081")
     
     private var storedDevicesSection: [NKDeviceModel] = []
     private var findedDevicesSection: [NKDeviceModel] = []
@@ -27,88 +27,7 @@ class NKScanDevicesInteractor: NKScanDevicesInteractorInputProtocol {
     var presenter: NKScanDevicesInteractorOutputProtocol?
     
     func subscribe() {
-        
-        let worker = NKCoreDataWorker.shared
-        let udp = NKUDPUtil.shared
-        
-        worker.modelChangeSubject
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { [weak self] model in
-                self?.modelSaveStateChanged(model: model)
-            }, onError: { [weak self] error in
-                self?.presenter?.errorHandler(error)
-            })
-            .disposed(by: disposeBag)
-        
-        udp.deviceSubject
-            .filter { [weak self] model in
-                
-                guard let model = model else {
-                    return true
-                }
-                
-                let index = self?.storedDevicesSection.firstIndex {
-                    return model.isEqual(toDiffableObject: $0)
-                }
-                
-                if index != nil {
-                    self?.storedDevicesSection[index!].isReachable = true
-                    DispatchQueue.main.async {
-                        
-                        guard let strongSelf = self, let index = index else {
-                            return
-                        }
-                        
-                        strongSelf.presenter?.needUpdate(sectionFor: strongSelf.storedDevicesSection[index])
-                    }
-                    
-                    return false
-                }
-                
-                return true
-            }
-            .observeOn(MainScheduler.instance)
-            .subscribeOn(SerialDispatchQueueScheduler(qos: .background))
-            .subscribe(onNext: { [weak self] model in
-                
-                guard let strongSelf = self else {
-                    return
-                }
-                
-                guard let model = model else {
-                    
-                    strongSelf.findedHeaderModel.isLoading = false
-                    strongSelf.presenter?.needUpdate(sectionFor: strongSelf.findedHeaderModel)
-                    strongSelf.isFirstSearch = false
-                    strongSelf.dataReady()
-                    
-                    return
-                }
-                
-                model.isReachable = true
-                self?.findedDevicesSection.append(model)
-                self?.dataReady()
-            }, onError: { [weak self] error in
-                guard let strongSelf = self else {
-                    return
-                }
-                
-                strongSelf.presenter?.errorHandler(error)
-                strongSelf.findedHeaderModel.isLoading = false
-                strongSelf.presenter?.needUpdate(sectionFor: strongSelf.findedHeaderModel)
-            }, onCompleted: { [weak self] in
-                guard let strongSelf = self else {
-                   return
-                }
 
-                strongSelf.findedHeaderModel.isLoading = false
-                strongSelf.presenter?.needUpdate(sectionFor: strongSelf.findedHeaderModel)
-                strongSelf.isFirstSearch = false
-                strongSelf.dataReady()
-            })
-            .disposed(by: disposeBag)
-    
-        
     }
     
     func getData() {
@@ -116,25 +35,7 @@ class NKScanDevicesInteractor: NKScanDevicesInteractorInputProtocol {
     }
     
     func getSavedDevices() {
-    
-        let worker = NKCoreDataWorker.shared
-        
-        isFirstSearch = true
-        
-        worker.rx.loadModels(of: NKDeviceModel.self)
-            .subscribeOn(SerialDispatchQueueScheduler(qos: .background))
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { [weak self] model in
-                self?.storedDevicesSection.append(model)
-            }, onError: { [weak self] error in
-                self?.presenter?.errorHandler(error)
-                self?.scanForDevices()
-            }, onCompleted: { [weak self] in
-                self?.dataReady()
-                self?.scanForDevices()
-            })
-            .disposed(by: disposeBag)
-        
+
     }
     
     func scanForDevices() {
@@ -160,8 +61,8 @@ class NKScanDevicesInteractor: NKScanDevicesInteractorInputProtocol {
         
         var data: [ListDiffable] = []
         
-        data.append(adHeaderModel)
-        data.append(adModel)
+        //data.append(adHeaderModel)
+        //data.append(adModel)
         
         if (storedDevicesSection.count > 0) {
             data.append(storedHeaderModel)
@@ -191,6 +92,18 @@ class NKScanDevicesInteractor: NKScanDevicesInteractorInputProtocol {
         let model = NKDeviceModel(ip: address, port: port, isReachable: false)
         
         presenter?.manualModelReady(model: model)
+    }
+    
+    func configureDataStorage() {
+        
+        CoreStoreUtil.shared.initStorage(onProgress: { progress in
+            
+        }, onSuccess: { [weak self] in
+            self?.presenter?.presentGyverLampBeta()
+        }, onError: { [weak self] error in
+            self?.presenter?.errorHandler(error)
+        })
+        
     }
     
     private func modelSaveStateChanged(model: NKModel) {
@@ -234,6 +147,8 @@ class NKScanDevicesInteractor: NKScanDevicesInteractorInputProtocol {
         
         
     }
+    
+    
     
     
 }

@@ -9,7 +9,6 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import SwiftSocket
 
 typealias UDPSuccessBlock = (_ answer: String) -> ()
 typealias UDPErrorBlock = (_ answer: Error) -> ()

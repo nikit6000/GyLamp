@@ -15,4 +15,5 @@ protocol NKScanDevicesRouterProtocol: class {
     static func createScanModule(ref: NKScanDeviceView)
     
     func pushView(device: NKDeviceModel)
+    func presentGyverLampBetaView()
 }

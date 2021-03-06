@@ -4,3 +4,6 @@
 [submodule "HGCircularSlider"]
 	path = HGCircularSlider
 	url = https://github.com/nikit6000/HGCircularSlider.git
+[submodule "third-party/alerts-and-pickers"]
+	path = third-party/alerts-and-pickers
+	url = https://github.com/dillidon/alerts-and-pickers

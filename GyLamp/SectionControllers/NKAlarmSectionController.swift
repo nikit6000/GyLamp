@@ -51,11 +51,6 @@ class NKAlarmSectionController: ListSectionController {
         }
         
         model.isOn = !model.isOn
-        model.deviceModel?.interpretatator.set(alarmState: model, onSuccess: nil, onError: { _ in
-            model.hasError = true
-            model.isLoading = false
-            model.deviceModel?.modelUpdatedSubject.onNext(())
-        })
         model.isOn = !model.isOn
         model.isLoading = true
         model.deviceModel?.modelUpdatedSubject.onNext(())
@@ -84,15 +79,12 @@ class NKAlarmSectionController: ListSectionController {
         timePicker.onChange { date in
             model.date = date
             model.deviceModel?.modelUpdatedSubject.onNext(())
-            model.deviceModel?.interpretatator.set(alarmTime: model, onSuccess: nil, onError: nil)
             actionView.drawSnapshot()
         }
         
         actionView.addAction(title, style: .default) { button in
             
             model.dawnMode += 1
-            
-            model.deviceModel?.interpretatator.set(alarmDawn: model, onSuccess: nil, onError: nil)
             model.deviceModel?.modelUpdatedSubject.onNext(())
             
         }

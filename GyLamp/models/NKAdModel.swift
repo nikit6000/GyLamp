@@ -25,7 +25,7 @@ class NKAdModel: NSObject {
     }
     
     public var type: GADAdLoaderAdType {
-        return .dfpBanner
+        return .customNative
     }
     
     init(ad id: String, with options: [GADAdLoaderOptions] = [], isTesting: Bool = false) {

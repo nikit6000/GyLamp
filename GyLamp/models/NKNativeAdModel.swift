@@ -21,7 +21,7 @@ class NKNativeAdModel: NKAdModel {
     }
     
     override var type: GADAdLoaderAdType {
-        return .unifiedNative
+        return .customNative
     }
     
 }

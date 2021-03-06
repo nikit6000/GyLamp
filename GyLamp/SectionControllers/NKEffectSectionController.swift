@@ -57,17 +57,7 @@ class NKEffectSectionController: ListSectionController {
         
         model.isLoading = true
         model.deviceModel?.modelUpdatedSubject.onNext(())
-        
-        model.deviceModel?.interpretatator.set(mode: self.section, onSuccess: nil, onError: { _ in
-            
-            model.isLoading = false
-            model.hasError = true
-            model.deviceModel?.modelUpdatedSubject.onNext(())
-            
-        })
-        
-        
-        
+   
     }
     
     override func didUpdate(to object: Any) {

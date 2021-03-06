@@ -11,7 +11,6 @@ import IGListKit
 import RxSwift
 import RxCocoa
 import RxRelay
-import SwiftSocket
 import CoreData
 import SwiftyXML
 
@@ -115,14 +114,9 @@ class NKDeviceModel: NKModel, NKDeviceProtocol {
     
     public var modelUpdatedSubject = PublishSubject<Void>()
     
-    private(set) var lampInterpretator: GyverLampInterpretator
     private(set) var sliders = NKSlidersModel()
     private(set) var alarms = NKAlarmsModel()
     private(set) var effects = NKEffects()
-    
-    public var interpretatator: NKDeviceInterpretator {
-        return lampInterpretator as NKDeviceInterpretator
-    }
     
     public var name: String? = nil {
         didSet{
@@ -150,23 +144,7 @@ class NKDeviceModel: NKModel, NKDeviceProtocol {
         self.icon = #imageLiteral(resourceName: "light.off")
         self.isReachable = isReachable
         self.isOn = false
-        
-        lampInterpretator = GyverLampInterpretator(address: ip, port: port)
-        
         super.init()
-        
-        lampInterpretator.model = self
-        makeModels()
-        
-        for i in 0..<18 {
-            let effect = NKDeviceMode(rawValue: i)!
-            
-            let efferctModel = NKEffect(mode: effect.name)
-            
-            efferctModel.deviceModel = self
-            
-            effects.models.append(efferctModel)
-        }
     }
     
     private func makeModels() {
@@ -236,11 +214,8 @@ class NKDeviceModel: NKModel, NKDeviceProtocol {
         self.icon = #imageLiteral(resourceName: "light.off")
         self.isOn = false
         
-        lampInterpretator = GyverLampInterpretator(address: self.ip, port: self.port)
-        
         super.init()
         
-        lampInterpretator.model = self
         makeModels()
         
         for name in modes.value {
@@ -273,11 +248,8 @@ class NKDeviceModel: NKModel, NKDeviceProtocol {
         self.icon = #imageLiteral(resourceName: "light.off")
         self.isOn = false
         
-        lampInterpretator = GyverLampInterpretator(address: ip!, port: port!)
-        
         super.init(with: managedObject)
         
-        lampInterpretator.model = self
         makeModels()
         
         modes?.forEach {

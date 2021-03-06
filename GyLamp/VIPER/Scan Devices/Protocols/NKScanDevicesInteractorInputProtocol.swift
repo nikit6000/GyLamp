@@ -19,5 +19,6 @@ protocol NKScanDevicesInteractorInputProtocol: class {
     func scanForDevices()
     
     func addDevice(by ip: String)
+    func configureDataStorage()
     
 }

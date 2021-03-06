@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RxSwift
 
 enum NKHairlineStyle {
     case top
@@ -19,7 +18,6 @@ class NKHairlineView: UIView {
     private var mHairlineColor: UIColor?
     private var mHairlineAlpha: CGFloat
     private var mStyle: NKHairlineStyle
-    private var disposeBag: DisposeBag
     
     public var hairlineColor: UIColor? {
         set {
@@ -55,7 +53,6 @@ class NKHairlineView: UIView {
         mStyle = style
         mHairlineAlpha = 0.3
         mHairlineColor = .black
-        disposeBag = DisposeBag()
         
         super.init(frame: .zero)
         
@@ -67,18 +64,10 @@ class NKHairlineView: UIView {
         mStyle = .bottom
         mHairlineAlpha = 0.3
         mHairlineColor = .black
-        disposeBag = DisposeBag()
         
         super.init(frame: frame)
         
         self.backgroundColor = .clear
-    }
-    
-    private func setupInterface() {
-        let disposeable = ColorUtil.shared.colorizer.subscribe(onNext: { value in
-            self.hairlineColor = value.palette[.hairline]
-        })
-        disposeable.disposed(by: disposeBag)
     }
     
     required init?(coder aDecoder: NSCoder) {

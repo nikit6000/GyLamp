@@ -13,7 +13,7 @@ class NKAdsSectionController: ListSectionController {
     
     private var model: NKNativeAdModel?
     private var loader: GADAdLoader?
-    private var nativeAd: GADUnifiedNativeAd?
+    private var nativeAd: GADNativeAd?
     private var isLoading: Bool = false
     
     override init() {
@@ -76,9 +76,9 @@ class NKAdsSectionController: ListSectionController {
     
 }
 
-extension NKAdsSectionController: GADUnifiedNativeAdLoaderDelegate {
+extension NKAdsSectionController: GADNativeAdLoaderDelegate {
     
-    func adLoader(_ adLoader: GADAdLoader, didReceive nativeAd: GADUnifiedNativeAd) {
+    func adLoader(_ adLoader: GADAdLoader, didReceive nativeAd: GADNativeAd) {
         self.nativeAd = nativeAd
         
         self.collectionContext?.performBatch(animated: true, updates: { [weak self] updater in
@@ -93,7 +93,7 @@ extension NKAdsSectionController: GADUnifiedNativeAdLoaderDelegate {
         
     }
     
-    func adLoader(_ adLoader: GADAdLoader, didFailToReceiveAdWithError error: GADRequestError) {
+    func adLoader(_ adLoader: GADAdLoader, didFailToReceiveAdWithError error: Error) {
         self.nativeAd = nil
         
         self.collectionContext?.performBatch(animated: true, updates: { [weak self] updater in

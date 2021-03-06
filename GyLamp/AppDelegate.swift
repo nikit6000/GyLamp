@@ -7,9 +7,10 @@
 //
 
 import UIKit
-import SwiftSocket
 import Material
 import GoogleMobileAds
+import CoreStore
+import SystemConfiguration.CaptiveNetwork
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         
-        window = UIWindow(frame: UIScreen.main.bounds)
+        window = NKThemedWindow(frame: UIScreen.main.bounds)
         
         let navigationController = UINavigationController(navigationBarClass: NKNavigationBar.self, toolbarClass: UIToolbar.self)
         
@@ -29,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window!.makeKeyAndVisible()
         
-        GADMobileAds.sharedInstance().start(completionHandler: nil)
+        //GADMobileAds.sharedInstance().start(completionHandler: nil)
         
         /*GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = [
             

@@ -81,3 +81,84 @@
 "alarm.dawnOff" = "Включить рассвет";
 "alarm.dawnOn" = "Выключить рассвет";
 "alarm.dawnMode" = "Переключить рассвет";
+
+// MARK: - GyverLampBeta Strings
+
+"gyverLampBetaView.settings" = "Настройки";
+
+"gyverLampBetaView.general" = "Основные";
+"gyverLampBetaView.general.timeZone" = "Часовой пояс";
+"gyverLampBetaView.general.ntpServer" = "NTP сервер";
+"gyverLampBetaView.general.cityId" = "ID города";
+"gyverLampBetaView.general.adcMode" = "Режим АЦП";
+"gyverLampBetaView.general.lampType" = "Тип лампы";
+"gyverLampBetaView.general.maxCurrent" = "Максимальный ток";
+"gyverLampBetaView.general.workSince" = "Время начала работы";
+"gyverLampBetaView.general.workUntil" = "Время завершения работы";
+
+"gyverLampBetaView.general.timeZone.description" = "Выберите Ваш часовой пояс";
+"gyverLampBetaView.general.ntpServer.description" = "Выберите NTP сервер";
+"gyverLampBetaView.general.adcMode.description" = "Выберите режим работы АЦП";
+"gyverLampBetaView.general.lampType.description" = "Выберите тип лампы";
+"gyverLampBetaView.general.maxCurrent.description" = "Введите масимальный ток";
+"gyverLampBetaView.general.workSince.description" = "Выберите время, с которого будет работать лампа";
+"gyverLampBetaView.general.workUntil.description" = "Выберите время, до которого будет работать лампа";
+
+"gyverLampBetaView.brightness" = "Яркость";
+
+"gyverLampBetaView.brightness.current" = "Текущая";
+"gyverLampBetaView.brightness.min" = "Минимальная";
+"gyverLampBetaView.brightness.max" = "Максимальная";
+
+"gyverLampBetaView.brightness.current.description" = "Установите текущий уровень яркости";
+"gyverLampBetaView.brightness.min.description" = "Установите максимальный уровень яркости";
+"gyverLampBetaView.brightness.max.description" = "Установите минимальный уровень яркости";
+
+"gyverLampBetaView.presets" = "Режимы";
+
+"gyverLampBetaView.changeMode" = "Тип смены";
+"gyverLampBetaView.randomMode" = "Случайный";
+"gyverLampBetaView.changePeriod" = "Период смены";
+"gyverLampBetaView.changeMode.length" = "Длина";
+"gyverLampBetaView.changeMode.width" = "Ширина";
+
+"gyverLampBetaView.changeMode.description" = "Выберите тип смены режима";
+"gyverLampBetaView.randomMode.description" = "Случайный";
+"gyverLampBetaView.changePeriod.description" = "Введите период смены режима";
+"gyverLampBetaView.changeMode.length.description" = "Введите длину светодиодной матрицы";
+"gyverLampBetaView.changeMode.width.description" = "Введите ширину светодиодной матрицы";
+
+"gyverLampBetaView.lamp" = "Лампа";
+
+// MARK: - GLSettingsModel
+
+"GLSettingsModel.NPTServer.1.name" = "Сервер 1";
+"GLSettingsModel.NPTServer.2.name" = "Сервер 2";
+"GLSettingsModel.NPTServer.3.name" = "Сервер 3";
+"GLSettingsModel.NPTServer.4.name" = "Сервер 4";
+"GLSettingsModel.NPTServer.5.name" = "Сервер 5";
+
+"GLSettingsModel.ADCMode.1.name" = "Нет";
+"GLSettingsModel.ADCMode.2.name" = "Яркость";
+"GLSettingsModel.ADCMode.3.name" = "Цветомузыка";
+
+"GLSettingsModel.PresetChangeMode.0.name" = "Ручной";
+"GLSettingsModel.PresetChangeMode.1.name" = "Автоматический";
+
+"GLSettingsModel.LampType.1.name" = "Лента";
+"GLSettingsModel.LampType.2.name" = "Зигзаг";
+"GLSettingsModel.LampType.3.name" = "Спираль";
+
+"GLSettingsModel.changePeriod.fmt" = "%d мин";
+
+// MARK: - NKEnumICSectionController
+
+"NKEnumICSectionController.alert.done" = "Готово";
+"NKEnumICSectionController.alert.textEdit.placeholder" = "Введите значение";
+
+// MARK: - NKDiscreteRangePicker
+
+"WideRangePicker.error.noValue" = "Поле не должно быть пустым!";
+"WideRangePicker.error.cantConvert" = "Введенное значение вне допустимого диапазона";
+"WideRangePicker.error.lower.fmt" = "Значение не дожно быть меньше %@";
+"WideRangePicker.error.greater.fmt" = "Значение не дожно быть больше %@";

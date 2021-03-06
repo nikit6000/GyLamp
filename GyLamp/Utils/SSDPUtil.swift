@@ -20,7 +20,7 @@ class SSDPUtil {
     func getDevice(description url: URL) -> Observable<NKDeviceModel> {
         return Observable.create { observer in
             
-            Alamofire.request(url, method: .get, parameters: nil, encoding: URLEncoding.default, headers: nil).responseString(completionHandler: { response in
+            AF.request(url, method: .get, parameters: nil, encoding: URLEncoding.default, headers: nil).responseString(completionHandler: { response in
                 
                 guard response.error == nil else {
                     observer.onError(response.error!)

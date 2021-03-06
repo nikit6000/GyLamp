@@ -20,6 +20,7 @@ class NKScanDevicesPresenter: NKScanDevicesPresenterProtocol {
     private var currentData: [ListDiffable] = []
     
     func viewDidLoad() {
+        interactor?.configureDataStorage()
         interactor?.getData()
         interactor?.subscribe()
     }
@@ -63,5 +64,8 @@ extension NKScanDevicesPresenter: NKScanDevicesInteractorOutputProtocol {
         router?.pushView(device: model)
     }
     
+    func presentGyverLampBeta() {
+        router?.presentGyverLampBetaView()
+    }
     
 }
