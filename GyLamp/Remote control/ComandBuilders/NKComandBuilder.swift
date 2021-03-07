@@ -35,8 +35,30 @@ class NKStringComand: NKRawComand {
         return comand
     }
     
+    public var fullComandFollowedByTime: String? {
+        guard let fullComand = fullComand else {
+            return nil
+        }
+        
+        let dateFormatter = DateFormatter()
+        let now = Date()
+        let calendar = Calendar.current
+        
+        //Gregorian calendar starts with Sunday
+        var weekDay = calendar.component(.weekday, from: now) - 1
+        
+        if weekDay == 0 {
+            weekDay = 7
+        }
+        
+        dateFormatter.dateFormat = "H,m,s"
+        
+        return "\(fullComand),\(weekDay),\(dateFormatter.string(from: now))"
+        
+    }
+    
     public var data: Data? {
-        return fullComand?.data(using: .ascii)
+        return fullComandFollowedByTime?.data(using: .ascii)
     }
     
     

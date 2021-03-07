@@ -240,7 +240,7 @@ class NKGyverLampBetaSettingsInteractor: NKGyverLampBetaSettingsInteractorInputP
         let comand = GLSetCfg(config: packedConfig)
         let frame = GLComandFrame(payload: comand)
         
-        NKLog("NKGyverLampBetaSettingsInteractor", frame.fullComand ?? "Empty Comand")
+        NKLog("NKGyverLampBetaSettingsInteractor", frame.fullComandFollowedByTime ?? "Empty Comand")
         
         transport?.send(comand: frame, handler: { [weak self] error in
             NKLog("NKGyverLampBetaSettingsInteractor", "Transport send completed, Error:", error == nil ? "nil" : error!)
