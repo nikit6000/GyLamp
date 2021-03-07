@@ -141,7 +141,7 @@
 		CFD1697325D0744B00CE9CF3 /* Squircle+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD1696F25D0744B00CE9CF3 /* Squircle+Internal.swift */; };
 		CFD1697425D0744B00CE9CF3 /* Squircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD1697025D0744B00CE9CF3 /* Squircle.swift */; };
 		CFD6426725CEE0A10017B17A /* ListEnumICModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD6426625CEE0A10017B17A /* ListEnumICModel.swift */; };
-		CFD6426925CEEE9C0017B17A /* NKEnumICSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD6426825CEEE9C0017B17A /* NKEnumICSectionController.swift */; };
+		CFD6426925CEEE9C0017B17A /* NKListParamSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD6426825CEEE9C0017B17A /* NKListParamSectionController.swift */; };
 		CFD6434925CEF1B50017B17A /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD642FA25CEF1B50017B17A /* Array+Extensions.swift */; };
 		CFD6434A25CEF1B50017B17A /* Common+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD642FB25CEF1B50017B17A /* Common+Extensions.swift */; };
 		CFD6434B25CEF1B50017B17A /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD642FC25CEF1B50017B17A /* Date+Extension.swift */; };
@@ -382,7 +382,7 @@
 		CFD1696F25D0744B00CE9CF3 /* Squircle+Internal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Squircle+Internal.swift"; sourceTree = "<group>"; };
 		CFD1697025D0744B00CE9CF3 /* Squircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Squircle.swift; sourceTree = "<group>"; };
 		CFD6426625CEE0A10017B17A /* ListEnumICModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListEnumICModel.swift; sourceTree = "<group>"; };
-		CFD6426825CEEE9C0017B17A /* NKEnumICSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKEnumICSectionController.swift; sourceTree = "<group>"; };
+		CFD6426825CEEE9C0017B17A /* NKListParamSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKListParamSectionController.swift; sourceTree = "<group>"; };
 		CFD642FA25CEF1B50017B17A /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		CFD642FB25CEF1B50017B17A /* Common+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Common+Extensions.swift"; sourceTree = "<group>"; };
 		CFD642FC25CEF1B50017B17A /* Date+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
@@ -491,7 +491,7 @@
 				11E98ECC23B416ED00C111F6 /* NKLampSliderController.swift */,
 				11E98ECE23B417B800C111F6 /* NKEmbededSlidersController.swift */,
 				CF2AC67C246AE4560099CCFA /* NKAdsSectionController.swift */,
-				CFD6426825CEEE9C0017B17A /* NKEnumICSectionController.swift */,
+				CFD6426825CEEE9C0017B17A /* NKListParamSectionController.swift */,
 			);
 			path = SectionControllers;
 			sourceTree = "<group>";
@@ -1472,7 +1472,7 @@
 				11D3864B23491766005F38CC /* NKCoreDataUtil+extension.swift in Sources */,
 				CFD6437325CEF1B50017B17A /* ItemWithPhoto.swift in Sources */,
 				CFD6438125CF11AF0017B17A /* NKSettingsTextParamCollectionCell.swift in Sources */,
-				CFD6426925CEEE9C0017B17A /* NKEnumICSectionController.swift in Sources */,
+				CFD6426925CEEE9C0017B17A /* NKListParamSectionController.swift in Sources */,
 				CF2AC682246AE5300099CCFA /* NKAdModel.swift in Sources */,
 				CFE9D0DF25C9674F00267AB4 /* NKGyverLampBetaPresenter.swift in Sources */,
 				CF7EE3EE25C9A8F800781060 /* GLPresetModel.swift in Sources */,

@@ -31,10 +31,11 @@
     <entity name="GLSettingsModel" representedClassName="GLSettingsModel" syncable="YES">
         <attribute name="adcMode" optional="YES" attributeType="Integer 16" minValueString="1" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="brightness" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="changePeriod" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="changePeriod" optional="YES" attributeType="Integer 16" minValueString="1" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="cityId" optional="YES" attributeType="Integer 32" minValueString="0" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="lampType" optional="YES" attributeType="Integer 16" minValueString="1" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="length" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="matrixOrientation" optional="YES" attributeType="Integer 16" minValueString="1" maxValueString="8" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="maxBrigtness" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="maxCurrent" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="minBrightness" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -61,7 +62,7 @@
         <element name="GLDawnDay" positionX="-259.9375" positionY="4.921875" width="128" height="88"/>
         <element name="GLDawnSettings" positionX="-480.01953125" positionY="-30.2421875" width="125.4765625" height="88"/>
         <element name="GLPresetModel" positionX="-616.7734375" positionY="-32.515625" width="128" height="283"/>
-        <element name="GLSettingsModel" positionX="-761.71875" positionY="-32.6484375" width="128" height="358"/>
+        <element name="GLSettingsModel" positionX="-761.71875" positionY="-32.6484375" width="128" height="373"/>
         <element name="GyverLampAlpha" positionX="-900.1953125" positionY="-31.171875" width="128" height="103"/>
     </elements>
 </model>

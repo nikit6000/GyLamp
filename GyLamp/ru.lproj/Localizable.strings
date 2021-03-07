@@ -121,12 +121,32 @@
 "gyverLampBetaView.changePeriod" = "Период смены";
 "gyverLampBetaView.changeMode.length" = "Длина";
 "gyverLampBetaView.changeMode.width" = "Ширина";
+"gyverLampBetaView.lampSettings.orientation" = "Ориентация";
 
 "gyverLampBetaView.changeMode.description" = "Выберите тип смены режима";
 "gyverLampBetaView.randomMode.description" = "Случайный";
 "gyverLampBetaView.changePeriod.description" = "Введите период смены режима";
 "gyverLampBetaView.changeMode.length.description" = "Введите длину светодиодной матрицы";
 "gyverLampBetaView.changeMode.width.description" = "Введите ширину светодиодной матрицы";
+"gyverLampBetaView.lampSettings.orientation.description" = "Выберите ориентацию матрицы";
+
+"gyverLampBetaView.mqtt" = "MQTT";
+
+"gyverLampBetaView.mqttState" = "Состояние";
+"gyverLampBetaView.mqttHost" = "Хост";
+"gyverLampBetaView.mqttPort" = "Порт";
+"gyverLampBetaView.mqttId" = "ID";
+"gyverLampBetaView.mqttLogin" = "Логин";
+"gyverLampBetaView.mqttPass" = "Пароль";
+
+"gyverLampBetaView.mqttState.description" = "Состояние MQTT";
+"gyverLampBetaView.mqttHost.description" = "Введите хост MQTT";
+"gyverLampBetaView.mqttPort.description" = "Введите порт MQTT";
+"gyverLampBetaView.mqttId.description" = "Введите MQTT id";
+"gyverLampBetaView.mqttLogin.description" = "Введите логин";
+"gyverLampBetaView.mqttPass.description" = "Введите пароль";
+
+"GLSettingsModel.orientation.fmt" = "%d";
 
 "gyverLampBetaView.lamp" = "Лампа";
 

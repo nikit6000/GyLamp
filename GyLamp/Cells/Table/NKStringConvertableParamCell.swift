@@ -26,8 +26,18 @@ class NKStringConvertableParamCell: ImageBassedTableCell, ListBindable {
             return paramLabel.text
         }
         set {
-            paramLabel.text = newValue
             paramLabel.isHidden = newValue == nil
+            
+            guard let newValue = newValue else {
+                return
+            }
+            
+            if newValue.isEmpty {
+                paramLabel.text = "N/A"
+            } else {
+                paramLabel.text = newValue
+            }
+                       
         }
     }
  
@@ -37,9 +47,12 @@ class NKStringConvertableParamCell: ImageBassedTableCell, ListBindable {
     }
     
     override func applyConstraints() {
-        /* titleLabel */
-        NSLayoutConstraint(item: contentView, attribute: .trailing, relatedBy: .equal, toItem: paramLabel, attribute: .trailing, multiplier: 1, constant: 8).isActive = true
-        NSLayoutConstraint(item: paramLabel, attribute: .centerY, relatedBy: .equal, toItem: contentView, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+
+        NSLayoutConstraint.activate([
+            contentView.trailingAnchor.constraint(equalTo: paramLabel.trailingAnchor, constant: 8.0),
+            paramLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            paramLabel.widthAnchor.constraint(lessThanOrEqualTo: contentView.widthAnchor, multiplier: 0.33)
+        ])
         
         super.applyConstraints()
     }

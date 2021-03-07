@@ -42,7 +42,8 @@ class NKGyverLampBetaSettingsInteractor: NKGyverLampBetaSettingsInteractorInputP
                 \GLSettingsModel.lampType,
                 \GLSettingsModel.maxCurrent,
                 \GLSettingsModel.length,
-                \GLSettingsModel.width
+                \GLSettingsModel.width,
+                \GLSettingsModel.matrixOrientation
             ]
             
             let lightSettingsMapper: SectionMap = [
@@ -56,11 +57,22 @@ class NKGyverLampBetaSettingsInteractor: NKGyverLampBetaSettingsInteractorInputP
                 \GLSettingsModel.random,
                 \GLSettingsModel.changePeriod
             ]
+
+            
+            let mqttSettingsMapper: SectionMap = [
+                \GLSettingsModel.mqttState,
+                \GLSettingsModel.mqttHost,
+                \GLSettingsModel.mqttPort,
+                \GLSettingsModel.mqttId,
+                \GLSettingsModel.mqttLogin,
+                \GLSettingsModel.mqttPass
+            ]
             
             sectionMappers.append(generalSectionMapper)
             sectionMappers.append(lampSettingsMapper)
             sectionMappers.append(lightSettingsMapper)
             sectionMappers.append(modeSettingsMapper)
+            sectionMappers.append(mqttSettingsMapper)
             
         }
         
@@ -111,22 +123,27 @@ class NKGyverLampBetaSettingsInteractor: NKGyverLampBetaSettingsInteractorInputP
                                                     "gyverLampBetaView.general.lampType".localized,
                                                     "gyverLampBetaView.general.maxCurrent".localized,
                                                     "gyverLampBetaView.changeMode.length".localized,
-                                                    "gyverLampBetaView.changeMode.width".localized
+                                                    "gyverLampBetaView.changeMode.width".localized,
+                                                    "gyverLampBetaView.lampSettings.orientation".localized
+                                        
                                                 ], items: [
                                                     settingsModelRef!.lampType,
                                                     NKListRangedModel(value: settingsModelRef!.maxCurrent, maxValue: 3000, minValue: 0, format: "%d mA"),
                                                     NKListRangedModel(value: settingsModelRef!.length, maxValue: 65535, minValue: 0, format: "%d px"),
-                                                    NKListRangedModel(value: settingsModelRef!.width, maxValue: 65535, minValue: 0, format: "%d px")
+                                                    NKListRangedModel(value: settingsModelRef!.width, maxValue: 65535, minValue: 0, format: "%d px"),
+                                                    settingsModelRef!.matrixOrientation
                                                 ], icons: [
                                                     UIImage(named: "lampType"),
                                                     UIImage(named: "maxCurrent"),
                                                     UIImage(named: "matrixLength"),
+                                                    UIImage(named: "matrixWidth"),
                                                     UIImage(named: "matrixWidth")
                                                 ], descriptions: [
                                                     "gyverLampBetaView.general.lampType.description".localized,
                                                     "gyverLampBetaView.general.maxCurrent.description".localized,
                                                     "gyverLampBetaView.changeMode.length.description".localized,
-                                                    "gyverLampBetaView.changeMode.width.description".localized
+                                                    "gyverLampBetaView.changeMode.width.description".localized,
+                                                    "gyverLampBetaView.lampSettings.orientation.description".localized
                                                 ])
         
         let lightSettings = NKEnumSectionModel(sectionTitle: "gyverLampBetaView.brightness".localized,
@@ -173,24 +190,57 @@ class NKGyverLampBetaSettingsInteractor: NKGyverLampBetaSettingsInteractorInputP
                                                     "gyverLampBetaView.changePeriod.description".localized
                                               ])
         
+        let mqttSettings = NKEnumSectionModel(sectionTitle: "gyverLampBetaView.mqtt".localized,
+                                              titles: [
+                                                    "gyverLampBetaView.mqttState".localized,
+                                                    "gyverLampBetaView.mqttHost".localized,
+                                                    "gyverLampBetaView.mqttPort".localized,
+                                                    "gyverLampBetaView.mqttId".localized,
+                                                    "gyverLampBetaView.mqttLogin".localized,
+                                                    "gyverLampBetaView.mqttPass".localized
+                                              ],
+                                              items: [
+                                                    settingsModelRef!.mqttState,
+                                                    settingsModelRef!.mqttHost,
+                                                    NKListRangedModel(value: settingsModelRef!.mqttPort, maxValue: .max, minValue: 0, format: "%d"),
+                                                    settingsModelRef!.mqttId,
+                                                    settingsModelRef!.mqttLogin,
+                                                    NKStringListModel(value: settingsModelRef!.mqttPass, isSequreEntry: true)
+                                              ],
+                                              icons: [
+                                                    UIImage(named: "changeMode"),
+                                                    UIImage(named: "changeMode"),
+                                                    UIImage(named: "changeMode"),
+                                                    UIImage(named: "changeMode"),
+                                                    UIImage(named: "changeMode"),
+                                                    UIImage(named: "changeMode")
+                                              ],
+                                              descriptions: [
+                                                    "gyverLampBetaView.mqttState.description".localized,
+                                                    "gyverLampBetaView.mqttHost.description".localized,
+                                                    "gyverLampBetaView.mqttPort.description".localized,
+                                                    "gyverLampBetaView.mqttId.description".localized,
+                                                    "gyverLampBetaView.mqttLogin.description".localized,
+                                                    "gyverLampBetaView.mqttPass.description".localized
+                                              ])
+        
         
         tableData.append(general)
         tableData.append(lampSettings)
         tableData.append(lightSettings)
         tableData.append(modeSettings)
+        tableData.append(mqttSettings)
         
         presenter?.dataReady(data: tableData)
     }
     
     func packAndSend(model: GLSettingsModel) {
         
-        guard let key = self.key, let channel = self.channel else {
-            return
-        }
-        
         let packedConfig = model.packed
         let comand = GLSetCfg(config: packedConfig)
-        let frame = GLComandFrame(channel: channel, key: key, payload: comand)
+        let frame = GLComandFrame(payload: comand)
+        
+        NKLog("NKGyverLampBetaSettingsInteractor", frame.fullComand ?? "Empty Comand")
         
         transport?.send(comand: frame, handler: { [weak self] error in
             NKLog("NKGyverLampBetaSettingsInteractor", "Transport send completed, Error:", error == nil ? "nil" : error!)

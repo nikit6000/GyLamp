@@ -23,9 +23,9 @@ class ListEnumICModel: ListDiffable, NKListViewable {
     
     var value: ListEnumStringConvertable
     
-    private(set) var title: String
-    private(set) var icon: UIImage?
-    private(set) var description: String?
+    public var title: String
+    public var icon: UIImage?
+    public var description: String?
     
     public var casesDescriptions: [String] {
         return value.allCasesAsString

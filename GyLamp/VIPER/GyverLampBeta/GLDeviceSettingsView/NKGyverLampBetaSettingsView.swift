@@ -117,7 +117,7 @@ extension NKGyverLampBetaSettingsView: ListAdapterDataSource {
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
         switch object {
         case is NKEnumSectionModel:
-            let controller = NKEnumICSectionController()
+            let controller = NKListParamSectionController()
             controller.delegate = presenter?.interactor
             return controller
         default:

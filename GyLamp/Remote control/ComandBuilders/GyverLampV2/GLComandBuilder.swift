@@ -15,21 +15,29 @@ enum GLComandType: UInt {
     case dawn = 3
 }
 
-class GLArrayComand<Element: LosslessStringConvertible>: NKStringComand {
-    var elements: [Element]
+class GLArrayComand: NKStringComand {
+    var elements: [LosslessStringConvertible]
     
     override var comand: String? {
-        return elements.map { String($0) }.joined(separator: ",")
+        return elements.map { $0.description }.joined(separator: ",")
     }
     
-    init(withElements elements: [Element] = []) {
+    init(withElements elements: [LosslessStringConvertible] = []) {
         self.elements = elements
         super.init()
     }
     
-    init(with singleElement: Element) {
-        self.elements = [Element](repeating: singleElement, count: 1)
+    init(with singleElement: LosslessStringConvertible) {
+        self.elements = [LosslessStringConvertible](repeating: singleElement, count: 1)
         super.init()
+    }
+    
+    func append(_ element: LosslessStringConvertible) {
+        elements.append(element)
+    }
+    
+    func append(contentsOf array: [LosslessStringConvertible]) {
+        elements.append(contentsOf: array)
     }
     
 }
@@ -52,7 +60,6 @@ class GLComandFrame: NKStringComand {
     
     
     var key: String
-    var channel: UInt
     private var _payload: NKStringComand?
     
     override var payload: NKStringComand? {
@@ -60,11 +67,10 @@ class GLComandFrame: NKStringComand {
     }
     
     override var comand: String? {
-        return "\(key),\(channel)"
+        return "\(key)"
     }
     
-    init(channel: UInt, key: String, payload: NKStringComand?) {
-        self.channel = channel
+    init(key: String = "GL", payload: NKStringComand?) {
         self.key = key
         _payload = payload
         super.init()

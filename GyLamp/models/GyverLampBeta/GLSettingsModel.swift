@@ -127,6 +127,32 @@ import CoreStore
     }
 }
 
+@objc enum GLSettingsOrientation: Int16, CaseIterable, ListEnumStringConvertable, AllowedObjectiveCKeyPathValue {
+    typealias DestinationValueType = Int16
+    
+    case one = 1
+    case two = 2
+    case three = 3
+    case four = 4
+    case five = 5
+    case six = 6
+    case seven = 7
+    case eight = 8
+    
+    var description: String {
+        let localizedKey = String(format: "GLSettingsModel.orientation.fmt", self.rawValue)
+        return String(format: NSLocalizedString(localizedKey, comment: ""), self.rawValue)
+    }
+    
+    var allCasesAsString: [String] {
+        return type(of: self).allCases.map { $0.description }
+    }
+    
+    var allCasesRawValue: [Int16] {
+        return type(of: self).allCases.map { $0.rawValue }
+    }
+}
+
 @objc(GLSettingsModel)
 final class GLSettingsModel: NSManagedObject {
     
@@ -147,10 +173,17 @@ final class GLSettingsModel: NSManagedObject {
                         maxCurrent: UInt8(maxCurrent / 100),
                         workSince: UInt8(workTimeSince),
                         workUntill: UInt8(workTimeUntil),
+                        matrixOrientation: UInt8(matrixOrientation.rawValue),
+                        length: length,
+                        width: width,
+                        GTM: UInt8(timeZone + 13),
                         cityId: cityId,
-                        length: (high: UInt8((length >> 8) & 0xFF), low: UInt8(length & 0xFF)),
-                        width: (high: UInt8((width >> 8) & 0xFF), low: UInt8(width & 0xFF)),
-                        GTM: UInt8(timeZone + 13))
+                        mqttState: mqttState ? 1 : 0,
+                        mqttId: mqttId,
+                        mqttHost: mqttHost,
+                        mqttPort: mqttPort,
+                        mqttLogin: mqttLogin,
+                        mqttPass: mqttPass)
     }
     
 }
@@ -203,6 +236,8 @@ extension PartialKeyPath: PartialKeyPathStringConvertable where Root == GLSettin
             return "mqttState"
         case \GLSettingsModel.mqttLogin:
             return "mqttLogin"
+        case \GLSettingsModel.matrixOrientation:
+            return "matrixOrientation"
         default:
             fatalError("Unexpected key path")
         }

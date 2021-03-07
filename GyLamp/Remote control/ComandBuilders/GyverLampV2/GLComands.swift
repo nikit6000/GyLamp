@@ -233,10 +233,17 @@ struct GLConfig {
     var maxCurrent: UInt8
     var workSince: UInt8
     var workUntill: UInt8
-    var cityId: UInt32
-    var length: (high: UInt8, low: UInt8)
-    var width: (high: UInt8, low: UInt8)
+    var matrixOrientation: UInt8
+    var length: UInt16
+    var width: UInt16
     var GTM: UInt8
+    var cityId: UInt32
+    var mqttState: UInt8
+    var mqttId: String
+    var mqttHost: String
+    var mqttPort: UInt16
+    var mqttLogin: String
+    var mqttPass: String
 }
 
 class GLSetCfg: GLComand {
@@ -244,11 +251,33 @@ class GLSetCfg: GLComand {
     var config: GLConfig
     
     override var payload: NKStringComand? {
+    
+        let packetCmd = GLArrayComand()
         
-        let packedData = Data(bytes: &config, count: MemoryLayout<GLConfig>.size)
-        let packedBytes = [UInt8](packedData)
-        
-        return GLArrayComand(withElements: packedBytes)
+        packetCmd.append(config.bright)
+        packetCmd.append(config.adcMode)
+        packetCmd.append(config.minBright)
+        packetCmd.append(config.maxBright)
+        packetCmd.append(config.presetChangeMode)
+        packetCmd.append(config.randomMode)
+        packetCmd.append(config.changePeriod)
+        packetCmd.append(config.deviceType)
+        packetCmd.append(config.maxCurrent)
+        packetCmd.append(config.workSince)
+        packetCmd.append(config.workUntill)
+        packetCmd.append(config.matrixOrientation)
+        packetCmd.append(config.length)
+        packetCmd.append(config.width)
+        packetCmd.append(config.GTM)
+        packetCmd.append(config.cityId)
+        packetCmd.append(config.mqttState)
+        packetCmd.append(config.mqttId)
+        packetCmd.append(config.mqttHost)
+        packetCmd.append(config.mqttPort)
+        packetCmd.append(config.mqttLogin)
+        packetCmd.append(config.mqttPass)
+       
+        return packetCmd
         
     }
     

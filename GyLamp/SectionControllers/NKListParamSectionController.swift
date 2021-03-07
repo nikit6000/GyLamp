@@ -1,5 +1,5 @@
 //
-//  NKEnumICSectionController.swift
+//  NKListParamSectionController.swift
 //  GyLamp
 //
 //  Created by Nikita Tarkhov on 06.02.2021.
@@ -319,6 +319,6 @@ class NKListParamSectionController: ListBindingSectionController<ListDiffable>, 
     }
     
     deinit {
-        NKLog("")
+        NKLog("NKListParamSectionController", "deinit")
     }
 }

@@ -13,9 +13,10 @@ class NKDiscreteRangedModel<T: BinaryInteger>: ListDiffable, NKListViewable {
      
     public var value: T
     
-    private(set) var title: String
-    private(set) var description: String?
-    private(set) var icon: UIImage?
+    public var title: String
+    public var description: String?
+    public var icon: UIImage?
+    
     private(set) var min: T
     private(set) var max: T
     private(set) var step: T.Stride

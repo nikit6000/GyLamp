@@ -123,12 +123,33 @@
 "gyverLampBetaView.changePeriod" = "Change period";
 "gyverLampBetaView.changeMode.length" = "Length";
 "gyverLampBetaView.changeMode.width" = "Width";
+"gyverLampBetaView.lampSettings.orientation" = "Orientation";
 
 "gyverLampBetaView.changeMode.description" = "Select preset change mode";
 "gyverLampBetaView.randomMode.description" = "Random mode";
 "gyverLampBetaView.changePeriod.description" = "Enter change period";
 "gyverLampBetaView.changeMode.length.description" = "Enter length of LED matrix";
 "gyverLampBetaView.changeMode.width.description" = "Enter width of LED matrix";
+
+"gyverLampBetaView.lampSettings.orientation.description" = "Select matrix orientation";
+
+"gyverLampBetaView.mqtt" = "MQTT";
+
+"gyverLampBetaView.mqttState" = "State";
+"gyverLampBetaView.mqttHost" = "Host";
+"gyverLampBetaView.mqttPort" = "Port";
+"gyverLampBetaView.mqttId" = "ID";
+"gyverLampBetaView.mqttLogin" = "Login";
+"gyverLampBetaView.mqttPass" = "Password";
+
+"gyverLampBetaView.mqttState.description" = "MQTT State";
+"gyverLampBetaView.mqttHost.description" = "Enter MQTT host";
+"gyverLampBetaView.mqttPort.description" = "Enter MQTT port";
+"gyverLampBetaView.mqttId.description" = "Ender MQTT id";
+"gyverLampBetaView.mqttLogin.description" = "Enter login";
+"gyverLampBetaView.mqttPass.description" = "Enter password";
+
+"GLSettingsModel.orientation.fmt" = "%d";
 
 "gyverLampBetaView.lamp" = "Lamp";
 

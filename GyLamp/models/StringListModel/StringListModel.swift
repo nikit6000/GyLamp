@@ -15,14 +15,16 @@ class NKStringListModel: ListDiffable, NKListViewable {
     public var title: String
     public var description: String?
     public var icon: UIImage?
+    public var isSequreEntry: Bool
     
-    init(value: String, title: String = "", icon: UIImage? = nil, description: String? = nil) {
+    init(value: String, isSequreEntry: Bool, title: String = "", description: String? = nil, icon: UIImage? = nil) {
         self.value = value
         self.title = title
         self.description = description
         self.icon = icon
+        self.isSequreEntry = isSequreEntry
     }
-    
+
     func diffIdentifier() -> NSObjectProtocol {
         var hasher = Hasher()
         hasher.combine(value)

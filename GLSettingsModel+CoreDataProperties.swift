@@ -38,5 +38,6 @@ extension GLSettingsModel {
     @NSManaged public var workTimeUntil: UInt16
     @NSManaged public var length: UInt16
     @NSManaged public var width: UInt16
+    @NSManaged public var matrixOrientation: GLSettingsOrientation
 
 }

@@ -8,13 +8,14 @@
 
 import Foundation
 
-protocol NKListViewable: class {
+protocol NKListDisplayable: class {
+    var title: String { get set }
+    var description: String? { get set }
+    var icon: UIImage? { get set }
+}
+
+protocol NKListViewable: NKListDisplayable {
     associatedtype ValueType
 
     var value: ValueType { get set }
-    
-    var title: String { get }
-    var description: String? { get }
-    var icon: UIImage? { get }
-    
 }

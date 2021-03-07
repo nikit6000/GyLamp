@@ -15,11 +15,19 @@ class NKStringBindableCell: NKStringConvertableParamCell {
             return
         }
         
+        let text: String
+        
+        if model.isSequreEntry {
+            text = String(repeating: "•", count: model.value.count)
+        } else {
+            text = model.value
+        }
+        
         self.image = model.icon
         self.title = model.title
         self.subtitle = nil
         self.isImageRounded = false
-        self.param = model.value
+        self.param = text
     }
     
 }
