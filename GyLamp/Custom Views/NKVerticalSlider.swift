@@ -10,160 +10,145 @@ import UIKit
 
 class NKVerticalSlider: UIControl {
     
-    private var lastTapLocation: CGPoint
-    private var oldValue: CGFloat
-    private var isVerticalPan = true
-    
-    
-    private var sliderLayer: NKSliderLayer {
-        return layer as! NKSliderLayer
-    }
-    
-    override class var layerClass: AnyClass {
-        return NKSliderLayer.self
-    }
-    
-    public var value: CGFloat {
+    // MARK: - vars
+    public var value: CGFloat = 0.0 {
         didSet {
-            
-            if value > 1.0 {
-                sliderLayer.value = 1.0
-            } else if value < 0.0 {
-                sliderLayer.value = 0.0
-            } else {
-                sliderLayer.value = value
-            }
-            
-            sliderLayer.setNeedsDisplay()
+            layoutIfNeeded()
         }
     }
     
-    public var sliderColor: UIColor {
-        didSet {
-            self.setNeedsDisplay()
+    private var oldValue: CGFloat = 0.0
+    
+    public var sliderColor: UIColor? {
+        get {
+            slidingView.backgroundColor
+        }
+        set {
+            slidingView.backgroundColor = newValue
         }
     }
     
+    private lazy var slidingView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    private lazy var impactGenerator: UIImpactFeedbackGenerator = {
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        return generator
+    }()
+    
+    // MARK: - initialization
     override init(frame: CGRect) {
-        self.lastTapLocation = .zero
-        self.value = 0.0
-        self.oldValue = 0.0
-        self.sliderColor = .white
-        
         super.init(frame: frame)
-        
-        
-        
-        sliderLayer.setNeedsDisplay()
-        
+        setupUI()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    /*override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-     
-     guard let panGesture = gestureRecognizer as? UIPanGestureRecognizer else {
-     return super.gestureRecognizerShouldBegin(gestureRecognizer)
-     }
-     
-     let velocity = panGesture.velocity(in: self)
-     NKLog(velocity)
-     
-     return abs(velocity.y) > abs(velocity.x)
-     }*/
-    
-    override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-        
-        let result = super.beginTracking(touch, with: event)
-        
-        if self.isEnabled == false {
-            return result
+    // MARK: - methods
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard
+            let panGestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer,
+            panGestureRecognizer.translation(in: self).y >= 0
+        else {
+            return true
         }
-        
-        lastTapLocation = touch.location(in: self)
-        oldValue = value
-        sendActions(for: .touchDown)
-        return result
+        return true
     }
     
-    override func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-        let result = super.continueTracking(touch, with: event)
+    override func layoutIfNeeded() {
+        super.layoutIfNeeded()
+        let clampedInversedValue = 1.0 - value.clamp(0.0, 1.0)
+        slidingView.frame = CGRect(
+            x: .zero,
+            y: clampedInversedValue * frame.height,
+            width: frame.width,
+            height: frame.height
+        )
+    }
+    
+    private func setupUI() {
+        backgroundColor = .black
+        addSubview(slidingView)
+        setupGestureRecognizers()
+    }
+
+    private func setupGestureRecognizers() {
+        let panGestureRecognizer = UIPanGestureRecognizer(
+            target: self,
+            action: #selector(panGestureRecognizerHandler(_:))
+        )
+        panGestureRecognizer.delegate = self
+        panGestureRecognizer.delaysTouchesBegan = true
+        self.addGestureRecognizer(panGestureRecognizer)
+    }
+    
+    private func beginTracking() {
+        guard self.isEnabled else { return }
+        oldValue = value
+        sendActions(for: .touchDown)
+    }
+    
+    private func continueTracking(with translation: CGPoint) {
+        guard self.isEnabled else { return }
         
-        let deltaY = lastTapLocation.y - touch.location(in: self).y
-        let newValue: CGFloat = oldValue + deltaY / self.frame.height
+        let newValue: CGFloat = oldValue - translation.y / self.frame.height
+        let isNewValueInRange = newValue >= 0 && newValue <= 1.0
+        let currentValueInRange = value > 0 && value < 1.0
         
-        if self.isEnabled == false {
-            return result
-        }
+        guard isNewValueInRange || currentValueInRange else { return }
         
-        if newValue > 1.0 {
-            value = 1.0
-        } else if newValue < 0 {
-            value = 0
-        } else {
-            value = newValue
+        value = newValue.clamp(0.0, 1.0)
+        
+        if value == 1.0 || value == 0.0 {
+            impactGenerator.impactOccurred()
         }
         
         sendActions(for: .valueChanged)
-        
-        //NKLog(value)
-        return result
     }
     
-    override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
-        super.endTracking(touch, with: event)
+    private func endTracking() {
         sendActions(for: .touchUpInside)
     }
     
-    override func action(for layer: CALayer, forKey event: String) -> CAAction? {
-        if event == #keyPath(NKSliderLayer.value),
-            let action = super.action(for: layer, forKey: #keyPath(backgroundColor)) as? CAAnimation,
-            let animation: CABasicAnimation = (action.copy() as? CABasicAnimation) {
-            
-            animation.keyPath = #keyPath(NKSliderLayer.value)
-            animation.fromValue = sliderLayer.value
-            animation.toValue = value
-            self.layer.add(animation, forKey: #keyPath(NKSliderLayer.value))
-            
-            return animation
+    // MARK: - actions
+    @objc
+    private func panGestureRecognizerHandler(_ gestureRecognizer: UIPanGestureRecognizer) {
+        switch gestureRecognizer.state {
+        case .began:
+            beginTracking()
+        case .changed:
+            let translation = gestureRecognizer.translation(in: self)
+            continueTracking(with: translation)
+        case .ended:
+            endTracking()
+        default:
+            break
         }
-        
-        return super.action(for: layer, forKey: event)
     }
-    
 }
 
-fileprivate class NKSliderLayer: CALayer {
-    @NSManaged var value: CGFloat
+// MARK: - UIGestureRecognizerDelegate
+extension NKVerticalSlider: UIGestureRecognizerDelegate {
     
-    override class func needsDisplay(forKey key: String) -> Bool {
-        if key == #keyPath(value) {
-            return true
-        }
-        return super.needsDisplay(forKey: key)
-    }
-    
-    override func draw(in ctx: CGContext) {
-        super.draw(in: ctx)
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
+    ) -> Bool {
+        guard
+            let view = otherGestureRecognizer.view,
+            let panGestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer
+        else { return false }
         
-        UIGraphicsPushContext(ctx)
+        let velocity = panGestureRecognizer.velocity(in: self)
+        let isScrollView = view is UIScrollView
+        let isHorizontalTranslation = abs(velocity.x) > abs(velocity.y)
         
-        
-        
-        let height = value * self.frame.height
-        let width = self.frame.width
-        let y = self.frame.height - height
-        
-        let frame = CGRect(x: 0, y: y, width: width, height: height)
-        
-        UIColor.black.setFill()
-        ctx.fill(self.bounds)
-        
-        UIColor.white.setFill()
-        ctx.fill(frame)
-        
-        UIGraphicsPopContext()
+        return isScrollView && isHorizontalTranslation
     }
 }
