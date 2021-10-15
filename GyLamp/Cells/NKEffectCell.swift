@@ -29,6 +29,7 @@ class NKEffectCell: UICollectionViewCell, NKViewPressAble {
         let view = UILabel(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = UIFont.systemFont(ofSize: 12)
+        view.numberOfLines = 3
         view.textColor = UIColor.black
         return view
     }()

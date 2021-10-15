@@ -23,6 +23,9 @@ class NKTimeEdit: UIView {
         } else {
             view.setValue(UIColor.white, forKey: "textColor")
         }
+        if #available(iOS 13.4, *) {
+            view.preferredDatePickerStyle = .wheels
+        }
         return view
     }()
     
