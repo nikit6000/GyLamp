@@ -14,14 +14,9 @@ class NKDeviceViewInteractor: NKDeviceViewInteractorInputProtocol {
     
     var presenter: NKDeviceViewInteractorOutputProtocol?
     
-    private var adHeaderModel = NKSectionModel(style: .bottom, title: NSLocalizedString("scan.ad", comment: ""))
-    private var adModel = NKNativeAdModel(ad: "ca-app-pub-3597227208792915/8168587999")
-    
     func makeData(device: NKDeviceModel) {
         
         let data: [ListDiffable] = [
-            adHeaderModel,
-            adModel,
             NKSectionModel(style: .top, title: NSLocalizedString("device.device", comment: "")),
             device,
             NKSectionModel(style: .top, title: NSLocalizedString("device.controls", comment: "")),

@@ -9,7 +9,6 @@
 import UIKit
 import SwiftSocket
 import Material
-import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -28,13 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window!.rootViewController = navigationController
         
         window!.makeKeyAndVisible()
-        
-        GADMobileAds.sharedInstance().start(completionHandler: nil)
-        
-        /*GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = [
-            
-        ]*/
-        
+    
         // Override point for customization after application launch.
         return true
     }

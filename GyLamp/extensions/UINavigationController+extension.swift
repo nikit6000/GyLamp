@@ -6,7 +6,7 @@
 //  Copyright © 2020 nproject. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension UINavigationController {
     open override var preferredStatusBarStyle: UIStatusBarStyle {

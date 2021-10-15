@@ -13,7 +13,6 @@ import RxSwift
 
 class NKScanDeviceView: NKBlurViewController, NKScanDevicesViewProtocol {
     
-    private var adSectionController = NKAdsSectionController()
     private var data: [ListDiffable] = []
     public var presenter: NKScanDevicesPresenterProtocol? = nil
     
@@ -156,8 +155,6 @@ extension NKScanDeviceView: ListAdapterDataSource, NKCollectionViewDelegate {
             return controller
         case is String:
             return NKTextController()
-        case is NKNativeAdModel:
-            return adSectionController
         default:
             fatalError()
         }

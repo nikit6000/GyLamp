@@ -13,8 +13,6 @@ import RxSwift
 
 class NKDeviceView: NKBlurViewController, NKDeviceViewProtocol {
     
-    private let adSectionController = NKAdsSectionController()
-    
     private var data: [ListDiffable] = []
     private(set) var deviceModel: NKDeviceModel
     
@@ -186,8 +184,6 @@ extension NKDeviceView: ListAdapterDataSource, NKCollectionViewDelegate {
             return NKEmbededAlarmsController()
         case is NKEffects:
             return NKEmbededEffectsController()
-        case is NKAdModel:
-            return adSectionController
         default:
             fatalError()
         }

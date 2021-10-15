@@ -16,8 +16,6 @@ class NKScanDevicesInteractor: NKScanDevicesInteractorInputProtocol {
     
     private var storedHeaderModel = NKSectionModel(style: .bottom, title: NSLocalizedString("scan.saved", comment: ""))
     private var findedHeaderModel = NKSectionModel(style: .bottom, title: NSLocalizedString("scan.finded", comment: ""))
-    private var adHeaderModel = NKSectionModel(style: .bottom, title: NSLocalizedString("scan.ad", comment: ""))
-    private var adModel = NKNativeAdModel(ad: "ca-app-pub-3597227208792915/9854007081")
     
     private var storedDevicesSection: [NKDeviceModel] = []
     private var findedDevicesSection: [NKDeviceModel] = []
@@ -159,9 +157,6 @@ class NKScanDevicesInteractor: NKScanDevicesInteractorInputProtocol {
     private func dataReady() {
         
         var data: [ListDiffable] = []
-        
-        data.append(adHeaderModel)
-        data.append(adModel)
         
         if (storedDevicesSection.count > 0) {
             data.append(storedHeaderModel)

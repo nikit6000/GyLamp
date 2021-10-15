@@ -100,15 +100,6 @@
 		11FEEFD523B008D0005DA46E /* NKCenteredCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FEEFD423B008D0005DA46E /* NKCenteredCollectionViewLayout.swift */; };
 		11FEEFD723B00B84005DA46E /* NKCenteredCollectionViewLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FEEFD623B00B84005DA46E /* NKCenteredCollectionViewLayoutAttributes.swift */; };
 		20C8289DD39D55B601BF5B8B /* Pods_GyLamp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892B0062866A484621DDFCD /* Pods_GyLamp.framework */; };
-		CF2AC67D246AE4560099CCFA /* NKAdsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2AC67C246AE4560099CCFA /* NKAdsSectionController.swift */; };
-		CF2AC682246AE5300099CCFA /* NKAdModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2AC681246AE5300099CCFA /* NKAdModel.swift */; };
-		CF2AC684246AE7C40099CCFA /* NKNativeAdModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2AC683246AE7C40099CCFA /* NKNativeAdModel.swift */; };
-		CF2AC686246AF5550099CCFA /* NKNativeAdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2AC685246AF5550099CCFA /* NKNativeAdCell.swift */; };
-		CF2AC6BE246B25D90099CCFA /* GADTMediumTemplateView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF2AC6B7246B25D90099CCFA /* GADTMediumTemplateView.m */; };
-		CF2AC6BF246B25D90099CCFA /* GADTMediumTemplateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF2AC6B8246B25D90099CCFA /* GADTMediumTemplateView.xib */; };
-		CF2AC6C0246B25D90099CCFA /* GADTSmallTemplateView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF2AC6BA246B25D90099CCFA /* GADTSmallTemplateView.m */; };
-		CF2AC6C1246B25D90099CCFA /* GADTSmallTemplateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF2AC6BB246B25D90099CCFA /* GADTSmallTemplateView.xib */; };
-		CF2AC6C2246B25D90099CCFA /* GADTTemplateView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF2AC6BD246B25D90099CCFA /* GADTTemplateView.m */; };
 		CF2B06F5246EC236006AD175 /* HGCircularSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11FD6E9422C4149F00BABF30 /* HGCircularSlider.framework */; };
 		CF2B06F6246EC236006AD175 /* HGCircularSlider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 11FD6E9422C4149F00BABF30 /* HGCircularSlider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CF2B06F7246EC240006AD175 /* SwiftSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11AC0F0D22C2B8A4008442D2 /* SwiftSocket.framework */; };
@@ -293,18 +284,6 @@
 		11FEEFD623B00B84005DA46E /* NKCenteredCollectionViewLayoutAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKCenteredCollectionViewLayoutAttributes.swift; sourceTree = "<group>"; };
 		2892B0062866A484621DDFCD /* Pods_GyLamp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GyLamp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEDA60115F4135953C1A1477 /* Pods-GyLamp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GyLamp.debug.xcconfig"; path = "Target Support Files/Pods-GyLamp/Pods-GyLamp.debug.xcconfig"; sourceTree = "<group>"; };
-		CF2AC67C246AE4560099CCFA /* NKAdsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKAdsSectionController.swift; sourceTree = "<group>"; };
-		CF2AC681246AE5300099CCFA /* NKAdModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKAdModel.swift; sourceTree = "<group>"; };
-		CF2AC683246AE7C40099CCFA /* NKNativeAdModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKNativeAdModel.swift; sourceTree = "<group>"; };
-		CF2AC685246AF5550099CCFA /* NKNativeAdCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKNativeAdCell.swift; sourceTree = "<group>"; };
-		CF2AC6B6246B25D90099CCFA /* GADTMediumTemplateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADTMediumTemplateView.h; sourceTree = "<group>"; };
-		CF2AC6B7246B25D90099CCFA /* GADTMediumTemplateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GADTMediumTemplateView.m; sourceTree = "<group>"; };
-		CF2AC6B8246B25D90099CCFA /* GADTMediumTemplateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GADTMediumTemplateView.xib; sourceTree = "<group>"; };
-		CF2AC6B9246B25D90099CCFA /* GADTSmallTemplateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADTSmallTemplateView.h; sourceTree = "<group>"; };
-		CF2AC6BA246B25D90099CCFA /* GADTSmallTemplateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GADTSmallTemplateView.m; sourceTree = "<group>"; };
-		CF2AC6BB246B25D90099CCFA /* GADTSmallTemplateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GADTSmallTemplateView.xib; sourceTree = "<group>"; };
-		CF2AC6BC246B25D90099CCFA /* GADTTemplateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADTTemplateView.h; sourceTree = "<group>"; };
-		CF2AC6BD246B25D90099CCFA /* GADTTemplateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GADTTemplateView.m; sourceTree = "<group>"; };
 		CF50A380246EBA5600DE56CF /* UINavigationController+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+extension.swift"; sourceTree = "<group>"; };
 		CF59D7622468716C000CEEA0 /* NKTouchThroughable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKTouchThroughable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -337,7 +316,6 @@
 				11A9F9DD239F995C00105536 /* NKProcressController.swift */,
 				11E98ECC23B416ED00C111F6 /* NKLampSliderController.swift */,
 				11E98ECE23B417B800C111F6 /* NKEmbededSlidersController.swift */,
-				CF2AC67C246AE4560099CCFA /* NKAdsSectionController.swift */,
 			);
 			path = SectionControllers;
 			sourceTree = "<group>";
@@ -378,7 +356,6 @@
 				11A9F9D8239F8E1D00105536 /* NKProgressCell.swift */,
 				11E98EC723B4169F00C111F6 /* NKVerticalSliderCell.swift */,
 				11E98ED023B417EE00C111F6 /* NKSlidersCollectionCell.swift */,
-				CF2AC685246AF5550099CCFA /* NKNativeAdCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -438,7 +415,6 @@
 			children = (
 				11AA0E0D23D0A36600328240 /* Iterpratators */,
 				11FEEFD023B008A5005DA46E /* CollectionsLayout */,
-				CF2AC6B5246B25D90099CCFA /* nativetemplates */,
 				11FA207423AD24B4000E813C /* SwiftSSDP */,
 				11D3864F23492A69005F38CC /* VIPER */,
 				11D3864C234917E5005F38CC /* Abs */,
@@ -476,8 +452,6 @@
 				11917A81234E51E700FF2C68 /* NKError.swift */,
 				11A9F9DF239F9B5F00105536 /* NKProgressModel.swift */,
 				118FEE3023B7F19200ACAC35 /* NKSlidersModel.swift */,
-				CF2AC681246AE5300099CCFA /* NKAdModel.swift */,
-				CF2AC683246AE7C40099CCFA /* NKNativeAdModel.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -615,21 +589,6 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		CF2AC6B5246B25D90099CCFA /* nativetemplates */ = {
-			isa = PBXGroup;
-			children = (
-				CF2AC6B6246B25D90099CCFA /* GADTMediumTemplateView.h */,
-				CF2AC6B7246B25D90099CCFA /* GADTMediumTemplateView.m */,
-				CF2AC6B8246B25D90099CCFA /* GADTMediumTemplateView.xib */,
-				CF2AC6B9246B25D90099CCFA /* GADTSmallTemplateView.h */,
-				CF2AC6BA246B25D90099CCFA /* GADTSmallTemplateView.m */,
-				CF2AC6BB246B25D90099CCFA /* GADTSmallTemplateView.xib */,
-				CF2AC6BC246B25D90099CCFA /* GADTTemplateView.h */,
-				CF2AC6BD246B25D90099CCFA /* GADTTemplateView.m */,
-			);
-			path = nativetemplates;
-			sourceTree = "<group>";
-		};
 		F03B608BC0CE73C9D909ABB0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -751,12 +710,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF2AC6C1246B25D90099CCFA /* GADTSmallTemplateView.xib in Resources */,
 				11021B7222C4302200A82A80 /* Localizable.strings in Resources */,
 				1177845B22B91FCC0075CE33 /* Assets.xcassets in Resources */,
 				11021B6222C42B6C00A82A80 /* launchscreen.storyboard in Resources */,
 				11021B6C22C42E1B00A82A80 /* Main.storyboard in Resources */,
-				CF2AC6BF246B25D90099CCFA /* GADTMediumTemplateView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -813,18 +770,15 @@
 				11340C5222B9339E008094FA /* ColorUtil.swift in Sources */,
 				11D386402348E31B005F38CC /* NKViewPressAble.swift in Sources */,
 				110BF31F22C67C80005428D4 /* NKAlarmCell.swift in Sources */,
-				CF2AC6C2246B25D90099CCFA /* GADTTemplateView.m in Sources */,
 				11602AC422EF356800DF4A62 /* NKTextCell.swift in Sources */,
 				119B066D2347F6EC003EB25F /* NKCollectionViewDelegate.swift in Sources */,
 				11FA208423AD24D5000E813C /* SSDPSearchTarget.swift in Sources */,
 				11FA208323AD24D5000E813C /* SSDPUPnP.swift in Sources */,
 				118FEE3123B7F19200ACAC35 /* NKSlidersModel.swift in Sources */,
 				11AA0E0C23D0A1C300328240 /* NKDeviceProtocol.swift in Sources */,
-				CF2AC686246AF5550099CCFA /* NKNativeAdCell.swift in Sources */,
 				11C64C6F239F000200F16085 /* NKDeviceViewInteractor.swift in Sources */,
 				11D3866123492D23005F38CC /* NKScanDevicesPresenterProtocol.swift in Sources */,
 				11E98ECF23B417B800C111F6 /* NKEmbededSlidersController.swift in Sources */,
-				CF2AC67D246AE4560099CCFA /* NKAdsSectionController.swift in Sources */,
 				11219AF623AD6D1000C7F6BA /* SSDPUtil.swift in Sources */,
 				11A6A89B23467B2C00B6DADD /* NKCoreDataUtil.swift in Sources */,
 				11D3864E234917FE005F38CC /* NKModel.swift in Sources */,
@@ -833,7 +787,6 @@
 				11FD6E6722C3A27D00BABF30 /* NKNavigationBar.swift in Sources */,
 				11FA208523AD24D5000E813C /* SSDPDiscoverySession.swift in Sources */,
 				11A9F9D9239F8E1D00105536 /* NKProgressCell.swift in Sources */,
-				CF2AC684246AE7C40099CCFA /* NKNativeAdModel.swift in Sources */,
 				11D3866323492D4C005F38CC /* NKScanDevicesInteractorInputProtocol.swift in Sources */,
 				11AC0F1522C2CC42008442D2 /* UDPClient+extension.swift in Sources */,
 				11FD6E7122C3D84300BABF30 /* NKCollectionCell.swift in Sources */,
@@ -848,7 +801,6 @@
 				11D3865923492C7E005F38CC /* NKScanDevicesPresenter.swift in Sources */,
 				1177845422B91FC80075CE33 /* AppDelegate.swift in Sources */,
 				11D3864B23491766005F38CC /* NKCoreDataUtil+extension.swift in Sources */,
-				CF2AC682246AE5300099CCFA /* NKAdModel.swift in Sources */,
 				11C64C73239F002C00F16085 /* NKDeviceViewProtocols.swift in Sources */,
 				11C64C75239F114200F16085 /* UIViewController+extension.swift in Sources */,
 				11FD6E5F22C3848700BABF30 /* NKDeviceCell.swift in Sources */,
@@ -870,7 +822,6 @@
 				11340C5422B9342F008094FA /* Colorizer.swift in Sources */,
 				11FEEFD723B00B84005DA46E /* NKCenteredCollectionViewLayoutAttributes.swift in Sources */,
 				119C0E402349EE1B00AC1332 /* NKActionView.swift in Sources */,
-				CF2AC6C0246B25D90099CCFA /* GADTSmallTemplateView.m in Sources */,
 				119C0E3B2349EBC700AC1332 /* SectionController+extension.swift in Sources */,
 				11E98EC823B4169F00C111F6 /* NKVerticalSliderCell.swift in Sources */,
 				11D3865D23492CE3005F38CC /* NKScanDevicesRouterProtocol.swift in Sources */,
@@ -879,7 +830,6 @@
 				11A9F9DE239F995C00105536 /* NKProcressController.swift in Sources */,
 				CF59D7632468716C000CEEA0 /* NKTouchThroughable.swift in Sources */,
 				11340C5822B944EB008094FA /* NKLedContoller.swift in Sources */,
-				CF2AC6BE246B25D90099CCFA /* GADTMediumTemplateView.m in Sources */,
 				11FD6E6D22C3D2D800BABF30 /* NKEmbededEffectsController.swift in Sources */,
 				11FD6E9A22C415D700BABF30 /* NKSliderCell.swift in Sources */,
 				11D386472348F979005F38CC /* NKSerializeable.swift in Sources */,
