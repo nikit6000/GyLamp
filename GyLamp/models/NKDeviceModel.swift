@@ -181,9 +181,9 @@ class NKDeviceModel: NKModel, NKDeviceProtocol {
             alarms.alarmModels.removeAll()
         }
         
-        let sliderBRI = NKSliderModel(cmd: "BRI", min: 0.0, max: 255.0, type: .int)
-        let sliderSPD = NKSliderModel(cmd: "SPD", min: 0.0, max: 255.0, type: .int)
-        let sliderSCA = NKSliderModel(cmd: "SCA", min: 0.0, max: 255.0, type: .int)
+        let sliderBRI = NKSliderModel(cmd: "BRI", title: NSLocalizedString("device.bri", comment: ""), min: 0.0, max: 255.0, type: .int)
+        let sliderSPD = NKSliderModel(cmd: "SPD", title: NSLocalizedString("device.spd", comment: ""), min: 0.0, max: 255.0, type: .int)
+        let sliderSCA = NKSliderModel(cmd: "SCA", title: NSLocalizedString("device.sca", comment: ""), min: 0.0, max: 255.0, type: .int)
         
         sliderBRI.model = self
         sliderSPD.model = self

@@ -10,8 +10,9 @@ import UIKit
 import HGCircularSlider
 import RxSwift
 import RxRelay
+import Squircle
 
-class NKAlarmCell: UICollectionViewCell, NKViewPressAble {
+class NKAlarmCell: UICollectionViewCell, NKPressableCellProtocol {
     
     var isPressAble: Bool = true
     var isLongPressAble: Bool = true
@@ -40,22 +41,12 @@ class NKAlarmCell: UICollectionViewCell, NKViewPressAble {
         return view
     }()
     
-    private lazy var hoursLabel: UILabel = {
+    private lazy var timeLabel: UILabel = {
         let view = UILabel(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.font = UIFont.systemFont(ofSize: 30)
+        view.font = .systemFont(ofSize: 30, weight: .semibold)
         view.textColor = UIColor.black
         view.textAlignment = .right
-        return view
-    }()
-    
-    private lazy var minutesLabel: UILabel = {
-        let view = UILabel(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.font = UIFont.systemFont(ofSize: 15)
-        
-        view.textColor = UIColor.black
-        view.textAlignment = .left
         return view
     }()
     
@@ -141,11 +132,7 @@ class NKAlarmCell: UICollectionViewCell, NKViewPressAble {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        contentView.layer.masksToBounds = true
-        contentView.layer.cornerRadius = 20
-        
-        contentView.addSubview(hoursLabel)
-        contentView.addSubview(minutesLabel)
+        contentView.addSubview(timeLabel)
         contentView.addSubview(amLabel)
         contentView.addSubview(pmLabel)
         contentView.addSubview(dayLabel)
@@ -168,13 +155,11 @@ class NKAlarmCell: UICollectionViewCell, NKViewPressAble {
         
         if UIScreen.main.scale == 3.0 {
             /* iPhone 7 Plus and above*/
-            hoursLabel.font = .systemFont(ofSize: 30)
-            minutesLabel.font = .systemFont(ofSize: 15)
+            timeLabel.font = .systemFont(ofSize: 30)
             amLabel.font = .systemFont(ofSize: 15)
             pmLabel.font = .systemFont(ofSize: 15)
         } else  {
-            hoursLabel.font = .systemFont(ofSize: 20)
-            minutesLabel.font = .systemFont(ofSize: 10)
+            timeLabel.font = .systemFont(ofSize: 20)
             amLabel.font = .systemFont(ofSize: 10)
             pmLabel.font = .systemFont(ofSize: 10)
         }
@@ -191,6 +176,7 @@ class NKAlarmCell: UICollectionViewCell, NKViewPressAble {
         
         dawnLabel.sizeToFit()
         dawnLabel.layer.cornerRadius = dawnLabel.frame.height / 2.0
+        contentView.squircle()
     }
     
     
@@ -199,28 +185,28 @@ class NKAlarmCell: UICollectionViewCell, NKViewPressAble {
         let amPmLabelFontSize: CGFloat = UIScreen.main.scale == 3.0 ? 15.0 : 10.0
         
         /* iconView */
-        NSLayoutConstraint(item: iconView, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: 8).isActive = true
-        NSLayoutConstraint(item: iconView, attribute: .top, relatedBy: .equal, toItem: contentView, attribute: .top, multiplier: 1, constant: 8).isActive = true
+        NSLayoutConstraint(item: iconView, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: 12).isActive = true
+        NSLayoutConstraint(item: iconView, attribute: .top, relatedBy: .equal, toItem: contentView, attribute: .top, multiplier: 1, constant: 12).isActive = true
         NSLayoutConstraint(item: iconView, attribute: .width, relatedBy: .equal, toItem: iconView, attribute: .height, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: iconView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
         
         /* sunsetIconView */
-        NSLayoutConstraint(item: sunsetIconView, attribute: .top, relatedBy: .equal, toItem: contentView, attribute: .top, multiplier: 1, constant: 8).isActive = true
+        NSLayoutConstraint(item: sunsetIconView, attribute: .top, relatedBy: .equal, toItem: contentView, attribute: .top, multiplier: 1, constant: 12).isActive = true
         NSLayoutConstraint(item: sunsetIconView, attribute: .width, relatedBy: .equal, toItem: sunsetIconView, attribute: .height, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: sunsetIconView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
-        NSLayoutConstraint(item: contentView, attribute: .trailing, relatedBy: .equal, toItem: sunsetIconView, attribute: .trailing, multiplier: 1, constant: 8).isActive = true
+        NSLayoutConstraint(item: contentView, attribute: .trailing, relatedBy: .equal, toItem: sunsetIconView, attribute: .trailing, multiplier: 1, constant: 12).isActive = true
         
         /* indicator */
-        NSLayoutConstraint(item: indicator, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: 8).isActive = true
-        NSLayoutConstraint(item: indicator, attribute: .top, relatedBy: .equal, toItem: contentView, attribute: .top, multiplier: 1, constant: 8).isActive = true
+        NSLayoutConstraint(item: indicator, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: 12).isActive = true
+        NSLayoutConstraint(item: indicator, attribute: .top, relatedBy: .equal, toItem: contentView, attribute: .top, multiplier: 1, constant: 12).isActive = true
         NSLayoutConstraint(item: indicator, attribute: .width, relatedBy: .equal, toItem: indicator, attribute: .height, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: indicator, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
         
         /* errorImage */
-        NSLayoutConstraint(item: errorImage, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: 8).isActive = true
-        NSLayoutConstraint(item: errorImage, attribute: .top, relatedBy: .equal, toItem: contentView, attribute: .top, multiplier: 1, constant: 8).isActive = true
+        NSLayoutConstraint(item: errorImage, attribute: .centerX, relatedBy: .equal, toItem: indicator, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: errorImage, attribute: .centerY, relatedBy: .equal, toItem: indicator, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: errorImage, attribute: .width, relatedBy: .equal, toItem: errorImage, attribute: .height, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: errorImage, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
+        NSLayoutConstraint(item: errorImage, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 20).isActive = true
         
         /* dawnLabel */
         
@@ -230,25 +216,20 @@ class NKAlarmCell: UICollectionViewCell, NKViewPressAble {
         
         /* hoursLabel */
         
-        NSLayoutConstraint(item: hoursLabel, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: 8).isActive = true
-        NSLayoutConstraint(item: hoursLabel, attribute: .bottom, relatedBy: .equal, toItem: dayLabel, attribute: .top, multiplier: 1, constant: 0).isActive = true
-        
-        /* minutesLabel */
-        
-        NSLayoutConstraint(item: minutesLabel, attribute: .leading, relatedBy: .equal, toItem: hoursLabel, attribute: .trailing, multiplier: 1, constant: 8).isActive = true
-        NSLayoutConstraint(item: minutesLabel, attribute: .top, relatedBy: .equal, toItem: hoursLabel, attribute: .top, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: timeLabel, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: 12).isActive = true
+        NSLayoutConstraint(item: timeLabel, attribute: .bottom, relatedBy: .equal, toItem: dayLabel, attribute: .top, multiplier: 1, constant: 0).isActive = true
         
         /* amLabel */
-        NSLayoutConstraint(item: amLabel, attribute: .centerY, relatedBy: .equal, toItem: hoursLabel, attribute: .centerY, multiplier: 1, constant: (-amPmLabelFontSize / 2.0) - 1.5 ).isActive = true
-        NSLayoutConstraint(item: contentView, attribute: .trailing, relatedBy: .equal, toItem: amLabel, attribute: .trailing, multiplier: 1, constant: 8).isActive = true
+        NSLayoutConstraint(item: amLabel, attribute: .centerY, relatedBy: .equal, toItem: timeLabel, attribute: .centerY, multiplier: 1, constant: (-amPmLabelFontSize / 2.0) - 1.5 ).isActive = true
+        NSLayoutConstraint(item: amLabel, attribute: .centerX, relatedBy: .equal, toItem: dawnLabel, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
         
         /* pmLabel */
-        NSLayoutConstraint(item: pmLabel, attribute: .centerY, relatedBy: .equal, toItem: hoursLabel, attribute: .centerY, multiplier: 1, constant: (amPmLabelFontSize / 2.0) + 1.5).isActive = true
-        NSLayoutConstraint(item: contentView, attribute: .trailing, relatedBy: .equal, toItem: pmLabel, attribute: .trailing, multiplier: 1, constant: 8).isActive = true
+        NSLayoutConstraint(item: pmLabel, attribute: .centerY, relatedBy: .equal, toItem: timeLabel, attribute: .centerY, multiplier: 1, constant: (amPmLabelFontSize / 2.0) + 1.5).isActive = true
+        NSLayoutConstraint(item: pmLabel, attribute: .centerX, relatedBy: .equal, toItem: amLabel, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
         
         /* dayLabel */
-        NSLayoutConstraint(item: dayLabel, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: 8).isActive = true
-        NSLayoutConstraint(item: contentView, attribute: .bottom, relatedBy: .equal, toItem: dayLabel, attribute: .bottom, multiplier: 1, constant: 8).isActive = true
+        NSLayoutConstraint(item: dayLabel, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: 12).isActive = true
+        NSLayoutConstraint(item: contentView, attribute: .bottom, relatedBy: .equal, toItem: dayLabel, attribute: .bottom, multiplier: 1, constant: 12).isActive = true
         NSLayoutConstraint(item: contentView, attribute: .trailing, relatedBy: .equal, toItem: dayLabel, attribute: .trailing, multiplier: 1, constant: 8).isActive = true
         
         self.setNeedsLayout()
@@ -281,9 +262,7 @@ class NKAlarmCell: UICollectionViewCell, NKViewPressAble {
             }
         }
         
-        self.hoursLabel.text = model.hoursText
-        //self.minutesLabel.attributedText = NSAttributedString(string: model.minutesText, attributes: underlineAttribute)
-        self.minutesLabel.text = model.minutesText
+        self.timeLabel.text = "\(model.hoursText):\(model.minutesText)"
         self.dayLabel.text = model.day.getDayShort()
         
         if model.isOn {

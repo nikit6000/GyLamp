@@ -58,7 +58,7 @@
 		11C64C75239F114200F16085 /* UIViewController+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C64C74239F114200F16085 /* UIViewController+extension.swift */; };
 		11C64C77239F1BB800F16085 /* NKDeviceStateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C64C76239F1BB800F16085 /* NKDeviceStateController.swift */; };
 		11D33AE922FF39F0001FB9AE /* NKCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D33AE822FF39F0001FB9AE /* NKCollectionView.swift */; };
-		11D386402348E31B005F38CC /* NKViewPressAble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D3863F2348E31B005F38CC /* NKViewPressAble.swift */; };
+		11D386402348E31B005F38CC /* NKPressableCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D3863F2348E31B005F38CC /* NKPressableCellProtocol.swift */; };
 		11D386432348E5E6005F38CC /* CData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 11D386412348E5E6005F38CC /* CData.xcdatamodeld */; };
 		11D386452348F8EF005F38CC /* NKCoreDataWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D386442348F8EF005F38CC /* NKCoreDataWorker.swift */; };
 		11D386472348F979005F38CC /* NKSerializeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D386462348F979005F38CC /* NKSerializeable.swift */; };
@@ -240,7 +240,7 @@
 		11C64C74239F114200F16085 /* UIViewController+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+extension.swift"; sourceTree = "<group>"; };
 		11C64C76239F1BB800F16085 /* NKDeviceStateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKDeviceStateController.swift; sourceTree = "<group>"; };
 		11D33AE822FF39F0001FB9AE /* NKCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKCollectionView.swift; sourceTree = "<group>"; };
-		11D3863F2348E31B005F38CC /* NKViewPressAble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKViewPressAble.swift; sourceTree = "<group>"; };
+		11D3863F2348E31B005F38CC /* NKPressableCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKPressableCellProtocol.swift; sourceTree = "<group>"; };
 		11D386422348E5E6005F38CC /* CData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CData.xcdatamodel; sourceTree = "<group>"; };
 		11D386442348F8EF005F38CC /* NKCoreDataWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKCoreDataWorker.swift; sourceTree = "<group>"; };
 		11D386462348F979005F38CC /* NKSerializeable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NKSerializeable.swift; sourceTree = "<group>"; };
@@ -499,7 +499,7 @@
 			isa = PBXGroup;
 			children = (
 				11AA0E0B23D0A1C300328240 /* NKDeviceProtocol.swift */,
-				11D3863F2348E31B005F38CC /* NKViewPressAble.swift */,
+				11D3863F2348E31B005F38CC /* NKPressableCellProtocol.swift */,
 				11D386462348F979005F38CC /* NKSerializeable.swift */,
 				CF59D7622468716C000CEEA0 /* NKTouchThroughable.swift */,
 			);
@@ -768,7 +768,7 @@
 			files = (
 				11C64C6B239EFFE500F16085 /* NKDeviceViewRouter.swift in Sources */,
 				11340C5222B9339E008094FA /* ColorUtil.swift in Sources */,
-				11D386402348E31B005F38CC /* NKViewPressAble.swift in Sources */,
+				11D386402348E31B005F38CC /* NKPressableCellProtocol.swift in Sources */,
 				110BF31F22C67C80005428D4 /* NKAlarmCell.swift in Sources */,
 				11602AC422EF356800DF4A62 /* NKTextCell.swift in Sources */,
 				119B066D2347F6EC003EB25F /* NKCollectionViewDelegate.swift in Sources */,

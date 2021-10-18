@@ -16,15 +16,16 @@ enum NKSliderType: Int {
 
 class NKSliderModel: NSObject {
     
-    private var type: NKSliderType
+    var value: CGFloat = 0.0
+    let cmd: String
+    let title: String
     
-    public var value: CGFloat = 0.0
-    public var cmd: String
+    weak var model: NKDeviceProtocol?
     
     private(set) var minValue: CGFloat
     private(set) var maxValue: CGFloat
-
-    public weak var model: NKDeviceProtocol?
+    
+    private var type: NKSliderType
     
     public var strVal: String {
         
@@ -39,12 +40,13 @@ class NKSliderModel: NSObject {
         
     }
     
-    init(cmd: String, min: CGFloat = 0.0, max: CGFloat = 1.0, type: NKSliderType = .float) {
+    init(cmd: String, title: String, min: CGFloat = 0.0, max: CGFloat = 1.0, type: NKSliderType = .float) {
         
         self.cmd = cmd
         self.minValue = min
         self.maxValue = max
         self.type = type
+        self.title = title
         
         super.init()
     }

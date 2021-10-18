@@ -43,6 +43,9 @@
 "device.delete" = "Delete";
 "device.quit" = "Quit";
 "device.stay" = "Stay";
+"device.bri" = "Brightness";
+"device.sca" = "Scale";
+"device.spd" = "Speed";
 
 
 "mode.confetti" = "confetti";

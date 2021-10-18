@@ -9,9 +9,9 @@
 import UIKit
 import RxSwift
 import RxRelay
+import Squircle
 
-
-class NKDeviceCell: UICollectionViewCell, NKViewPressAble {
+class NKDeviceCell: UICollectionViewCell, NKPressableCellProtocol {
     
     var isPressAble: Bool
     var isLongPressAble: Bool
@@ -29,7 +29,7 @@ class NKDeviceCell: UICollectionViewCell, NKViewPressAble {
     private lazy var nameLabel: UILabel = {
         let view = UILabel(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.font = UIFont.systemFont(ofSize: 12)
+        view.font = .systemFont(ofSize: 15, weight: .bold)
         view.textColor = UIColor.black
         return view
     }()
@@ -87,9 +87,6 @@ class NKDeviceCell: UICollectionViewCell, NKViewPressAble {
         
         super.init(frame: frame)
         
-        contentView.layer.masksToBounds = true
-        contentView.layer.cornerRadius = 20
-        
         contentView.addSubview(iconView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(adressLabel)
@@ -114,39 +111,43 @@ class NKDeviceCell: UICollectionViewCell, NKViewPressAble {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        contentView.squircle()
+    }
+    
     private func setupConstraints() {
         
         /* iconView */
-        NSLayoutConstraint(item: iconView, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: 8).isActive = true
-        NSLayoutConstraint(item: iconView, attribute: .top, relatedBy: .equal, toItem: contentView, attribute: .top, multiplier: 1, constant: 8).isActive = true
+        NSLayoutConstraint(item: iconView, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: 12).isActive = true
+        NSLayoutConstraint(item: iconView, attribute: .top, relatedBy: .equal, toItem: contentView, attribute: .top, multiplier: 1, constant: 12).isActive = true
         NSLayoutConstraint(item: iconView, attribute: .width, relatedBy: .equal, toItem: iconView, attribute: .height, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: iconView, attribute: .height, relatedBy: .lessThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
         NSLayoutConstraint(item: nameLabel, attribute: .top, relatedBy: .greaterThanOrEqual, toItem: iconView, attribute: .bottom, multiplier: 1, constant: 4).isActive = true
         
         /* accessLabel */
-        NSLayoutConstraint(item: accessLabel, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: 8).isActive = true
-        NSLayoutConstraint(item: contentView, attribute: .bottom, relatedBy: .equal, toItem: accessLabel, attribute: .bottom, multiplier: 1, constant: 8).isActive = true
-        NSLayoutConstraint(item: contentView, attribute: .trailing, relatedBy: .equal, toItem: accessLabel, attribute: .trailing, multiplier: 1, constant: 8).isActive = true
+        NSLayoutConstraint(item: accessLabel, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: 12).isActive = true
+        NSLayoutConstraint(item: contentView, attribute: .bottom, relatedBy: .equal, toItem: accessLabel, attribute: .bottom, multiplier: 1, constant: 12).isActive = true
+        NSLayoutConstraint(item: contentView, attribute: .trailing, relatedBy: .equal, toItem: accessLabel, attribute: .trailing, multiplier: 1, constant: 12).isActive = true
         NSLayoutConstraint(item: accessLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 10).isActive = true
         
         
         /* adressLabel */
-        NSLayoutConstraint(item: adressLabel, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: 8).isActive = true
+        NSLayoutConstraint(item: adressLabel, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: 12).isActive = true
         NSLayoutConstraint(item: accessLabel, attribute: .top, relatedBy: .equal, toItem: adressLabel, attribute: .bottom, multiplier: 1, constant: 2).isActive = true
-        NSLayoutConstraint(item: contentView, attribute: .trailing, relatedBy: .equal, toItem: adressLabel, attribute: .trailing, multiplier: 1, constant: 8).isActive = true
+        NSLayoutConstraint(item: contentView, attribute: .trailing, relatedBy: .equal, toItem: adressLabel, attribute: .trailing, multiplier: 1, constant: 12).isActive = true
         NSLayoutConstraint(item: adressLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 12).isActive = true
         
         /* nameLabel */
-        NSLayoutConstraint(item: nameLabel, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: 8).isActive = true
+        NSLayoutConstraint(item: nameLabel, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: 12).isActive = true
         NSLayoutConstraint(item: adressLabel, attribute: .top, relatedBy: .equal, toItem: nameLabel, attribute: .bottom, multiplier: 1, constant: 2).isActive = true
-        NSLayoutConstraint(item: contentView, attribute: .trailing, relatedBy: .equal, toItem: nameLabel, attribute: .trailing, multiplier: 1, constant: 8).isActive = true
-        NSLayoutConstraint(item: nameLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 12).isActive = true
+        NSLayoutConstraint(item: contentView, attribute: .trailing, relatedBy: .equal, toItem: nameLabel, attribute: .trailing, multiplier: 1, constant: 12).isActive = true
         
         /* activityIndicator */
         NSLayoutConstraint(item: activityIndicator, attribute: .width, relatedBy: .equal, toItem: activityIndicator, attribute: .height, multiplier: 1.0, constant: 0.0).isActive = true
         NSLayoutConstraint(item: activityIndicator, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 40.0).isActive = true
-        NSLayoutConstraint(item: activityIndicator, attribute: .top, relatedBy: .equal, toItem: contentView, attribute: .top, multiplier: 1.0, constant: 8.0).isActive = true
-        NSLayoutConstraint(item: contentView, attribute: .trailing, relatedBy: .equal, toItem: activityIndicator, attribute: .trailing, multiplier: 1.0, constant: 8.0).isActive = true
+        NSLayoutConstraint(item: activityIndicator, attribute: .top, relatedBy: .equal, toItem: contentView, attribute: .top, multiplier: 1.0, constant: 12).isActive = true
+        NSLayoutConstraint(item: contentView, attribute: .trailing, relatedBy: .equal, toItem: activityIndicator, attribute: .trailing, multiplier: 1.0, constant: 12).isActive = true
         
         self.setNeedsLayout()
         self.layoutIfNeeded()

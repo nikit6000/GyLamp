@@ -9,11 +9,10 @@
 import UIKit
 import RxSwift
 import RxRelay
+import Squircle
 
-protocol NKVerticalSliderCellDelegate: class {
-    
+protocol NKVerticalSliderCellDelegate: AnyObject {
     func verticalSliderCell(_ slider: NKVerticalSlider, changed value: CGFloat)
-    
 }
 
 class NKVerticalSliderCell: UICollectionViewCell {
@@ -21,11 +20,9 @@ class NKVerticalSliderCell: UICollectionViewCell {
     private var disposeBag: DisposeBag?
     
     private(set) lazy var slider: NKVerticalSlider = {
-        
         let view = NKVerticalSlider()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.masksToBounds = true
-        view.layer.cornerRadius = 20.0
         return view
     }()
     
@@ -33,11 +30,10 @@ class NKVerticalSliderCell: UICollectionViewCell {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        view.backgroundColor = .white
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 8
-        view.textColor = .black
-        view.fontSize = 20
+        view.textColor = .white
+        view.font = .systemFont(ofSize: 20, weight: .semibold)
         view.textAlignment = .center
         view.isUserInteractionEnabled = false
         
@@ -47,9 +43,7 @@ class NKVerticalSliderCell: UICollectionViewCell {
     override var alpha: CGFloat {
         set {
             super.alpha = newValue
-            
             self.slider.isEnabled = !(alpha < 1.0)
-            
         }
         get {
             return super.alpha
@@ -64,7 +58,7 @@ class NKVerticalSliderCell: UICollectionViewCell {
             }
             
             
-            self.label.text = model.cmd
+            self.label.text = model.title
             self.slider.value = model.value
             
             disposeBag = nil
@@ -72,8 +66,6 @@ class NKVerticalSliderCell: UICollectionViewCell {
             
             model.model?.modelUpdatedSubject.asDriver(onErrorJustReturn: ())
                 .drive(onNext: { [weak self] in
-
-      //usingSpringWithDamping: 0, initialSpringVelocity: 0
                     
                     UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
                         self?.slider.value = self?.model?.value ?? 0.0
@@ -108,18 +100,17 @@ class NKVerticalSliderCell: UICollectionViewCell {
     private func addConstraints() {
         
         /* slider */
-        
         NSLayoutConstraint(item: slider, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: slider, attribute: .top, relatedBy: .equal, toItem: contentView, attribute: .top, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: contentView, attribute: .trailing, relatedBy: .equal, toItem: slider, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: contentView, attribute: .bottom, relatedBy: .equal, toItem: slider, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: label, attribute: .top, relatedBy: .equal, toItem: slider, attribute: .bottom, multiplier: 1, constant: 8).isActive = true
         
         /* label */
         
         NSLayoutConstraint(item: label, attribute: .centerX, relatedBy: .equal, toItem: contentView, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: contentView, attribute: .bottom, relatedBy: .equal, toItem: label, attribute: .bottom, multiplier: 1, constant: 20).isActive = true
-        NSLayoutConstraint(item: label, attribute: .width, relatedBy: .equal, toItem: contentView, attribute: .width, multiplier: 0.7, constant: 0).isActive = true
         
+        self.setNeedsLayout()
         self.layoutIfNeeded()
         
     }
@@ -128,6 +119,8 @@ class NKVerticalSliderCell: UICollectionViewCell {
         super.layoutSubviews()
         label.sizeToFit()
         label.layer.cornerRadius = label.frame.height / 2.0
+        slider.layer.layoutIfNeeded()
+        slider.squircle()
     }
     
     @objc private func valueChanged(sender: NKVerticalSlider) {

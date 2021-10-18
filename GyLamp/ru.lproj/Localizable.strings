@@ -43,6 +43,9 @@
 "device.delete" = "Удалить";
 "device.quit" = "Выйти";
 "device.stay" = "Остаться";
+"device.bri" = "Яркость";
+"device.sca" = "Масштаб";
+"device.spd" = "Скорость";
 
 "mode.confetti" = "Конфетти";
 "mode.fire" = "Огонь";

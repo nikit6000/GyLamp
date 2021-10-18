@@ -9,7 +9,7 @@
 import UIKit
 import MBCircularProgressBar
 
-class NKProgressCell: UICollectionViewCell, NKViewPressAble {
+class NKProgressCell: UICollectionViewCell, NKPressableCellProtocol {
     
     public var isPressAble: Bool = false
     

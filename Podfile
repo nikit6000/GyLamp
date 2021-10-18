@@ -16,4 +16,5 @@ target 'GyLamp' do
 	pod 'Weak', '~> 1.0.0'
 	pod 'Alamofire'
 	pod 'SwiftyXML', '~> 3.0.0'
+  pod 'Squircle'
 end
